@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEngine.Core", "SharpEngine.Core\SharpEngine.Core.csproj", "{66004721-4986-46E2-AD5B-D843D0FD3BE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{A656DBCB-6308-4F81-8CCE-A7FA618F2AFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{66004721-4986-46E2-AD5B-D843D0FD3BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66004721-4986-46E2-AD5B-D843D0FD3BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66004721-4986-46E2-AD5B-D843D0FD3BE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A656DBCB-6308-4F81-8CCE-A7FA618F2AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A656DBCB-6308-4F81-8CCE-A7FA618F2AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A656DBCB-6308-4F81-8CCE-A7FA618F2AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A656DBCB-6308-4F81-8CCE-A7FA618F2AFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
