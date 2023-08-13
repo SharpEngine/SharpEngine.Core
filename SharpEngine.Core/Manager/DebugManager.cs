@@ -30,12 +30,16 @@ public static class DebugManager
     public const string SeVersion = "1.0.0";
 
     /// <summary>
-    /// Create ImGui Window for SharpEngine.Core
+    /// Create ImGui Window for SharpEngine
     /// </summary>
-    public static void CreateSeImGuiWindow(Window window)
+    public static void CreateSeImGuiWindow(Window window, bool showAssemblyVersion = false)
     {
         ImGui.Begin("SharpEngine.Core Debug");
         ImGui.Text($"SharpEngine.Core Version : {SeVersion}");
+        if(showAssemblyVersion)
+            foreach (var an in typeof(DebugManager).Assembly.GetReferencedAssemblies())
+                if((!an.Name?.StartsWith("Microsoft") ?? false) && (!an.Name?.StartsWith("System") ?? false))
+                    ImGui.Text($"{an.Name} Version : {an.Version}");
         ImGui.Separator();
         ImGui.Text($"FPS (from ImGui) : {1000.0/ImGui.GetIO().Framerate:.000}ms/frame ({ImGui.GetIO().Framerate} FPS)");
         ImGui.Text($"FPS (from SE) : {1000.0/FrameRate:.000}ms/frame ({FrameRate} FPS)");
