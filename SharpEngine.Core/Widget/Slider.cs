@@ -68,7 +68,7 @@ public class Slider: Widget
             var point = InputManager.GetMousePosition().X - position.X;
             var temp = Value;
             Value = (int)System.Math.Round(point * 100 / barSize, MidpointRounding.AwayFromZero);
-            if (System.Math.Abs(temp - Value) > Internal.FloatTolerance)
+            if (System.Math.Abs(temp - Value) > 0.001f)
             {
                 ValueChanged?.Invoke(this, new ValueEventArgs<float>
                 {

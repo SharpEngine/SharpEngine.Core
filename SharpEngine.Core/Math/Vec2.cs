@@ -113,8 +113,8 @@ public struct Vec2
     /// <param name="vec2">Second Vector 2D</param>
     /// <returns>If first is equals to second</returns>
     public static bool operator ==(Vec2 vec1, Vec2 vec2) =>
-        System.Math.Abs(vec1.X - vec2.X) < Internal.FloatTolerance &&
-        System.Math.Abs(vec1.Y - vec2.Y) < Internal.FloatTolerance;
+        System.Math.Abs(vec1.X - vec2.X) < 0.001f &&
+        System.Math.Abs(vec1.Y - vec2.Y) < 0.001f;
     
     /// <summary>
     /// Operator Negation

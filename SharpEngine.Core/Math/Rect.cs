@@ -103,10 +103,10 @@ public struct Rect
     /// <param name="r1">First Rect</param>
     /// <param name="r2">Second Rect</param>
     /// <returns>If first is equals to second</returns>
-    public static bool operator ==(Rect r1, Rect r2) => System.Math.Abs(r1.X - r2.X) < Internal.FloatTolerance &&
-                                                        System.Math.Abs(r1.Y - r2.Y) < Internal.FloatTolerance &&
-                                                        System.Math.Abs(r1.Width - r2.Width) < Internal.FloatTolerance &&
-                                                        System.Math.Abs(r1.Height - r2.Height) < Internal.FloatTolerance;
+    public static bool operator ==(Rect r1, Rect r2) => System.Math.Abs(r1.X - r2.X) < 0.001f &&
+                                                        System.Math.Abs(r1.Y - r2.Y) < 0.001f &&
+                                                        System.Math.Abs(r1.Width - r2.Width) < 0.001f &&
+                                                        System.Math.Abs(r1.Height - r2.Height) < 0.001f;
     
     /// <summary>
     /// Convert RectI to Rect
