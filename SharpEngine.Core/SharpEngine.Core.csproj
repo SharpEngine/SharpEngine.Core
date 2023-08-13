@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Core Package of SharpEngine - 2D Game Engine</Description>
+    <PackageProjectUrl />
+    <Authors>LavaPower</Authors>
+    <Company>LavaPower</Company>
+    <Copyright>Copyright (c) LavaPower 2021-2023</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SharpEngine/SharpEngine.Core</PackageProjectUrl>
+    <PackageVersion>1.0.0</PackageVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <EnablePackageValisation>true</EnablePackageValisation>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RepositoryUrl>https://github.com/SharpEngine/SharpEngine.Core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Raylib,SharpEngine,Game,Engine</PackageTags>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImGui.NET" Version="1.89.7.1" />
+    <PackageReference Include="Raylib-cs" Version="4.5.0.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="../CHANGELOG.md" Pack="true" PackagePath="\" />
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

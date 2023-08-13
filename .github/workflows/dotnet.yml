@@ -1,0 +1,92 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  workflow_dispatch: # Allow running the workflow manually from the GitHub UI
+  release:
+    types:
+      - published    # Run the workflow when a new GitHub release is published
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace}}/nuget
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  create_nuget:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      
+    - name: Restore
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build SharpEngine.Core/SharpEngine.Core.csproj -c Release
+
+    - name: Pack Nuget
+      run: dotnet pack SharpEngine.Core/SharpEngine.Core.csproj -c Release --no-build --output ${{ env.NuGetDirectory }}
+    
+    - uses: actions/upload-artifact@v3
+      with:
+        name: nuget
+        if-no-files-found: error
+        retention-days: 7
+        path: ${{ env.NuGetDirectory }}/*.nupkg
+
+  validate_nuget:
+    runs-on: ubuntu-latest
+    needs: [ create_nuget ]
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDirectory }}
+
+      - name: Install nuget validator
+        run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
+        
+      - name: Validate package
+        run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
+        continue-on-error: true
+
+  run_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+    - name: Run tests
+      run: dotnet test --configuration Release
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ validate_nuget, run_test ]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDirectory }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+
+      - name: Publish NuGet package
+        run: |
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }
