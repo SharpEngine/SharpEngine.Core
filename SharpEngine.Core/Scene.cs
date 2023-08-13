@@ -31,12 +31,19 @@ public class Scene
     
     private readonly List<Entity.Entity> _removeEntities = new();
     private readonly List<Widget.Widget> _removeWidgets = new();
+    private readonly List<ISceneSystem> _sceneSystems = new();
 
     /// <summary>
     /// Create Scene
     /// </summary>
     public Scene()
     {}
+
+    /// <summary>
+    /// Add Scene System
+    /// </summary>
+    /// <param name="system">Scene System</param>
+    public void AddSceneSystem(ISceneSystem system) => _sceneSystems.Add(system);
 
     /// <summary>
     /// Add Widget to Scene
@@ -129,6 +136,9 @@ public class Scene
     /// </summary>
     public virtual void Load()
     {
+        foreach (var system in _sceneSystems)
+            system.Load();
+        
         foreach (var entity in Entities)
             entity.Load();
         foreach (var widget in Widgets)
@@ -144,6 +154,9 @@ public class Scene
             entity.Unload();
         foreach (var widget in Widgets)
             widget.Unload();
+        
+        foreach (var system in _sceneSystems)
+            system.Unload();
     }
 
     /// <summary>
@@ -152,6 +165,9 @@ public class Scene
     /// <param name="delta">Time since last update</param>
     public virtual void Update(float delta)
     {
+        foreach (var system in _sceneSystems)
+            system.Update(delta);
+        
         foreach (var removeEntity in _removeEntities)
             RemoveEntity(removeEntity);
         foreach (var removeWidget in _removeWidgets)
@@ -175,6 +191,9 @@ public class Scene
     /// </summary>
     public virtual void Draw()
     {
+        foreach (var system in _sceneSystems)
+            system.Draw();
+        
         foreach (var ent in Entities)
             ent.Draw();
         foreach (var widget in Widgets)
@@ -184,10 +203,16 @@ public class Scene
     /// <summary>
     /// Function call when Scene is opened
     /// </summary>
-    public virtual void OpenScene() { }
+    public virtual void OpenScene() {
+        foreach (var system in _sceneSystems)
+            system.OpenScene(); 
+    }
 
     /// <summary>
     /// Function call when Scene is closed
     /// </summary>
-    public virtual void CloseScene() { }
+    public virtual void CloseScene() {
+        foreach (var system in _sceneSystems)
+            system.CloseScene();
+    }
 }
