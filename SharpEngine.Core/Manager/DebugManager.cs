@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ImGuiNET;
 using Raylib_cs;
 using SharpEngine.Core.Renderer;
@@ -27,7 +29,7 @@ public static class DebugManager
     /// <summary>
     /// SharpEngine.Core Version
     /// </summary>
-    public const string SeVersion = "1.0.0";
+    public const string SeVersion = "1.1.0";
 
     /// <summary>
     /// Create ImGui Window for SharpEngine
