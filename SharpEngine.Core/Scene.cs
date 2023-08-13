@@ -46,6 +46,13 @@ public class Scene
     public void AddSceneSystem(ISceneSystem system) => _sceneSystems.Add(system);
 
     /// <summary>
+    /// Get Scene System
+    /// </summary>
+    /// <typeparam name="T">Type of System</typeparam>
+    /// <returns>System or null</returns>
+    public T? GetSceneSystem<T>() where T : ISceneSystem => _sceneSystems.OfType<T>().FirstOrDefault();
+
+    /// <summary>
     /// Add Widget to Scene
     /// </summary>
     /// <param name="widget">Widget which be added</param>
