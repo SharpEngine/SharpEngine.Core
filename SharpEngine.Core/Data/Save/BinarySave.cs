@@ -70,9 +70,7 @@ public class BinarySave: ISave
 
     /// <inheritdoc />
     public T GetObjectAs<T>(string key, T defaultValue) =>
-        _data.TryGetValue(key, out var value)
-            ? (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture)
-            : defaultValue;
+        _data.TryGetValue(key, out var value) ? (T)value : defaultValue;
 
     /// <inheritdoc />
     public void SetObject(string key, object value) => _data[key] = value;

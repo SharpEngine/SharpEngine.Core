@@ -21,16 +21,14 @@ public class JsonSave: ISave
     }
 
     /// <inheritdoc />
-    public void Write(string file) => System.IO.File.WriteAllText(file, JsonSerializer.Serialize(_data));
+    public void Write(string file) => File.WriteAllText(file, JsonSerializer.Serialize(_data));
 
     /// <inheritdoc />
     public object GetObject(string key, object defaultValue) => _data.GetValueOrDefault(key, defaultValue);
 
     /// <inheritdoc />
     public T GetObjectAs<T>(string key, T defaultValue) =>
-        _data.TryGetValue(key, out var value)
-            ? (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture)
-            : defaultValue;
+        _data.TryGetValue(key, out var value) ? (T)value : defaultValue;
 
     /// <inheritdoc />
     public void SetObject(string key, object value) => _data[key] = value;
