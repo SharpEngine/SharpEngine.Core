@@ -1,4 +1,5 @@
 ﻿using SharpEngine.Core;
+using SharpEngine.Core.Data.Save;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Utils;
 
@@ -14,6 +15,13 @@ internal static class Program
         };
         
         window.AddScene(new MyScene());
+        
+        
+        var save = new JsonSave();
+        save.Read("save.json");
+        var s = Save.FromSave(save, "game");
+        DebugManager.Log(LogLevel.LogInfo, $"{s.a}");
+        DebugManager.Log(LogLevel.LogInfo, $"{s.b}");
         
         window.Run();
     }

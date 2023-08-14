@@ -11,4 +11,10 @@
       <ProjectReference Include="..\SharpEngine.Core\SharpEngine.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="save.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
