@@ -24,24 +24,25 @@ public static class DebugManager
     /// Number of bytes in GC
     /// </summary>
     public static long GcMemory => GC.GetTotalMemory(false);
-    
-    
+
     /// <summary>
-    /// SharpEngine.Core Version
+    /// Packages Versions
     /// </summary>
-    public const string SeVersion = "1.1.1";
+    public static readonly Dictionary<string, string> Versions = new()
+    {
+        { "Raylib-cs", "4.5.0.4" },
+        { "ImGui.NET", "1.89.7.1" },
+        { "SharpEngine.Core", "1.1.2" }
+    };
 
     /// <summary>
     /// Create ImGui Window for SharpEngine
     /// </summary>
-    public static void CreateSeImGuiWindow(Window window, bool showAssemblyVersion = false)
+    public static void CreateSeImGuiWindow(Window window)
     {
-        ImGui.Begin("SharpEngine.Core Debug");
-        ImGui.Text($"SharpEngine.Core Version : {SeVersion}");
-        if(showAssemblyVersion)
-            foreach (var an in typeof(DebugManager).Assembly.GetReferencedAssemblies())
-                if((!an.Name?.StartsWith("Microsoft") ?? false) && (!an.Name?.StartsWith("System") ?? false))
-                    ImGui.Text($"{an.Name} Version : {an.Version}");
+        ImGui.Begin("SharpEngine Debug");
+        foreach (var version in Versions)
+            ImGui.Text($"{version.Key} Version : {version.Value}");
         ImGui.Separator();
         ImGui.Text($"FPS (from ImGui) : {1000.0/ImGui.GetIO().Framerate:.000}ms/frame ({ImGui.GetIO().Framerate} FPS)");
         ImGui.Text($"FPS (from SE) : {1000.0/FrameRate:.000}ms/frame ({FrameRate} FPS)");

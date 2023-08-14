@@ -10,7 +10,7 @@ internal static class Program
     {
         var window = new Window(1280, 920, "SE Raylib", Color.CornflowerBlue, null, true, true, true)
         {
-            RenderImGui = win => DebugManager.CreateSeImGuiWindow(win, true)
+            RenderImGui = DebugManager.CreateSeImGuiWindow
         };
         
         window.AddScene(new MyScene());

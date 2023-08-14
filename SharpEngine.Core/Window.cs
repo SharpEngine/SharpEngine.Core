@@ -387,6 +387,7 @@ public class Window
             LogLevel.LogFatal => $"FATAL: {message}",
             _ => message
         };
+
         message = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {message}";
         
         if(_consoleLog)
