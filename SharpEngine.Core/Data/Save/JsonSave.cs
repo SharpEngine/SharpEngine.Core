@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
@@ -28,7 +26,7 @@ public class JsonSave: ISave
 
     /// <inheritdoc />
     public T GetObjectAs<T>(string key, T defaultValue) =>
-        _data.TryGetValue(key, out var value) ? (T)value : defaultValue;
+        _data.TryGetValue(key, out var value) ? (value is JsonElement element ? element.Deserialize<T>()! : (T) value) : defaultValue;
 
     /// <inheritdoc />
     public void SetObject(string key, object value) => _data[key] = value;

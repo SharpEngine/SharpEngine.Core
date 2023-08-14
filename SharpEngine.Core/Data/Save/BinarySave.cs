@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace SharpEngine.Core.Data.Save;
@@ -16,7 +14,7 @@ public class BinarySave: ISave
     public void Read(string file)
     {
         _data.Clear();
-        using var bR = new BinaryReader(System.IO.File.OpenRead(file));
+        using var bR = new BinaryReader(File.OpenRead(file));
 
         try
         {
@@ -39,7 +37,7 @@ public class BinarySave: ISave
     /// <inheritdoc />
     public void Write(string file)
     {
-        using var bW = new BinaryWriter(System.IO.File.Open(file, FileMode.Create));
+        using var bW = new BinaryWriter(File.Open(file, FileMode.Create));
         foreach (var data in _data)
         {
             bW.Write(data.Key);
