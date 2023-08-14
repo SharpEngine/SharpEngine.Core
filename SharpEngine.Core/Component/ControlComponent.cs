@@ -41,17 +41,17 @@ public class ControlComponent: Component
     /// <summary>
     /// If Entity is moving
     /// </summary>
-    public bool IsMoving { get; private set; }
+    public bool IsMoving { get; protected set; }
     
     /// <summary>
     /// If Entity can jump
     /// </summary>
-    public bool CanJump { get; private set; }
+    public bool CanJump { get; protected set; }
     
     /// <summary>
     /// Direction of Control
     /// </summary>
-    public Vec2 Direction { get; private set; }
+    public Vec2 Direction { get; protected set; }
 
     private readonly Dictionary<ControlKey, Key> _keys;
     private TransformComponent? _transform;
@@ -116,7 +116,6 @@ public class ControlComponent: Component
 
         var posX = 0f;
         var posY = 0f;
-        var jump = false;
 
         switch (ControlType)
         {
@@ -182,7 +181,7 @@ public class ControlComponent: Component
         if (posX == 0 && posY == 0) return;
 
         IsMoving = true;
-        Direction = jump ? new Vec2(posX, posY) : new Vec2(posX, posY).Normalized();
+        Direction = new Vec2(posX, posY).Normalized();
         _transform.Position += new Vec2(Direction.X * Speed * delta, Direction.Y * Speed * delta);
     }
 }
