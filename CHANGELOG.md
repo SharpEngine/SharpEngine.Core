@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.1.2 - 14/08/2023
+[+] DebugManager : Versions<br>
+[\~] ControlComponent : Allow Moving and Direction modification by children<br>
+[-] DebugManager : SeVersion
+
 ### V 1.1.1 - 13/08/2023
 [+] Scene : GetSceneSystem
 
