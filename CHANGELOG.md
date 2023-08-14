@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.1.3 - 14/08/2023
+[#] JsonSave : Fix casting
+[#] BinarySave : Fix casting
+
 ### V 1.1.2 - 14/08/2023
 [+] DebugManager : Versions<br>
 [\~] ControlComponent : Allow Moving and Direction modification by children<br>
