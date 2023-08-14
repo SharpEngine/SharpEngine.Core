@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.1.4 - 14/08/2023
+[#] JsonSave : Fix deserialization
+
 ### V 1.1.3 - 14/08/2023
 [#] JsonSave : Fix casting
 [#] BinarySave : Fix casting
