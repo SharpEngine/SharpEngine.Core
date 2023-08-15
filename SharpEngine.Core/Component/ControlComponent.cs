@@ -55,6 +55,7 @@ public class ControlComponent: Component
 
     private readonly Dictionary<ControlKey, Key> _keys;
     private TransformComponent? _transform;
+    private CollisionComponent? _basicPhysics;
 
     /// <summary>
     /// Create Control Component
@@ -103,6 +104,7 @@ public class ControlComponent: Component
         base.Load();
 
         _transform = Entity?.GetComponentAs<TransformComponent>();
+        _basicPhysics = Entity?.GetComponentAs<CollisionComponent>();
     }
 
     /// <inheritdoc />
@@ -182,6 +184,9 @@ public class ControlComponent: Component
 
         IsMoving = true;
         Direction = new Vec2(posX, posY).Normalized();
-        _transform.Position += new Vec2(Direction.X * Speed * delta, Direction.Y * Speed * delta);
+        var newPos = new Vec2(_transform.Position.X + Direction.X * Speed * delta,
+            _transform.Position.Y + Direction.Y * Speed * delta);
+        if (_basicPhysics == null || _basicPhysics.CanGo(newPos))
+            _transform.Position = newPos;
     }
 }
