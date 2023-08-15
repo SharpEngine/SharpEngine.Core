@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.2.0 - 15/08/2023
+[+] CollisionComponent
+
 ### V 1.1.4 - 14/08/2023
 [#] JsonSave : Fix deserialization
 
