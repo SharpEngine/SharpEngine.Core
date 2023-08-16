@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.2.2 - 16/08/2023
+[#] CollisionComponent : CanGo doesn't calculate all collisions
+
 ### V 1.2.1 - 16/08/2023
 [\~] ControlComponent : Slide to collisions
 
