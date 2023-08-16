@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.2.1 - 16/08/2023
+[\~] ControlComponent : Slide to collisions
+
 ### V 1.2.0 - 15/08/2023
 [+] CollisionComponent
 
