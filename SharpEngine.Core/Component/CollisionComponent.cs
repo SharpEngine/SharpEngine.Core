@@ -65,6 +65,7 @@ public class CollisionComponent : Component
     /// <returns>True if can go to position</returns>
     public bool CanGo(Vec2 position)
     {
+        var canGo = true;
         foreach (var entity in Entity?.Scene?.Entities!)
         {
             if (entity == Entity) continue;
@@ -76,11 +77,13 @@ public class CollisionComponent : Component
             {
                 CollisionCallback?.Invoke(Entity, entity);
                 entityPhysics.CollisionCallback?.Invoke(Entity, entity);
-                return !(Solid && entityPhysics.Solid);
+
+                if (canGo)
+                    canGo = !(Solid && entityPhysics.Solid);
             }
         }
 
-        return true;
+        return canGo;
     }
 
     /// <inheritdoc />
