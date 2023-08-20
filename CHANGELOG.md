@@ -7,6 +7,12 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.3.0 - 20/08/2023
+[\~] Move some utils to own folder<br>
+[-] VecI<br>
+[-] RectI
+[.] Refactor
+
 ### V 1.2.2 - 16/08/2023
 [#] CollisionComponent : CanGo doesn't calculate all collisions
 
