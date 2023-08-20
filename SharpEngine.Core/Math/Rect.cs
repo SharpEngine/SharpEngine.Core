@@ -109,13 +109,6 @@ public struct Rect
                                                         System.Math.Abs(r1.Height - r2.Height) < 0.001f;
     
     /// <summary>
-    /// Convert RectI to Rect
-    /// </summary>
-    /// <param name="rectI">RectI</param>
-    /// <returns>Rect</returns>
-    public static implicit operator Rect(RectI rectI) => new(rectI.X, rectI.Y, rectI.Width, rectI.Height);
-    
-    /// <summary>
     /// Convert Rect to Rectangle
     /// </summary>
     /// <param name="rect">Rect</param>

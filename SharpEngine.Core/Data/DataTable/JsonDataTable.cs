@@ -23,7 +23,7 @@ public class JsonDataTable<T> : IDataTable
     }
 
     /// <inheritdoc />
-    public dynamic? Get(Predicate<dynamic> predicate)
+    public dynamic? Get(Predicate<dynamic?> predicate)
     {
         return Objects.Find(predicate);
     }

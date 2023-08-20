@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Numerics;
-using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
+using Color = SharpEngine.Core.Utils.Color;
 
-namespace SharpEngine.Core.Utils.Particle;
+namespace SharpEngine.Core.Particle;
 
 /// <summary>
 /// CLass which represents Particle

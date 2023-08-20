@@ -200,11 +200,4 @@ public struct Vec2
     /// <param name="vec">Vec2</param>
     /// <returns>Vector2</returns>
     public static implicit operator Vector2(Vec2 vec) => new(vec.X, vec.Y);
-    
-    /// <summary>
-    /// Convert Vec2I to Vec2
-    /// </summary>
-    /// <param name="vec2I">Vec2I</param>
-    /// <returns>Vec2</returns>
-    public static implicit operator Vec2(Vec2I vec2I) => new(vec2I.X, vec2I.Y);
 }

@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using Raylib_cs;
 using SharpEngine.Core.Math;
-using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core.Renderer;
 

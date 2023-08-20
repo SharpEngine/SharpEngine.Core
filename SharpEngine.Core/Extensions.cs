@@ -1,8 +1,8 @@
 ﻿using Raylib_cs;
-using SharpEngine.Core.Utils.Input;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using SharpEngine.Core.Input;
+using SharpEngine.Core.Utils;
 
-namespace SharpEngine.Core.Utils;
+namespace SharpEngine.Core;
 
 internal static class Extensions
 {

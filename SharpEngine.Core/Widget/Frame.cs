@@ -1,7 +1,6 @@
-﻿using Raylib_cs;
-using SharpEngine.Core.Math;
+﻿using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
-using Color = SharpEngine.Core.Utils.Color;
+using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Widget;
 
@@ -13,7 +12,7 @@ public class Frame: Widget
     /// <summary>
     /// Color of Frame Border
     /// </summary>
-    public Utils.Color BorderColor { get; set; }
+    public Color BorderColor { get; set; }
     
     /// <summary>
     /// Size of Frame
@@ -28,7 +27,7 @@ public class Frame: Widget
     /// <summary>
     /// Color of Frame Background
     /// </summary>
-    public Utils.Color? BackgroundColor { get; set; }
+    public Color? BackgroundColor { get; set; }
 
     /// <summary>
     /// Create Frame
@@ -39,10 +38,10 @@ public class Frame: Widget
     /// <param name="borderColor">Frame Border Color (Color.Black)</param>
     /// <param name="backgroundColor">Frame Background Color (null)</param>
     /// <param name="zLayer">Z Layer</param>
-    public Frame(Vec2 position, Vec2 size, int borderSize = 3, Utils.Color? borderColor = null,
-        Utils.Color? backgroundColor = null, int zLayer = 0) : base(position, zLayer)
+    public Frame(Vec2 position, Vec2 size, int borderSize = 3, Color? borderColor = null,
+        Color? backgroundColor = null, int zLayer = 0) : base(position, zLayer)
     {
-        BorderColor = borderColor ?? Utils.Color.Black;
+        BorderColor = borderColor ?? Color.Black;
         Size = size;
         BorderSize = borderSize;
         BackgroundColor = backgroundColor;

@@ -1,11 +1,10 @@
 ﻿using System;
-using Raylib_cs;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils.EventArgs;
-using Color = SharpEngine.Core.Utils.Color;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using SharpEngine.Core.Utils;
+using SharpEngine.Core.Input;
 
 namespace SharpEngine.Core.Widget;
 
@@ -49,7 +48,7 @@ public class Checkbox: Widget
         
         if(!Active) return;
 
-        if (InputManager.IsMouseButtonPressed(Utils.Input.MouseButton.Left) &&
+        if (InputManager.IsMouseButtonPressed(MouseButton.Left) &&
             InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size)))
         {
             IsChecked = !IsChecked;
@@ -69,13 +68,13 @@ public class Checkbox: Widget
         if(!Displayed || Size == Vec2.Zero) return;
         
         var position = RealPosition;
-        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Utils.Color.Black,
+        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Color.Black,
             InstructionSource.UI, ZLayer);
         SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X - 4, Size.Y - 4), (Size - 4) / 2,
-            0, Utils.Color.White, InstructionSource.UI, ZLayer + 0.00001f);
+            0, Color.White, InstructionSource.UI, ZLayer + 0.00001f);
         
         if(IsChecked)
             SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X - 6, Size.Y - 6), (Size - 6) / 2,
-            0, Utils.Color.Black, InstructionSource.UI, ZLayer + 0.00002f);
+            0, Color.Black, InstructionSource.UI, ZLayer + 0.00002f);
     }
 }

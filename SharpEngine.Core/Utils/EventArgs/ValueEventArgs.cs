@@ -9,10 +9,10 @@ public class ValueEventArgs<T>: System.EventArgs
     /// <summary>
     /// Old Value
     /// </summary>
-    public T OldValue { get; init; }
+    public required T OldValue { get; init; }
 
     /// <summary>
     /// New Value
     /// </summary>
-    public T NewValue { get; init; }
+    public required T NewValue { get; init; }
 }

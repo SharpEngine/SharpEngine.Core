@@ -1,7 +1,6 @@
 ﻿using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
-using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core.Widget;
 

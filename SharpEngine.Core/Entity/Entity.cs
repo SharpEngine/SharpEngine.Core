@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SharpEngine.Core.Component;
 using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Entity;

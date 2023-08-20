@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
-using SharpEngine.Core.Utils.Input;
-using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Component;
 

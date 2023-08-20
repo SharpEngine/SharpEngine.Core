@@ -12,5 +12,5 @@ public interface IDataTable
     /// </summary>
     /// <param name="predicate">Predicate</param>
     /// <returns>Object</returns>
-    public dynamic? Get(Predicate<dynamic> predicate);
+    public dynamic? Get(Predicate<dynamic?> predicate);
 }

@@ -1,8 +1,7 @@
-﻿using System.Numerics;
-using Raylib_cs;
+﻿using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
-using SharpEngine.Core.Utils.Widget;
+using SharpEngine.Core.Widget.Utils;
 using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core.Widget;
@@ -25,7 +24,7 @@ public class Label: Widget
     /// <summary>
     /// Color of Label
     /// </summary>
-    public Utils.Color Color { get; set; }
+    public Color Color { get; set; }
     
     /// <summary>
     /// If Lines is Centered
@@ -59,13 +58,13 @@ public class Label: Widget
     /// <param name="centerAllLines">If Label Lines is Centered</param>
     /// <param name="fontSize">Label Font Size (or null)</param>
     /// <param name="zLayer">Z Layer</param>
-    public Label(Vec2 position, string text = "", string font = "", Utils.Color? color = null,
+    public Label(Vec2 position, string text = "", string font = "", Color? color = null,
         LabelStyle style = LabelStyle.None, int rotation = 0, bool centerAllLines = false,
         int? fontSize = null, int zLayer = 0) : base(position, zLayer)
     {
         Text = text;
         Font = font;
-        Color = color ?? Utils.Color.Black;
+        Color = color ?? Color.Black;
         Rotation = rotation;
         CenterAllLines = centerAllLines;
         FontSize = fontSize;
@@ -98,10 +97,10 @@ public class Label: Widget
 
             if (Style.HasFlag(LabelStyle.Strike))
                 SERender.DrawRectangle((int)finalPosition.X, (int)(finalPosition.Y + lineSize.Y / 2), (int)lineSize.X,
-                    2, Utils.Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
+                    2, Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
             if (Style.HasFlag(LabelStyle.Underline))
                 SERender.DrawRectangle((int)finalPosition.X, (int)(finalPosition.Y + lineSize.Y), (int)lineSize.X, 2,
-                    Utils.Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
+                    Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
         }
     }
 }

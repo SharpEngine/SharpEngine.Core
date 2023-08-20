@@ -34,30 +34,30 @@ public class Window
     /// <summary>
     /// Size of Window
     /// </summary>
-    public Vec2I ScreenSize
+    public Vec2 ScreenSize
     {
         get => _screenSize;
         set
         {
             _screenSize = value;
             CameraManager.SetScreenSize(value);
-            Raylib.SetWindowSize(value.X, value.Y);
+            Raylib.SetWindowSize((int)value.X, (int)value.Y);
         }
     }
 
     /// <summary>
     /// Position of Window
     /// </summary>
-    public Vec2I Position
+    public Vec2 Position
     {
         get => Raylib.GetWindowPosition();
-        set => Raylib.SetWindowPosition(value.X, value.Y);
+        set => Raylib.SetWindowPosition((int)value.X, (int)value.Y);
     }
 
     /// <summary>
     /// Background Color used in Window
     /// </summary>
-    public Utils.Color BackgroundColor;
+    public Color BackgroundColor;
 
     /// <summary>
     /// Event which be called in Start of Window (can stop start by set result to false)
@@ -149,7 +149,7 @@ public class Window
     /// </summary>
     public List<Scene> Scenes { get; } = new();
 
-    private Vec2I _screenSize;
+    private Vec2 _screenSize;
     private string _title;
     private readonly SeImGui _seImGui;
     private bool _closeWindow;
@@ -169,9 +169,9 @@ public class Window
     /// <param name="debug">Debug Mode (false)</param>
     /// <param name="consoleLog">Log in Console</param>
     /// <param name="fileLog">Log in File (log.txt)</param>
-    public Window(int width, int height, string title, Utils.Color? backgroundColor = null, int? fps = 60, bool debug = false,
+    public Window(int width, int height, string title, Color? backgroundColor = null, int? fps = 60, bool debug = false,
         bool consoleLog = true, bool fileLog = false) :
-        this(new Vec2I(width, height), title, backgroundColor, fps, debug, consoleLog, fileLog)
+        this(new Vec2(width, height), title, backgroundColor, fps, debug, consoleLog, fileLog)
     {
     }
 
@@ -185,7 +185,7 @@ public class Window
     /// <param name="debug">Debug Mode (false)</param>
     /// <param name="consoleLog">Log in Console</param>
     /// <param name="fileLog">Log in File (log.txt)</param>
-    public Window(Vec2I screenSize, string title, Utils.Color? backgroundColor = null, int? fps = 60, bool debug = false,
+    public Window(Vec2 screenSize, string title, Color? backgroundColor = null, int? fps = 60, bool debug = false,
         bool consoleLog = true, bool fileLog = false)
     {
         _consoleLog = consoleLog;
@@ -203,11 +203,11 @@ public class Window
             Raylib.SetTraceLogCallback(&LogCustom);
         }
 
-        Raylib.InitWindow(screenSize.X, screenSize.Y, title);
+        Raylib.InitWindow((int)screenSize.X, (int)screenSize.Y, title);
         Raylib.InitAudioDevice();
 
         _seImGui = new SeImGui();
-        _seImGui.Load(screenSize.X, screenSize.Y);
+        _seImGui.Load((int)screenSize.X, (int)screenSize.Y);
 
         TextureManager = new TextureManager();
         FontManager = new FontManager();

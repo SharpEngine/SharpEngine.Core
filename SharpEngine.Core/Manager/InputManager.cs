@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Raylib_cs;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Math;
-using SharpEngine.Core.Utils.Input;
-using SharpEngine.Core.Utils;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using MouseButton = SharpEngine.Core.Input.MouseButton;
 
 namespace SharpEngine.Core.Manager;
 
@@ -67,28 +66,28 @@ public static class InputManager
     /// </summary>
     /// <param name="button">Mouse button</param>
     /// <returns>If mouse button is down</returns>
-    public static bool IsMouseButtonDown(Utils.Input.MouseButton button) => Raylib.IsMouseButtonDown(button.ToRayLib());
+    public static bool IsMouseButtonDown(MouseButton button) => Raylib.IsMouseButtonDown(button.ToRayLib());
 
     /// <summary>
     /// Check if mouse button is up
     /// </summary>
     /// <param name="button">Mouse button</param>
     /// <returns>If mouse button is up</returns>
-    public static bool IsMouseButtonUp(Utils.Input.MouseButton button) => Raylib.IsMouseButtonUp(button.ToRayLib());
+    public static bool IsMouseButtonUp(MouseButton button) => Raylib.IsMouseButtonUp(button.ToRayLib());
 
     /// <summary>
     /// Check if mouse button is pressed
     /// </summary>
     /// <param name="button">Mouse button</param>
     /// <returns>If mouse button is pressed</returns>
-    public static bool IsMouseButtonPressed(Utils.Input.MouseButton button) => Raylib.IsMouseButtonPressed(button.ToRayLib());
+    public static bool IsMouseButtonPressed(MouseButton button) => Raylib.IsMouseButtonPressed(button.ToRayLib());
 
     /// <summary>
     /// Check if mouse button is released
     /// </summary>
     /// <param name="button">Mouse button</param>
     /// <returns>If mouse button is released</returns>
-    public static bool IsMouseButtonReleased(Utils.Input.MouseButton button) => Raylib.IsMouseButtonReleased(button.ToRayLib());
+    public static bool IsMouseButtonReleased(MouseButton button) => Raylib.IsMouseButtonReleased(button.ToRayLib());
 
 
     /// <summary>
@@ -101,7 +100,7 @@ public static class InputManager
     /// Set Mouse Position
     /// </summary>
     /// <param name="position">Position</param>
-    public static void SetMousePosition(Vec2I position) => Raylib.SetMousePosition(position.X, position.Y);
+    public static void SetMousePosition(Vec2 position) => Raylib.SetMousePosition((int)position.X, (int)position.Y);
     
     /// <summary>
     /// Get Mouse Wheel Movement Value

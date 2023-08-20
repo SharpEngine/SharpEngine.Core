@@ -1,4 +1,4 @@
-﻿namespace SharpEngine.Core.Utils.Input;
+﻿namespace SharpEngine.Core.Input;
 
 /// <summary>
 /// Enum which represents Button of Gamepad

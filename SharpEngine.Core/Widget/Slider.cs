@@ -1,10 +1,10 @@
 ﻿using System;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.EventArgs;
-using SharpEngine.Core.Utils.Input;
 
 namespace SharpEngine.Core.Widget;
 

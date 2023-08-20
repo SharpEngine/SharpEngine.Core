@@ -1,12 +1,12 @@
 ﻿using System;
 using Raylib_cs;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils.EventArgs;
-using SharpEngine.Core.Utils.Input;
 using Color = SharpEngine.Core.Utils.Color;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using MouseButton = SharpEngine.Core.Input.MouseButton;
 
 namespace SharpEngine.Core.Widget;
 
@@ -73,7 +73,7 @@ public class LineInput: Widget
             return;
         }
 
-        if (InputManager.IsMouseButtonPressed(Utils.Input.MouseButton.Left))
+        if (InputManager.IsMouseButtonPressed(MouseButton.Left))
             Focused = InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size));
 
         if(!Focused) return;
@@ -121,10 +121,10 @@ public class LineInput: Widget
 
         var position = RealPosition;
 
-        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Utils.Color.Black,
+        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Color.Black,
             InstructionSource.UI, ZLayer);
         SERender.DrawRectangle(new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4), Size / 2, 0,
-            Utils.Color.White, InstructionSource.UI, ZLayer + 0.00001f);
+            Color.White, InstructionSource.UI, ZLayer + 0.00001f);
         
         var font = Scene?.Window?.FontManager.GetFont(Font);
         
@@ -142,13 +142,13 @@ public class LineInput: Widget
                 InstructionSource.UI, ZLayer + 0.00002f, () =>
                 {
                     SERender.DrawText(font.Value, Text, new Vec2(finalPosition.X - (offset > 0 ? offset : 0), finalPosition.Y),
-                        fontSize, 2, Utils.Color.Black, InstructionSource.UI, 0);
+                        fontSize, 2, Color.Black, InstructionSource.UI, 0);
                 });
         }
 
         if (Focused)
             SERender.DrawRectangle((int)(position.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
-                (int)(position.Y - textSize.Y / 2 + 4), 5, (int)textSize.Y - 8, Utils.Color.Black, InstructionSource.UI,
+                (int)(position.Y - textSize.Y / 2 + 4), 5, (int)textSize.Y - 8, Color.Black, InstructionSource.UI,
                 ZLayer + 0.00003f);
     }
 }

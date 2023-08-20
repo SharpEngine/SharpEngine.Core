@@ -5,7 +5,7 @@ namespace SharpEngine.Core.Math;
 /// <summary>
 /// Class for random numbers
 /// </summary>
-public class Rand
+public static class Rand
 {
     private static readonly Random Random = new();
 

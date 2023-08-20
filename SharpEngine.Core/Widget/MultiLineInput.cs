@@ -1,11 +1,11 @@
 ﻿using System;
 using Raylib_cs;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils.EventArgs;
-using SharpEngine.Core.Utils.Input;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using MouseButton = SharpEngine.Core.Input.MouseButton;
 using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core.Widget;
@@ -73,7 +73,7 @@ public class MultiLineInput: Widget
             return;
         }
 
-        if (InputManager.IsMouseButtonPressed(Utils.Input.MouseButton.Left))
+        if (InputManager.IsMouseButtonPressed(MouseButton.Left))
             Focused = InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size));
 
         if(!Focused) return;
@@ -131,10 +131,10 @@ public class MultiLineInput: Widget
 
         var position = RealPosition;
 
-        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Utils.Color.Black,
+        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Color.Black,
             InstructionSource.UI, ZLayer);
         SERender.DrawRectangle(new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4), Size / 2, 0,
-            Utils.Color.White, InstructionSource.UI, ZLayer + 0.00001f);
+            Color.White, InstructionSource.UI, ZLayer + 0.00001f);
         
         var font = Scene?.Window?.FontManager.GetFont(Font);
         
@@ -158,13 +158,13 @@ public class MultiLineInput: Widget
                     var lineSize = Raylib.MeasureTextEx(font.Value, lines[i], fontSize, 2);
                     var pos = new Vec2(finalPosition.X - (offsetX > 0 ? offsetX : 0),
                         finalPosition.Y + i * lineSize.Y - (offsetY > 0 ? offsetY : 0));
-                    SERender.DrawText(font.Value, lines[i], pos, fontSize, 2, Utils.Color.Black, InstructionSource.UI, 0);
+                    SERender.DrawText(font.Value, lines[i], pos, fontSize, 2, Color.Black, InstructionSource.UI, 0);
                 }
             });
 
         if (Focused)
             SERender.DrawRectangle((int)(finalPosition.X + 6 + textSize.X - (offsetX > 0 ? offsetX : 0)),
                 (int)(finalPosition.Y + textSize.Y * (lines.Length - 1)  - (offsetY > 0 ? offsetY : 0)),
-                5, (int)textSize.Y, Utils.Color.Black, InstructionSource.UI, ZLayer + 0.00003f);
+                5, (int)textSize.Y, Color.Black, InstructionSource.UI, ZLayer + 0.00003f);
     }
 }

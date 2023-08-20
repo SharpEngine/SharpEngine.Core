@@ -3,7 +3,6 @@ using System.Numerics;
 using Raylib_cs;
 using SharpEngine.Core.Component;
 using SharpEngine.Core.Math;
-using CameraMode = SharpEngine.Core.Utils.CameraMode;
 
 namespace SharpEngine.Core.Manager;
 

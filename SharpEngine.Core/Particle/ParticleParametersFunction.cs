@@ -1,4 +1,4 @@
-﻿namespace SharpEngine.Core.Utils.Particle;
+﻿namespace SharpEngine.Core.Particle;
 
 /// <summary>
 /// Enum which represents functions for particles

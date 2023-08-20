@@ -4,7 +4,7 @@ using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using Color = SharpEngine.Core.Utils.Color;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using MouseButton = SharpEngine.Core.Input.MouseButton;
 
 namespace SharpEngine.Core.Widget;
 
@@ -43,7 +43,7 @@ public class TextureButton: Widget
     /// <summary>
     /// Color of Button Font
     /// </summary>
-    public Utils.Color FontColor { get; set; }
+    public Color FontColor { get; set; }
 
     /// <summary>
     /// Font Size of Button (or Null)
@@ -69,13 +69,13 @@ public class TextureButton: Widget
     /// <param name="fontSize">Texture Button Font Size</param>
     /// <param name="zLayer">Z Layer</param>
     public TextureButton(Vec2 position, string text = "", string font = "", string texture = "", Vec2? size = null, 
-        Utils.Color? fontColor = null, int? fontSize = null, int zLayer = 0) : base(position, zLayer)
+        Color? fontColor = null, int? fontSize = null, int zLayer = 0) : base(position, zLayer)
     {
         Text = text;
         Texture = texture;
         Font = font;
         Size = size ?? Vec2.Zero;
-        FontColor = fontColor ?? Utils.Color.Black;
+        FontColor = fontColor ?? Color.Black;
         FontSize = fontSize;
         _state = ButtonState.Idle;
     }
@@ -98,9 +98,9 @@ public class TextureButton: Widget
         if (InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size)))
         {
             _state = ButtonState.Hover;
-            if (InputManager.IsMouseButtonPressed(Utils.Input.MouseButton.Left))
+            if (InputManager.IsMouseButtonPressed(MouseButton.Left))
                 Clicked?.Invoke(this, EventArgs.Empty);
-            if(InputManager.IsMouseButtonDown(Utils.Input.MouseButton.Left))
+            if(InputManager.IsMouseButtonDown(MouseButton.Left))
                 _state = ButtonState.Down;
         }
         else
@@ -124,12 +124,12 @@ public class TextureButton: Widget
 
         if (_state == ButtonState.Hover && Active)
             SERender.DrawRectangle((int)(position.X - (Size.X + 4) / 2), (int)(position.Y - (Size.Y + 4) / 2),
-                (int)(Size.X + 4),(int)(Size.Y + 4), Utils.Color.White, InstructionSource.UI, ZLayer);
+                (int)(Size.X + 4),(int)(Size.Y + 4), Color.White, InstructionSource.UI, ZLayer);
 
         SERender.DrawRectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X,
-            (int)Size.Y, Utils.Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
+            (int)Size.Y, Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
         SERender.DrawTexture(texture.Value, new Rect(0, 0, texture.Value.width, texture.Value.height),
-            new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4), Size / 2, 0, Utils.Color.White,
+            new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4), Size / 2, 0, Color.White,
             InstructionSource.UI, ZLayer + 0.00002f);
         
         var fontSize = FontSize ?? font.Value.baseSize;
@@ -139,6 +139,6 @@ public class TextureButton: Widget
         
         if(_state == ButtonState.Down || !Active)
             SERender.DrawRectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X,
-                (int)Size.Y, new Utils.Color(0, 0, 0, 128), InstructionSource.UI, ZLayer + 0.00004f);
+                (int)Size.Y, new Color(0, 0, 0, 128), InstructionSource.UI, ZLayer + 0.00004f);
     }
 }

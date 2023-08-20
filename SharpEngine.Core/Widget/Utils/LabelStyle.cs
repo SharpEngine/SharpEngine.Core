@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharpEngine.Core.Utils.Widget;
+namespace SharpEngine.Core.Widget.Utils;
 
 /// <summary>
 /// Style for Label

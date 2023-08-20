@@ -4,7 +4,7 @@ using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using Color = SharpEngine.Core.Utils.Color;
-using MouseButton = SharpEngine.Core.Utils.Input.MouseButton;
+using MouseButton = SharpEngine.Core.Input.MouseButton;
 
 namespace SharpEngine.Core.Widget;
 
@@ -38,12 +38,12 @@ public class Button: Widget
     /// <summary>
     /// Color of Button Font
     /// </summary>
-    public Utils.Color FontColor { get; set; }
+    public Color FontColor { get; set; }
     
     /// <summary>
     /// Color of Button Background
     /// </summary>
-    public Utils.Color BackgroundColor { get; set; }
+    public Color BackgroundColor { get; set; }
 
     /// <summary>
     /// Font Size of Button (or Null)
@@ -68,14 +68,14 @@ public class Button: Widget
     /// <param name="backgroundColor">Button Background Color</param>
     /// <param name="fontSize">Button Font Size</param>
     /// <param name="zLayer">Z Layer</param>
-    public Button(Vec2 position, string text = "", string font = "", Vec2? size = null, Utils.Color? fontColor = null,
-        Utils.Color? backgroundColor = null, int? fontSize = null, int zLayer = 0) : base(position, zLayer)
+    public Button(Vec2 position, string text = "", string font = "", Vec2? size = null, Color? fontColor = null,
+        Color? backgroundColor = null, int? fontSize = null, int zLayer = 0) : base(position, zLayer)
     {
         Text = text;
         Font = font;
         Size = size ?? new Vec2(200, 40);
-        FontColor = fontColor ?? Utils.Color.Black;
-        BackgroundColor = backgroundColor ?? Utils.Color.Gray;
+        FontColor = fontColor ?? Color.Black;
+        BackgroundColor = backgroundColor ?? Color.Gray;
         FontSize = fontSize;
         _state = ButtonState.Idle;
     }
@@ -90,9 +90,9 @@ public class Button: Widget
         if (InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size)))
         {
             _state = ButtonState.Hover;
-            if (InputManager.IsMouseButtonPressed(Utils.Input.MouseButton.Left))
+            if (InputManager.IsMouseButtonPressed(MouseButton.Left))
                 Clicked?.Invoke(this, EventArgs.Empty);
-            if(InputManager.IsMouseButtonDown(Utils.Input.MouseButton.Left))
+            if(InputManager.IsMouseButtonDown(MouseButton.Left))
                 _state = ButtonState.Down;
         }
         else
@@ -112,10 +112,10 @@ public class Button: Widget
 
         if (_state == ButtonState.Hover && Active)
             SERender.DrawRectangle((int)(position.X - (Size.X + 4) / 2), (int)(position.Y - (Size.Y + 4) / 2),
-                (int)(Size.X + 4), (int)(Size.Y + 4), Utils.Color.White, InstructionSource.UI, ZLayer); 
+                (int)(Size.X + 4), (int)(Size.Y + 4), Color.White, InstructionSource.UI, ZLayer); 
 
         SERender.DrawRectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X,
-            (int)Size.Y, Utils.Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
+            (int)Size.Y, Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
         SERender.DrawRectangle((int)(position.X - (Size.X - 4) / 2), (int)(position.Y - (Size.Y - 4) / 2),
             (int)(Size.X - 4), (int)(Size.Y - 4), BackgroundColor, InstructionSource.UI, ZLayer + 0.00002f);
         
@@ -126,6 +126,6 @@ public class Button: Widget
         
         if(_state == ButtonState.Down || !Active)
             SERender.DrawRectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X,
-                (int)Size.Y, new Utils.Color(0, 0, 0, 128), InstructionSource.UI, ZLayer + 0.00004f);
+                (int)Size.Y, new Color(0, 0, 0, 128), InstructionSource.UI, ZLayer + 0.00004f);
     }
 }

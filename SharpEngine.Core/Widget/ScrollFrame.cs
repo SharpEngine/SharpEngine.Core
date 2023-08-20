@@ -1,8 +1,7 @@
-﻿using Raylib_cs;
-using SharpEngine.Core.Manager;
+﻿using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
-using Color = SharpEngine.Core.Utils.Color;
+using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Widget;
 
@@ -14,7 +13,7 @@ public class ScrollFrame: Widget
     /// <summary>
     /// Color of Scroll Frame Border
     /// </summary>
-    public Utils.Color BorderColor { get; set; }
+    public Color BorderColor { get; set; }
     
     /// <summary>
     /// Size of Scroll Frame
@@ -29,7 +28,7 @@ public class ScrollFrame: Widget
     /// <summary>
     /// Color of Scroll Frame Background
     /// </summary>
-    public Utils.Color? BackgroundColor { get; set; }
+    public Color? BackgroundColor { get; set; }
 
     /// <summary>
     /// Scroll Factor of Scroll Frame
@@ -46,10 +45,10 @@ public class ScrollFrame: Widget
     /// <param name="borderColor">Scroll Frame Border Color (Color.Black)</param>
     /// <param name="backgroundColor">Scroll Frame Background Color (null)</param>
     /// <param name="zLayer">Z Layer</param>
-    public ScrollFrame(Vec2 position, Vec2 size, int scrollFactor = 5, int borderSize = 3, Utils.Color? borderColor = null,
-        Utils.Color? backgroundColor = null, int zLayer = 0) : base(position, zLayer)
+    public ScrollFrame(Vec2 position, Vec2 size, int scrollFactor = 5, int borderSize = 3, Color? borderColor = null,
+        Color? backgroundColor = null, int zLayer = 0) : base(position, zLayer)
     {
-        BorderColor = borderColor ?? Utils.Color.Black;
+        BorderColor = borderColor ?? Color.Black;
         Size = size;
         ScrollFactor = scrollFactor;
         BorderSize = borderSize;

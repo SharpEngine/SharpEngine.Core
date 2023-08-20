@@ -1,8 +1,5 @@
-﻿using System.Numerics;
-using Raylib_cs;
-using SharpEngine.Core.Math;
+﻿using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
-using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core.Component;
 

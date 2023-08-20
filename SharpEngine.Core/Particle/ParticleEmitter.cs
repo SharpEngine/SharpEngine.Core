@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SharpEngine.Core.Math;
+using SharpEngine.Core.Utils;
 
-namespace SharpEngine.Core.Utils.Particle;
+namespace SharpEngine.Core.Particle;
 
 /// <summary>
 /// Class which represents Particle Emitter

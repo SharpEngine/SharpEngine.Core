@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SharpEngine.Core.Utils.Particle;
+using SharpEngine.Core.Particle;
 
 namespace SharpEngine.Core.Component;
 
