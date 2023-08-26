@@ -196,9 +196,9 @@ public class Scene
         foreach (var removeWidget in _removeWidgets)
             RemoveWidget(removeWidget);
         foreach (var addEntity in _addEntities)
-            AddEntity(addEntity);
+            AddEntity(addEntity).Load();
         foreach (var addWidget in _addWidgets)
-            AddWidget(addWidget);
+            AddWidget(addWidget).Load();
         
         _removeEntities.Clear();
         _removeWidgets.Clear();
