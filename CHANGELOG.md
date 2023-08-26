@@ -1,11 +1,14 @@
 # Changelog
 
-### Légende 
+### Caption 
 [+] Add<br>
 [\~] Modification<br>
 [-] Suppression<br>
 [#] Bug Fixes<br>
 [.] Others
+
+### V 1.3.1 - 26/08/2023
+[+] Scene : delay parameter in AddWidget and AddEntity
 
 ### V 1.3.0 - 20/08/2023
 [\~] Move some utils to own folder<br>
