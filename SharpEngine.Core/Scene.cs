@@ -28,7 +28,9 @@ public class Scene
     /// All Entities of Scene
     /// </summary>
     public List<Entity.Entity> Entities { get; } = new();
-    
+
+    private readonly List<Entity.Entity> _addEntities = new();
+    private readonly List<Widget.Widget> _addWidgets = new();
     private readonly List<Entity.Entity> _removeEntities = new();
     private readonly List<Widget.Widget> _removeWidgets = new();
     private readonly List<ISceneSystem> _sceneSystems = new();
@@ -56,12 +58,19 @@ public class Scene
     /// Add Widget to Scene
     /// </summary>
     /// <param name="widget">Widget which be added</param>
+    /// <param name="delay">If adding must be delayed</param>
     /// <typeparam name="T">Type of Widget</typeparam>
     /// <returns>Widget</returns>
-    public T AddWidget<T>(T widget) where T : Widget.Widget
+    public T AddWidget<T>(T widget, bool delay = false) where T : Widget.Widget
     {
-        widget.Scene = this;
-        Widgets.Add(widget);
+        if(delay)
+            _addWidgets.Add(widget);
+        else
+        {
+            widget.Scene = this;
+            Widgets.Add(widget);
+        }
+
         return widget;
     }
 
@@ -103,12 +112,19 @@ public class Scene
     /// Add Entity To Scene
     /// </summary>
     /// <param name="entity">Entity to be added</param>
+    /// <param name="delay">If adding must be delayed</param>
     /// <typeparam name="T">Type of Widgets</typeparam>
     /// <returns>Entity</returns>
-    public T AddEntity<T>(T entity) where T : Entity.Entity
+    public T AddEntity<T>(T entity, bool delay = false) where T : Entity.Entity
     {
-        entity.Scene = this;
-        Entities.Add(entity);
+        if(delay)
+            _addEntities.Add(entity);
+        else
+        {
+            entity.Scene = this;
+            Entities.Add(entity);
+        }
+
         return entity;
     }
 
@@ -179,6 +195,10 @@ public class Scene
             RemoveEntity(removeEntity);
         foreach (var removeWidget in _removeWidgets)
             RemoveWidget(removeWidget);
+        foreach (var addEntity in _addEntities)
+            AddEntity(addEntity);
+        foreach (var addWidget in _addWidgets)
+            AddWidget(addWidget);
 
         for (var i = Entities.Count - 1; i > -1; i--)
             if(Entities[i].PauseState is PauseState.Enabled ||
