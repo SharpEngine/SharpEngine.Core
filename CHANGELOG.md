@@ -7,13 +7,17 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.3.2 - 16/08/2023
+[#] Scene : Add Widget or Entity with delay doesn't make loading<br>
+[#] Scene : Delay removing or adding lists aren't clear
+
 ### V 1.3.1 - 26/08/2023
 [+] Scene : delay parameter in AddWidget and AddEntity
 
 ### V 1.3.0 - 20/08/2023
 [\~] Move some utils to own folder<br>
 [-] VecI<br>
-[-] RectI
+[-] RectI<br>
 [.] Refactor
 
 ### V 1.2.2 - 16/08/2023
@@ -29,7 +33,7 @@
 [#] JsonSave : Fix deserialization
 
 ### V 1.1.3 - 14/08/2023
-[#] JsonSave : Fix casting
+[#] JsonSave : Fix casting<br>
 [#] BinarySave : Fix casting
 
 ### V 1.1.2 - 14/08/2023
