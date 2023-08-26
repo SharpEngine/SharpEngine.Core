@@ -199,6 +199,11 @@ public class Scene
             AddEntity(addEntity);
         foreach (var addWidget in _addWidgets)
             AddWidget(addWidget);
+        
+        _removeEntities.Clear();
+        _removeWidgets.Clear();
+        _addEntities.Clear();
+        _addWidgets.Clear();
 
         for (var i = Entities.Count - 1; i > -1; i--)
             if(Entities[i].PauseState is PauseState.Enabled ||
