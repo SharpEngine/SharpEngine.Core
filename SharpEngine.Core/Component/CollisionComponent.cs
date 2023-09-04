@@ -1,6 +1,9 @@
 using System;
+using System.Diagnostics;
 using Raylib_cs;
 using SharpEngine.Core.Math;
+using SharpEngine.Core.Renderer;
+using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core.Component;
 
@@ -28,6 +31,11 @@ public class CollisionComponent : Component
     /// Collision Callback
     /// </summary>
     public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; }
+    
+    /// <summary>
+    /// If must draw collision
+    /// </summary>
+    public bool DrawDebug { get; set; }
 
     private TransformComponent? _transformComponent;
 
@@ -38,13 +46,15 @@ public class CollisionComponent : Component
     /// <param name="offset">Collision Offset (Vec2(0))</param>
     /// <param name="solid">If Collision is Solid (true)</param>
     /// <param name="collisionCallback">Action called when collision (null)</param>
+    /// <param name="drawDebug">Draw collision for debug (false)</param>
     public CollisionComponent(Vec2 size, Vec2? offset = null, bool solid = true,
-        Action<Entity.Entity, Entity.Entity>? collisionCallback = null)
+        Action<Entity.Entity, Entity.Entity>? collisionCallback = null, bool drawDebug = false)
     {
         Size = size;
         Offset = offset ?? Vec2.Zero;
         Solid = solid;
         CollisionCallback = collisionCallback;
+        DrawDebug = drawDebug;
     }
 
     /// <summary>
@@ -91,5 +101,19 @@ public class CollisionComponent : Component
     {
         base.Load();
         _transformComponent = Entity?.GetComponentAs<TransformComponent>();
+    }
+
+    /// <inheritdoc />
+    public override void Draw()
+    {
+        base.Draw();
+        if (_transformComponent == null) return;
+
+        if (DrawDebug)
+            SERender.DrawRectangleLines(
+                new Rect(
+                    new Vec2(_transformComponent.Position.X - Size.X / 2 + Offset.X,
+                        _transformComponent.Position.Y - Size.Y / 2 + Offset.Y), Size), 2, Color.Red,
+                InstructionSource.Entity, float.MaxValue);
     }
 }
