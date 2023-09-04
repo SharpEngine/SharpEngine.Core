@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.3.3 - 04/09/2023
+[+] CollisionComponent : Add DebugDraw
+
 ### V 1.3.2 - 16/08/2023
 [#] Scene : Add Widget or Entity with delay doesn't make loading<br>
 [#] Scene : Delay removing or adding lists aren't clear
