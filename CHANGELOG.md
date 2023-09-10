@@ -7,6 +7,12 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.4.0 - 10/09/2023
+[+] ShaderManager<br>
+[+] SERender : ShaderMode<br>
+[+] Color : ToVec4<br>
+[+] SpriteComponent : Shader
+
 ### V 1.3.3 - 04/09/2023
 [+] CollisionComponent : Add DebugDraw
 
