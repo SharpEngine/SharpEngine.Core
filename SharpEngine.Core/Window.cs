@@ -98,6 +98,11 @@ public class Window
     /// Texture Manager of Window
     /// </summary>
     public TextureManager TextureManager { get; }
+    
+    /// <summary>
+    /// Shader Manager of Window
+    /// </summary>
+    public ShaderManager ShaderManager { get; }
 
     /// <summary>
     /// Font Manager of Window
@@ -210,6 +215,7 @@ public class Window
         _seImGui.Load((int)screenSize.X, (int)screenSize.Y);
 
         TextureManager = new TextureManager();
+        ShaderManager = new ShaderManager();
         FontManager = new FontManager();
         CameraManager = new CameraManager();
         SoundManager = new SoundManager();
@@ -353,6 +359,9 @@ public class Window
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Fonts...");
         FontManager.Unload();
         DebugManager.Log(LogLevel.LogInfo, "SE: Fonts unloaded !");
+        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Shaders...");
+        ShaderManager.Unload();
+        DebugManager.Log(LogLevel.LogInfo, "SE: Shaders unloaded !");
         
         DebugManager.Log(LogLevel.LogInfo, "SE: Closing Window.");
         Raylib.CloseAudioDevice();

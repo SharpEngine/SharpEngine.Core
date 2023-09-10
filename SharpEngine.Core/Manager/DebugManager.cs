@@ -48,6 +48,7 @@ public static class DebugManager
         ImGui.Text($"GC Memory : {GcMemory/1000000.0:.000} mo");
         ImGui.Separator();
         ImGui.Text($"Textures Number : {window.TextureManager.Textures.Count}");
+        ImGui.Text($"Shaders Number : {window.ShaderManager.Shaders.Count}");
         ImGui.Text($"Fonts Number : {window.FontManager.Fonts.Count}");
         ImGui.Text($"Sounds Number : {window.SoundManager.Sounds.Count}");
         ImGui.Text($"Musics Number : {window.MusicManager.Musics.Count}");

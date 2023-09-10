@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using SharpEngine.Core.Math;
 
 namespace SharpEngine.Core.Utils;
@@ -77,6 +78,12 @@ public struct Color
         B = b;
         A = a;
     }
+
+    /// <summary>
+    /// Return Vec4
+    /// </summary>
+    /// <returns>Vec4 format</returns>
+    public Vector4 ToVec4() => new(_r / 255f, _g / 255f, _b / 255f, _a / 255f);
 
     /// <summary>
     /// Return Darker Color
