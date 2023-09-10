@@ -43,10 +43,16 @@ public static class SERender
             
             switch (instruction.Type)
             {
+                case InstructionType.ShaderMode:
+                    Raylib.BeginShaderMode((Shader)instruction.Parameters[0]);
+                    DrawInstructions(instruction.Parameters.GetRange(1, instruction.Parameters.Count - 1)
+                        .Select(x => (Instruction)x).ToList());
+                    Raylib.EndShaderMode();
+                    break;
                 case InstructionType.ScissorMode:
                     Raylib.BeginScissorMode((int)instruction.Parameters[0], (int)instruction.Parameters[1],
                         (int)instruction.Parameters[2], (int)instruction.Parameters[3]);
-                    DrawInstructions(instruction.Parameters.GetRange(4, instructions.Count - 4)
+                    DrawInstructions(instruction.Parameters.GetRange(4, instruction.Parameters.Count - 4)
                         .Select(x => (Instruction)x).ToList());
                     Raylib.EndScissorMode();
                     break;
@@ -126,6 +132,30 @@ public static class SERender
         DrawInstructions(uiInstructions);
         
         Instructions.Clear();
+    }
+
+    /// <summary>
+    /// Add Shader Mode Instructions
+    /// </summary>
+    /// <param name="shader">Shader</param>
+    /// <param name="source">Instruction Source</param>
+    /// <param name="zLayer">Z Layer</param>
+    /// <param name="shaderAction">Function which render in shader mode</param>
+    public static void ShaderMode(Shader shader, InstructionSource source, float zLayer, Action shaderAction)
+    {
+        var instructions = new List<Instruction>(Instructions);
+        Instructions.Clear();
+        shaderAction();
+        var instruction = new Instruction
+        {
+            Type = InstructionType.ShaderMode,
+            Source = source,
+            ZLayer = zLayer,
+            Parameters = new List<object> { shader }
+        };
+        instruction.Parameters.AddRange(Instructions.Select(x => (object)x));
+        Instructions = instructions;
+        Instructions.Add(instruction);
     }
 
     /// <summary>

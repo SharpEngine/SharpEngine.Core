@@ -43,5 +43,10 @@ public enum InstructionType
     /// <summary>
     /// Scissor Mode
     /// </summary>
-    ScissorMode
+    ScissorMode,
+    
+    /// <summary>
+    /// ShaderMode
+    /// </summary>
+    ShaderMode
 }
