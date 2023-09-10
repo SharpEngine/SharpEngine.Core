@@ -1,4 +1,5 @@
-﻿using SharpEngine.Core.Math;
+﻿using System;
+using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 
 namespace SharpEngine.Core.Component;
@@ -37,6 +38,11 @@ public class SpriteComponent: Component
     /// Offset of ZLayer of Sprite
     /// </summary>
     public int ZLayerOffset { get; set; }
+    
+    /// <summary>
+    /// Shader of Sprite
+    /// </summary>
+    public string Shader { get; set; }
 
     private TransformComponent? _transformComponent;
 
@@ -49,8 +55,9 @@ public class SpriteComponent: Component
     /// <param name="flipX">If Sprite is Flip Horizontally</param>
     /// <param name="flipY">If Sprite is Flip Vertically</param>
     /// <param name="zLayerOffset">Offset of zLayer</param>
+    /// <param name="shader">Sprite Shader ("")</param>
     public SpriteComponent(string texture, bool displayed = true, Vec2? offset = null, bool flipX = false,
-        bool flipY = false, int zLayerOffset = 0)
+        bool flipY = false, int zLayerOffset = 0, string shader = "")
     {
         Texture = texture;
         Displayed = displayed;
@@ -58,6 +65,7 @@ public class SpriteComponent: Component
         FlipX = flipX;
         FlipY = flipY;
         ZLayerOffset = zLayerOffset;
+        Shader = shader;
     }
 
     /// <inheritdoc />
@@ -79,14 +87,33 @@ public class SpriteComponent: Component
 
         var texture = window.TextureManager.GetTexture(Texture);
         var position = _transformComponent.GetTransformedPosition(Offset);
-        SERender.DrawTexture(
-            texture,
-            new Rect(0, 0, FlipX ? -texture.width : texture.width, FlipY ? -texture.height : texture.height),
-            new Rect(position.X, position.Y, texture.width * _transformComponent.Scale.X,
-                texture.height * _transformComponent.Scale.Y),
-            new Vec2(texture.width / 2f * _transformComponent.Scale.X,
-                texture.height / 2f * _transformComponent.Scale.Y),
-            _transformComponent.Rotation, Utils.Color.White, InstructionSource.Entity,
-            _transformComponent.ZLayer + ZLayerOffset);
+        if (Shader == "")
+        {
+            SERender.DrawTexture(
+                texture,
+                new Rect(0, 0, FlipX ? -texture.width : texture.width, FlipY ? -texture.height : texture.height),
+                new Rect(position.X, position.Y, texture.width * _transformComponent.Scale.X,
+                    texture.height * _transformComponent.Scale.Y),
+                new Vec2(texture.width / 2f * _transformComponent.Scale.X,
+                    texture.height / 2f * _transformComponent.Scale.Y),
+                _transformComponent.Rotation, Utils.Color.White, InstructionSource.Entity,
+                _transformComponent.ZLayer + ZLayerOffset);
+        }
+        else
+        {
+            var shader = window.ShaderManager.GetShader(Shader);
+            SERender.ShaderMode(shader, InstructionSource.Entity, _transformComponent.ZLayer + ZLayerOffset, () =>
+            {
+                SERender.DrawTexture(
+                    texture,
+                    new Rect(0, 0, FlipX ? -texture.width : texture.width, FlipY ? -texture.height : texture.height),
+                    new Rect(position.X, position.Y, texture.width * _transformComponent.Scale.X,
+                        texture.height * _transformComponent.Scale.Y),
+                    new Vec2(texture.width / 2f * _transformComponent.Scale.X,
+                        texture.height / 2f * _transformComponent.Scale.Y),
+                    _transformComponent.Rotation, Utils.Color.White, InstructionSource.Entity,
+                    _transformComponent.ZLayer + ZLayerOffset);
+            });
+        }
     }
 }
