@@ -3,6 +3,7 @@ using System.Numerics;
 using ImGuiNET;
 using Raylib_cs;
 using SharpEngine.Core.Manager;
+using SharpEngine.Core.Math;
 
 namespace SharpEngine.Core.Utils;
 
@@ -297,5 +298,70 @@ public class SeImGui : IDisposable
         Rlgl.rlSetTexture(0);
         Rlgl.rlDisableScissorTest();
         Rlgl.rlEnableBackfaceCulling();
+    }
+    
+    /// <summary>
+    /// Render Raylib Texture2D to ImGui
+    /// </summary>
+    /// <param name="image">Raylib Texture2D</param>
+    /// <param name="width">Destination Width</param>
+    /// <param name="height">Destination Height</param>
+    /// <param name="source">Source Rectangle</param>
+    public void ImageRect(Texture2D image, int width, int height, Rect source)
+    {
+        var uv0 = new Vec2();
+        var uv1 = new Vector2();
+
+        if (source.Width < 0)
+        {
+            uv0.X = -(source.X / image.width);
+            uv1.X = uv0.X - MathF.Abs(source.Width) / image.width;
+        }
+        else
+        {
+            uv0.X = source.X / image.width;
+            uv1.X = uv0.X + source.Width / image.width;
+        }
+
+        if (source.Height < 0)
+        {
+            uv0.Y = -(source.Y / image.height);
+            uv1.Y = uv0.Y - MathF.Abs(source.Height) / image.height;
+        }
+        else
+        {
+            uv0.Y = source.Y / image.height;
+            uv1.Y = uv0.Y + source.Height / image.height;
+        }
+        
+        ImGui.Image(new IntPtr(image.id), new Vector2(width, height), uv0, uv1);
+    }
+
+    /// <summary>
+    /// Render Raylib RenderTexture2D to ImGui
+    /// </summary>
+    /// <param name="image">Raylib RenderTexture2D</param>
+    /// <param name="center">Center RenderTexture2D</param>
+    public void ImageRenderTexture(RenderTexture2D image, bool center = true)
+    {
+        var area = ImGui.GetContentRegionAvail();
+
+        var scale = area.X / image.texture.width;
+
+        var y = image.texture.height * scale;
+        if (y > area.Y)
+            scale = area.Y / image.texture.height;
+
+        var sizeX = (int)(image.texture.width * scale);
+        var sizeY = (int)(image.texture.height * scale);
+
+        if (center)
+        {
+            ImGui.SetCursorPosX(0);
+            ImGui.SetCursorPosX(area.X / 2 - sizeX / 2f);
+            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (area.Y / 2 - sizeY / 2f));
+        }
+        
+        ImageRect(image.texture, sizeX, sizeY, new Rect(0, 0, image.texture.width, -image.texture.height));
     }
 }
