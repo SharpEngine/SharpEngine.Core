@@ -118,6 +118,11 @@ public class Window
     /// Music Manager of Window
     /// </summary>
     public MusicManager MusicManager { get; }
+    
+    /// <summary>
+    /// ImGui Management of Window
+    /// </summary>
+    public SeImGui SeImGui { get; }
 
     /// <summary>
     /// Index of Current Scene
@@ -156,7 +161,6 @@ public class Window
 
     private Vec2 _screenSize;
     private string _title;
-    private readonly SeImGui _seImGui;
     private bool _closeWindow;
     private int _internalIndexCurrentScene = -1;
     private bool _debug;
@@ -211,8 +215,8 @@ public class Window
         Raylib.InitWindow((int)screenSize.X, (int)screenSize.Y, title);
         Raylib.InitAudioDevice();
 
-        _seImGui = new SeImGui();
-        _seImGui.Load((int)screenSize.X, (int)screenSize.Y);
+        SeImGui = new SeImGui();
+        SeImGui.Load((int)screenSize.X, (int)screenSize.Y);
 
         TextureManager = new TextureManager();
         ShaderManager = new ShaderManager();
@@ -319,7 +323,7 @@ public class Window
 
             var delta = Raylib.GetFrameTime();
             
-            _seImGui.Update(delta);
+            SeImGui.Update(delta);
             
             CurrentScene.Update(delta);
             CameraManager.Update(delta);
@@ -339,7 +343,7 @@ public class Window
             SERender.Draw(this);
 
             if (Debug)
-                _seImGui.Draw();
+                SeImGui.Draw();
 
             Raylib.EndDrawing();
 
@@ -362,6 +366,9 @@ public class Window
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Shaders...");
         ShaderManager.Unload();
         DebugManager.Log(LogLevel.LogInfo, "SE: Shaders unloaded !");
+        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading SeImGui...");
+        SeImGui.Dispose();
+        DebugManager.Log(LogLevel.LogInfo, "SE: SeImGui unloaded !");
         
         DebugManager.Log(LogLevel.LogInfo, "SE: Closing Window.");
         Raylib.CloseAudioDevice();
