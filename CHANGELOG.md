@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.4.1 - 16/09/2023
+[+] SeImGui : ImageRenderTexture, ImageRect<br/>
+[\~] Window : Make SeImGui public 
+
 ### V 1.4.0 - 10/09/2023
 [+] ShaderManager<br>
 [+] SERender : ShaderMode<br>
