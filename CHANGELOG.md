@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.4.2 - 17/09/2023
+[+] Entity : Name<br/>
+[+] Widget : Name
+
 ### V 1.4.1 - 16/09/2023
 [+] SeImGui : ImageRenderTexture, ImageRect<br/>
 [\~] Window : Make SeImGui public 
