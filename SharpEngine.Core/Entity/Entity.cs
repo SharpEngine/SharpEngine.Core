@@ -20,6 +20,11 @@ public class Entity
     public string Tag { get; set; } = "";
 
     /// <summary>
+    /// Name of Entity
+    /// </summary>
+    public string Name { get; set; } = "";
+
+    /// <summary>
     /// Scene of Entity
     /// </summary>
     public Scene? Scene { get; set; }
