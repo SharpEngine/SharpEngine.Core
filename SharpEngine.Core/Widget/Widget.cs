@@ -39,7 +39,11 @@ public abstract class Widget
     /// How Widget must be updated when paused
     /// </summary>
     public PauseState PauseState { get; set; } = PauseState.Normal;
-
+    
+    /// <summary>
+    /// Name of Widgets
+    /// </summary>
+    public string Name { get; set; } = "";
     
     /// <summary>
     /// Get Real Position (Position + Parent RealPostion if widget has Parent)
