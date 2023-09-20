@@ -86,6 +86,14 @@ public struct Color
     public Vector4 ToVec4() => new(_r / 255f, _g / 255f, _b / 255f, _a / 255f);
 
     /// <summary>
+    /// Return Color from Vec4
+    /// </summary>
+    /// <param name="vector4">Vector 4</param>
+    /// <returns>Color</returns>
+    public static Color FromVec4(Vector4 vector4) => new((int)(vector4.X * 255), (int)(vector4.Y * 255),
+        (int)(vector4.Z * 255), (int)(vector4.W * 255));
+    
+    /// <summary>
     /// Return Darker Color
     /// </summary>
     /// <param name="force">Force of Darker Color</param>
