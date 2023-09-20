@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.4.3 - 20/09/2023
+[+] Color : FromVec4<br/>
+[.] Update ImGui.NET to 1.89.9.1
+
 ### V 1.4.2 - 17/09/2023
 [+] Entity : Name<br/>
 [+] Widget : Name
