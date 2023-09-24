@@ -100,10 +100,20 @@ public class Particle
     /// <param name="sizeFunction">Particle Size Function</param>
     /// <param name="sizeFunctionValue">Particle Size Function Value</param>
     /// <param name="zLayer">ZLayer</param>
-    public Particle(Vec2 position, Vec2 velocity, Vec2 acceleration, float lifetime, float size, float rotation,
-        float rotationSpeed, Color beginColor, Color endColor,
-        ParticleParametersFunction sizeFunction = ParticleParametersFunction.Normal, float sizeFunctionValue = 0,
-        int zLayer = 0)
+    public Particle(
+        Vec2 position,
+        Vec2 velocity,
+        Vec2 acceleration,
+        float lifetime,
+        float size,
+        float rotation,
+        float rotationSpeed,
+        Color beginColor,
+        Color endColor,
+        ParticleParametersFunction sizeFunction = ParticleParametersFunction.Normal,
+        float sizeFunctionValue = 0,
+        int zLayer = 0
+    )
     {
         Position = position;
         Velocity = velocity;
@@ -134,10 +144,9 @@ public class Particle
     {
         Velocity = new Vec2(
             Velocity.X + Acceleration.X * delta,
-            Velocity.Y + Acceleration.Y * delta);
-        Position = new Vec2(
-            Position.X + Velocity.X * delta,
-            Position.Y + Velocity.Y * delta);
+            Velocity.Y + Acceleration.Y * delta
+        );
+        Position = new Vec2(Position.X + Velocity.X * delta, Position.Y + Velocity.Y * delta);
         Rotation += RotationSpeed * delta;
 
         switch (SizeFunction)
@@ -170,9 +179,16 @@ public class Particle
     /// </summary>
     public void Draw()
     {
-        if (Size == 0) return;
+        if (Size == 0)
+            return;
 
-        SERender.DrawRectangle(new Rect(Position.X, Position.Y, Size, Size), new Vec2(Size / 2, Size / 2),
-            Rotation, CurrentColor, InstructionSource.Entity, ZLayer);
+        SERender.DrawRectangle(
+            new Rect(Position.X, Position.Y, Size, Size),
+            new Vec2(Size / 2, Size / 2),
+            Rotation,
+            CurrentColor,
+            InstructionSource.Entity,
+            ZLayer
+        );
     }
 }

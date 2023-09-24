@@ -10,13 +10,13 @@ public interface ISave
     /// </summary>
     /// <param name="file">Save File</param>
     public void Read(string file);
-    
+
     /// <summary>
     /// Write Save
     /// </summary>
     /// <param name="file">Save File</param>
     public void Write(string file);
-    
+
     /// <summary>
     /// Get Object from Save
     /// </summary>

@@ -11,17 +11,17 @@ public struct Instruction
     /// Type of Instruction
     /// </summary>
     public InstructionType Type;
-    
+
     /// <summary>
     /// if Instruction is for entities or ui
     /// </summary>
     public InstructionSource Source;
-    
+
     /// <summary>
     /// Z Layer of Instruction
     /// </summary>
     public float ZLayer;
-    
+
     /// <summary>
     /// Parameters of Instruction
     /// </summary>

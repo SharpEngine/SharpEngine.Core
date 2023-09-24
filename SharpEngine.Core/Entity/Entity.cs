@@ -12,7 +12,7 @@ public class Entity
     /// <summary>
     /// How Entity must be updated when paused
     /// </summary>
-    public PauseState PauseState  { get; set; } = PauseState.Normal;
+    public PauseState PauseState { get; set; } = PauseState.Normal;
 
     /// <summary>
     /// Tag of Entity
@@ -39,23 +39,24 @@ public class Entity
     /// </summary>
     /// <typeparam name="T">Type of Component</typeparam>
     /// <returns>Components of type T</returns>
-    public List<T> GetComponentsAs<T>() where T : Component.Component =>
-        Components.OfType<T>().ToList();
-    
+    public List<T> GetComponentsAs<T>()
+        where T : Component.Component => Components.OfType<T>().ToList();
+
     /// <summary>
     /// Get Component of one Type
     /// </summary>
     /// <typeparam name="T">Type of Component</typeparam>
     /// <returns>Component of type T</returns>
-    public T? GetComponentAs<T>() where T: Component.Component =>
-        Components.OfType<T>().FirstOrDefault();
+    public T? GetComponentAs<T>()
+        where T : Component.Component => Components.OfType<T>().FirstOrDefault();
 
     /// <summary>
     /// Get Scene as T
     /// </summary>
     /// <typeparam name="T">Scene Type</typeparam>
     /// <returns>Scene casted as T</returns>
-    public T? GetSceneAs<T>() where T : Scene => (T?)Scene;
+    public T? GetSceneAs<T>()
+        where T : Scene => (T?)Scene;
 
     /// <summary>
     /// Add Component and return it
@@ -63,7 +64,8 @@ public class Entity
     /// <param name="component">Component which be added</param>
     /// <typeparam name="T">Type of Component</typeparam>
     /// <returns>Component</returns>
-    public T AddComponent<T>(T component) where T : Component.Component
+    public T AddComponent<T>(T component)
+        where T : Component.Component
     {
         Components.Add(component);
         component.Entity = this;

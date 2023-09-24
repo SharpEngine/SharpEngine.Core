@@ -12,12 +12,12 @@ public enum LabelStyle
     /// None Style
     /// </summary>
     None = 0,
-    
+
     /// <summary>
     /// Underline Style
     /// </summary>
     Underline = 1,
-    
+
     /// <summary>
     /// Strike Style
     /// </summary>

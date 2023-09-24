@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,15 +19,18 @@
     <PackageTags>Raylib,SharpEngine,Game,Engine</PackageTags>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.89.9.1" />
     <PackageReference Include="Raylib-cs" Version="4.5.0.4" />
   </ItemGroup>
-  
   <ItemGroup>
     <None Include="../CHANGELOG.md" Pack="true" PackagePath="\" />
     <None Include="../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
+  <!-- set HUSKY to 0 in CI/CD disable this -->
+  <Target Name="Husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' != 0">
+    <Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" />
+    <Exec Command="dotnet husky install" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory=".." />
+  </Target>
 </Project>

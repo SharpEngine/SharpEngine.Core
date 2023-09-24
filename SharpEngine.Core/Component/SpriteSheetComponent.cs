@@ -9,43 +9,43 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which draw animations with sprite sheet
 /// </summary>
-public class SpriteSheetComponent: Component
+public class SpriteSheetComponent : Component
 {
     /// <summary>
     /// Name of Texture
     /// </summary>
     public string Texture { get; set; }
-    
+
     /// <summary>
     /// Size of one frame
     /// </summary>
     public Vec2 SpriteSize { get; set; }
-    
+
     /// <summary>
     /// List of Animations
     /// </summary>
     public List<Animation> Animations { get; set; }
-    
+
     /// <summary>
     /// If component is displayed
     /// </summary>
     public bool Displayed { get; set; }
-    
+
     /// <summary>
     /// Offset
     /// </summary>
     public Vec2 Offset { get; set; }
-    
+
     /// <summary>
     /// If Sprite is Flip Horizontally
     /// </summary>
     public bool FlipX { get; set; }
-    
+
     /// <summary>
     /// If Sprite is Flip Vertically
     /// </summary>
     public bool FlipY { get; set; }
-    
+
     /// <summary>
     /// Offset of ZLayer of Sprite Sheet
     /// </summary>
@@ -83,8 +83,17 @@ public class SpriteSheetComponent: Component
     /// <param name="flipX">If Sprite is Flip Horizontally</param>
     /// <param name="flipY">If Sprite is Flip Vertically</param>
     /// <param name="zLayerOffset">Offset of zLayer</param>
-    public SpriteSheetComponent(string texture, Vec2 spriteSize, List<Animation> animations, string currentAnim = "",
-        bool displayed = true, Vec2? offset = null, bool flipX = false, bool flipY = false, int zLayerOffset = 0)
+    public SpriteSheetComponent(
+        string texture,
+        Vec2 spriteSize,
+        List<Animation> animations,
+        string currentAnim = "",
+        bool displayed = true,
+        Vec2? offset = null,
+        bool flipX = false,
+        bool flipY = false,
+        int zLayerOffset = 0
+    )
     {
         Texture = texture;
         SpriteSize = spriteSize;
@@ -124,8 +133,9 @@ public class SpriteSheetComponent: Component
     public override void Update(float delta)
     {
         var anim = GetAnimation(_currentAnim);
-        
-        if(anim == null) return;
+
+        if (anim == null)
+            return;
 
         if (_internalTimer <= 0)
         {
@@ -147,20 +157,43 @@ public class SpriteSheetComponent: Component
         var window = Entity?.Scene?.Window;
         var anim = GetAnimation(_currentAnim);
 
-        if (_transform == null || !Displayed || Texture.Length <= 0 || SpriteSize == Vec2.Zero || anim == null ||
-            window == null) return;
-        
-        
+        if (
+            _transform == null
+            || !Displayed
+            || Texture.Length <= 0
+            || SpriteSize == Vec2.Zero
+            || anim == null
+            || window == null
+        )
+            return;
+
         var texture = window.TextureManager.GetTexture(Texture);
         var position = _transform.GetTransformedPosition(Offset);
         SERender.DrawTexture(
             texture,
             new Rect(
                 SpriteSize.X * (anim.Value.Indices[_currentImage] % (texture.width / SpriteSize.X)),
-                SpriteSize.Y * (int)(anim.Value.Indices[_currentImage] / (int)(texture.width / SpriteSize.X)),
-                FlipX ? -SpriteSize.X : SpriteSize.X, FlipY ? -SpriteSize.Y : SpriteSize.Y),
-            new Rect(position.X, position.Y, SpriteSize.X * _transform.Scale.X, SpriteSize.Y * _transform.Scale.Y),
-            new Vec2(SpriteSize.X / 2f * _transform.Scale.X, SpriteSize.Y / 2f * _transform.Scale.Y),
-            _transform.Rotation, Color.White, InstructionSource.Entity, _transform.ZLayer + ZLayerOffset);
+                SpriteSize.Y
+                    * (int)(
+                        anim.Value.Indices[_currentImage] / (int)(texture.width / SpriteSize.X)
+                    ),
+                FlipX ? -SpriteSize.X : SpriteSize.X,
+                FlipY ? -SpriteSize.Y : SpriteSize.Y
+            ),
+            new Rect(
+                position.X,
+                position.Y,
+                SpriteSize.X * _transform.Scale.X,
+                SpriteSize.Y * _transform.Scale.Y
+            ),
+            new Vec2(
+                SpriteSize.X / 2f * _transform.Scale.X,
+                SpriteSize.Y / 2f * _transform.Scale.Y
+            ),
+            _transform.Rotation,
+            Color.White,
+            InstructionSource.Entity,
+            _transform.ZLayer + ZLayerOffset
+        );
     }
 }

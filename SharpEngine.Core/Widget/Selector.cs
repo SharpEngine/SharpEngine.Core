@@ -9,48 +9,48 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// CLass which display a selector
 /// </summary>
-public class Selector: Widget
+public class Selector : Widget
 {
     /// <summary>
     /// Values of Selector
     /// </summary>
     public List<string> Values { get; }
-    
+
     /// <summary>
     /// Selected Index of Selector
     /// </summary>
     public int SelectedIndex { get; set; }
-    
+
     /// <summary>
     /// Left Button of Selector
     /// </summary>
     public Button LeftButton { get; }
-    
+
     /// <summary>
     /// Right Button of Selector
     /// </summary>
     public Button RightButton { get; }
-    
+
     /// <summary>
     /// Label of Selector
     /// </summary>
     public Label LabelValue { get; }
-    
+
     /// <summary>
     /// Font of Selector
     /// </summary>
     public string Font { get; set; }
-    
+
     /// <summary>
     /// Font Size of Selector
     /// </summary>
     public int? FontSize { get; set; }
-    
+
     /// <summary>
     /// Event trigger when value is changed
     /// </summary>
-    public event EventHandler<ValueEventArgs<string>>? ValueChanged; 
-    
+    public event EventHandler<ValueEventArgs<string>>? ValueChanged;
+
     /// <summary>
     /// Selected Value
     /// </summary>
@@ -65,8 +65,15 @@ public class Selector: Widget
     /// <param name="currentIndex">Current Index of Selector</param>
     /// <param name="fontSize">Font Size of Selector</param>
     /// <param name="zLayer">Z Layer</param>
-    public Selector(Vec2 position, List<string>? values = null, string font = "", int currentIndex = 0,
-        int? fontSize = null, int zLayer = 0) : base(position, zLayer)
+    public Selector(
+        Vec2 position,
+        List<string>? values = null,
+        string font = "",
+        int currentIndex = 0,
+        int? fontSize = null,
+        int zLayer = 0
+    )
+        : base(position, zLayer)
     {
         Values = values ?? new List<string>();
         SelectedIndex = currentIndex;
@@ -74,8 +81,22 @@ public class Selector: Widget
         FontSize = fontSize;
 
         LabelValue = new Label(Vec2.Zero, Selected, font, fontSize: fontSize, zLayer: zLayer);
-        LeftButton = new Button(Vec2.Zero, "<", font, new Vec2(30), fontSize: fontSize, zLayer: zLayer);
-        RightButton = new Button(Vec2.Zero, ">", font, new Vec2(30), fontSize: fontSize, zLayer: zLayer);
+        LeftButton = new Button(
+            Vec2.Zero,
+            "<",
+            font,
+            new Vec2(30),
+            fontSize: fontSize,
+            zLayer: zLayer
+        );
+        RightButton = new Button(
+            Vec2.Zero,
+            ">",
+            font,
+            new Vec2(30),
+            fontSize: fontSize,
+            zLayer: zLayer
+        );
 
         AddChild(LabelValue);
         AddChild(LeftButton).Clicked += LeftButtonClick;
@@ -90,12 +111,11 @@ public class Selector: Widget
         else
             SelectedIndex--;
         LabelValue.Text = Selected;
-        
-        ValueChanged?.Invoke(this, new ValueEventArgs<string>
-        {
-            OldValue = old,
-            NewValue = Selected
-        });
+
+        ValueChanged?.Invoke(
+            this,
+            new ValueEventArgs<string> { OldValue = old, NewValue = Selected }
+        );
     }
 
     private void RightButtonClick(object? sender, EventArgs e)
@@ -106,12 +126,11 @@ public class Selector: Widget
         else
             SelectedIndex++;
         LabelValue.Text = Selected;
-        
-        ValueChanged?.Invoke(this, new ValueEventArgs<string>
-        {
-            OldValue = old,
-            NewValue = Selected
-        });
+
+        ValueChanged?.Invoke(
+            this,
+            new ValueEventArgs<string> { OldValue = old, NewValue = Selected }
+        );
     }
 
     /// <inheritdoc />
@@ -120,7 +139,7 @@ public class Selector: Widget
         base.Load();
 
         var font = Scene?.Window?.FontManager.GetFont(Font);
-        
+
         if (font != null)
         {
             var fontSize = FontSize ?? font.Value.baseSize;

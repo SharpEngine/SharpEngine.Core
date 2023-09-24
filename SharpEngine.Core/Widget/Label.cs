@@ -9,28 +9,28 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which display Label
 /// </summary>
-public class Label: Widget
+public class Label : Widget
 {
     /// <summary>
     /// Text of Label
     /// </summary>
     public string Text { get; set; }
-    
+
     /// <summary>
     /// Font of Label
     /// </summary>
     public string Font { get; set; }
-    
+
     /// <summary>
     /// Color of Label
     /// </summary>
     public Color Color { get; set; }
-    
+
     /// <summary>
     /// If Lines is Centered
     /// </summary>
     public bool CenterAllLines { get; set; }
-    
+
     /// <summary>
     /// Rotation of Label
     /// </summary>
@@ -58,9 +58,18 @@ public class Label: Widget
     /// <param name="centerAllLines">If Label Lines is Centered</param>
     /// <param name="fontSize">Label Font Size (or null)</param>
     /// <param name="zLayer">Z Layer</param>
-    public Label(Vec2 position, string text = "", string font = "", Color? color = null,
-        LabelStyle style = LabelStyle.None, int rotation = 0, bool centerAllLines = false,
-        int? fontSize = null, int zLayer = 0) : base(position, zLayer)
+    public Label(
+        Vec2 position,
+        string text = "",
+        string font = "",
+        Color? color = null,
+        LabelStyle style = LabelStyle.None,
+        int rotation = 0,
+        bool centerAllLines = false,
+        int? fontSize = null,
+        int zLayer = 0
+    )
+        : base(position, zLayer)
     {
         Text = text;
         Font = font;
@@ -75,14 +84,15 @@ public class Label: Widget
     public override void Draw()
     {
         base.Draw();
-        
+
         var font = Scene?.Window?.FontManager.GetFont(Font);
-        
-        if(!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || font == null) return;
+
+        if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || font == null)
+            return;
 
         var realPosition = RealPosition;
         var fontSize = FontSize ?? font.Value.baseSize;
-        
+
         var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
 
         var lines = Text.Split("\n");
@@ -91,16 +101,41 @@ public class Label: Widget
             var lineSize = Raylib.MeasureTextEx(font.Value, lines[i], fontSize, 2);
             var finalPosition = new Vec2(
                 CenterAllLines ? realPosition.X - lineSize.X / 2 : realPosition.X - textSize.X / 2,
-                realPosition.Y - textSize.Y / 2 + i * lineSize.Y);
-            SERender.DrawText(font.Value, lines[i], finalPosition, Vec2.Zero, Rotation, fontSize, 2, Color,
-                InstructionSource.UI, ZLayer);
+                realPosition.Y - textSize.Y / 2 + i * lineSize.Y
+            );
+            SERender.DrawText(
+                font.Value,
+                lines[i],
+                finalPosition,
+                Vec2.Zero,
+                Rotation,
+                fontSize,
+                2,
+                Color,
+                InstructionSource.UI,
+                ZLayer
+            );
 
             if (Style.HasFlag(LabelStyle.Strike))
-                SERender.DrawRectangle((int)finalPosition.X, (int)(finalPosition.Y + lineSize.Y / 2), (int)lineSize.X,
-                    2, Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
+                SERender.DrawRectangle(
+                    (int)finalPosition.X,
+                    (int)(finalPosition.Y + lineSize.Y / 2),
+                    (int)lineSize.X,
+                    2,
+                    Color.Black,
+                    InstructionSource.UI,
+                    ZLayer + 0.00001f
+                );
             if (Style.HasFlag(LabelStyle.Underline))
-                SERender.DrawRectangle((int)finalPosition.X, (int)(finalPosition.Y + lineSize.Y), (int)lineSize.X, 2,
-                    Color.Black, InstructionSource.UI, ZLayer + 0.00001f);
+                SERender.DrawRectangle(
+                    (int)finalPosition.X,
+                    (int)(finalPosition.Y + lineSize.Y),
+                    (int)lineSize.X,
+                    2,
+                    Color.Black,
+                    InstructionSource.UI,
+                    ZLayer + 0.00001f
+                );
         }
     }
 }

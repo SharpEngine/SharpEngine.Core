@@ -11,7 +11,7 @@ namespace SharpEngine.Core.Manager;
 public static class DataTableManager
 {
     private static readonly Dictionary<string, IDataTable> DataTables = new();
-    
+
     /// <summary>
     /// List of known data tables
     /// </summary>
@@ -24,8 +24,11 @@ public static class DataTableManager
     /// <param name="dataTable">Data Table</param>
     public static void AddDataTable(string name, IDataTable dataTable)
     {
-        if(!DataTables.TryAdd(name, dataTable))
-            DebugManager.Log(LogLevel.LogWarning, $"SE_DATATABLEMANAGER: DataTable already exist : {name}");
+        if (!DataTables.TryAdd(name, dataTable))
+            DebugManager.Log(
+                LogLevel.LogWarning,
+                $"SE_DATATABLEMANAGER: DataTable already exist : {name}"
+            );
     }
 
     /// <summary>
@@ -40,7 +43,10 @@ public static class DataTableManager
     {
         if (DataTables.TryGetValue(dataTable, out var dTable))
             return dTable.Get(predicate);
-        DebugManager.Log(LogLevel.LogError, $"SE_DATATABLEMANAGER: DataTable not found : {dataTable}");
+        DebugManager.Log(
+            LogLevel.LogError,
+            $"SE_DATATABLEMANAGER: DataTable not found : {dataTable}"
+        );
         throw new Exception($"DataTable not found : {dataTable}");
     }
 }
