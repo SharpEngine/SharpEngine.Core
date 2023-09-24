@@ -13,33 +13,33 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which represents Line Input
 /// </summary>
-public class LineInput: Widget
+public class LineInput : Widget
 {
     /// <summary>
     /// Current Text of Line Input
     /// </summary>
     public string Text { get; set; }
-    
+
     /// <summary>
     /// Font of Line Input
     /// </summary>
     public string Font { get; set; }
-    
+
     /// <summary>
     /// Size of Line Input
     /// </summary>
     public Vec2 Size { get; set; }
-    
+
     /// <summary>
     /// If Line Input is Focused
     /// </summary>
     public bool Focused { get; private set; }
-    
+
     /// <summary>
     /// Font Size of Line Input (or null)
     /// </summary>
     public int? FontSize { get; set; }
-    
+
     /// <summary>
     /// Event trigger when value is changed
     /// </summary>
@@ -54,8 +54,14 @@ public class LineInput: Widget
     /// <param name="size">Line Edit Size (Vec2(300, 50))</param>
     /// <param name="fontSize">Line Edit Font Size (null)</param>
     /// <param name="zLayer">Z Layer</param>
-    public LineInput(Vec2 position, string text = "", string font = "", Vec2? size = null, int? fontSize = null,
-        int zLayer = 0) : base(position, zLayer)
+    public LineInput(
+        Vec2 position,
+        string text = "",
+        string font = "",
+        Vec2? size = null,
+        int? fontSize = null,
+        int zLayer = 0
+    ) : base(position, zLayer)
     {
         Text = text;
         Font = font;
@@ -76,7 +82,8 @@ public class LineInput: Widget
         if (InputManager.IsMouseButtonPressed(MouseButton.Left))
             Focused = InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size));
 
-        if(!Focused) return;
+        if (!Focused)
+            return;
 
         #region Text Processing
 
@@ -84,11 +91,10 @@ public class LineInput: Widget
         {
             var old = Text;
             Text = Text[..^1];
-            ValueChanged?.Invoke(this, new ValueEventArgs<string>
-            {
-                OldValue = old,
-                NewValue = Text
-            });
+            ValueChanged?.Invoke(
+                this,
+                new ValueEventArgs<string> { OldValue = old, NewValue = Text }
+            );
         }
 
         var font = Scene?.Window?.FontManager.GetFont(Font);
@@ -96,15 +102,18 @@ public class LineInput: Widget
         {
             foreach (var pressedChar in InputManager.PressedChars)
             {
-                if (char.IsSymbol(pressedChar) || char.IsWhiteSpace(pressedChar) ||
-                    char.IsLetterOrDigit(pressedChar) || char.IsPunctuation(pressedChar))
+                if (
+                    char.IsSymbol(pressedChar)
+                    || char.IsWhiteSpace(pressedChar)
+                    || char.IsLetterOrDigit(pressedChar)
+                    || char.IsPunctuation(pressedChar)
+                )
                 {
                     Text += pressedChar;
-                    ValueChanged?.Invoke(this, new ValueEventArgs<string>
-                    {
-                        OldValue = Text,
-                        NewValue = Text[..^1]
-                    });
+                    ValueChanged?.Invoke(
+                        this,
+                        new ValueEventArgs<string> { OldValue = Text, NewValue = Text[..^1] }
+                    );
                 }
             }
         }
@@ -116,20 +125,34 @@ public class LineInput: Widget
     public override void Draw()
     {
         base.Draw();
-        
-        if(!Displayed || Scene == null ) return;
+
+        if (!Displayed || Scene == null)
+            return;
 
         var position = RealPosition;
 
-        SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, Color.Black,
-            InstructionSource.UI, ZLayer);
-        SERender.DrawRectangle(new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4), Size / 2, 0,
-            Color.White, InstructionSource.UI, ZLayer + 0.00001f);
-        
+        SERender.DrawRectangle(
+            new Rect(position.X, position.Y, Size.X, Size.Y),
+            Size / 2,
+            0,
+            Color.Black,
+            InstructionSource.UI,
+            ZLayer
+        );
+        SERender.DrawRectangle(
+            new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4),
+            Size / 2,
+            0,
+            Color.White,
+            InstructionSource.UI,
+            ZLayer + 0.00001f
+        );
+
         var font = Scene?.Window?.FontManager.GetFont(Font);
-        
-        if(Font.Length <= 0 || font == null) return;
-        
+
+        if (Font.Length <= 0 || font == null)
+            return;
+
         var fontSize = FontSize ?? font.Value.baseSize;
         var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
         var offset = textSize.X - (Size.X - 20);
@@ -137,18 +160,39 @@ public class LineInput: Widget
         if (Text.Length > 0)
         {
             var finalPosition = new Vec2(position.X - Size.X / 2 + 4, position.Y - textSize.Y / 2);
-            
-            SERender.ScissorMode((int)finalPosition.X, (int)finalPosition.Y, (int)Size.X - 8, (int)textSize.Y, 
-                InstructionSource.UI, ZLayer + 0.00002f, () =>
+
+            SERender.ScissorMode(
+                (int)finalPosition.X,
+                (int)finalPosition.Y,
+                (int)Size.X - 8,
+                (int)textSize.Y,
+                InstructionSource.UI,
+                ZLayer + 0.00002f,
+                () =>
                 {
-                    SERender.DrawText(font.Value, Text, new Vec2(finalPosition.X - (offset > 0 ? offset : 0), finalPosition.Y),
-                        fontSize, 2, Color.Black, InstructionSource.UI, 0);
-                });
+                    SERender.DrawText(
+                        font.Value,
+                        Text,
+                        new Vec2(finalPosition.X - (offset > 0 ? offset : 0), finalPosition.Y),
+                        fontSize,
+                        2,
+                        Color.Black,
+                        InstructionSource.UI,
+                        0
+                    );
+                }
+            );
         }
 
         if (Focused)
-            SERender.DrawRectangle((int)(position.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
-                (int)(position.Y - textSize.Y / 2 + 4), 5, (int)textSize.Y - 8, Color.Black, InstructionSource.UI,
-                ZLayer + 0.00003f);
+            SERender.DrawRectangle(
+                (int)(position.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
+                (int)(position.Y - textSize.Y / 2 + 4),
+                5,
+                (int)textSize.Y - 8,
+                Color.Black,
+                InstructionSource.UI,
+                ZLayer + 0.00003f
+            );
     }
 }

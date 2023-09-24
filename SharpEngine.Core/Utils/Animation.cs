@@ -11,12 +11,12 @@ public readonly struct Animation
     /// Name of Animation
     /// </summary>
     public string Name { get; }
-    
+
     /// <summary>
     /// Indices of frames
     /// </summary>
-    public List<uint> Indices  { get; }
-    
+    public List<uint> Indices { get; }
+
     /// <summary>
     /// Timer between frames
     /// </summary>

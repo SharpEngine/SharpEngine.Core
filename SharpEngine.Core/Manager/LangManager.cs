@@ -26,11 +26,10 @@ public static class LangManager
     /// <param name="lang">Language Object</param>
     public static void AddLang(string name, ILang lang)
     {
-        if(!Languages.TryAdd(name, lang))
+        if (!Languages.TryAdd(name, lang))
             DebugManager.Log(LogLevel.LogWarning, $"SE_LANGMANAGER: Lang already exist : {name}");
     }
 
-    
     /// <summary>
     /// Get Translation with current language
     /// </summary>
@@ -51,9 +50,12 @@ public static class LangManager
     {
         if (Languages.TryGetValue(lang, out var translation))
             return translation.GetTranslation(key, defaultTranslation);
-        
-        if(lang != "default")
-            DebugManager.Log(LogLevel.LogWarning, $"SE_LANGMANAGER: Lang not found : {lang} (pass default translation)");
+
+        if (lang != "default")
+            DebugManager.Log(
+                LogLevel.LogWarning,
+                $"SE_LANGMANAGER: Lang not found : {lang} (pass default translation)"
+            );
         return defaultTranslation;
     }
 

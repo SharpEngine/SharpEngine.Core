@@ -5,7 +5,7 @@ using SharpEngine.Core.Math;
 
 namespace Testing;
 
-public class MyScene: Scene
+public class MyScene : Scene
 {
     public MyScene()
     {

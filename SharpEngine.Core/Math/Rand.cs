@@ -29,7 +29,6 @@ public static class Rand
     /// </summary>
     /// <returns>Random Number</returns>
     public static int GetRand() => Random.Next();
-    
 
     /// <summary>
     /// Get random float between minimum and maximum values
@@ -38,7 +37,7 @@ public static class Rand
     /// <param name="max">Maximum Value (excluded)</param>
     /// <returns>Random Number</returns>
     public static float GetRandF(float min, float max) => Random.NextSingle() * (max - min) + min;
-    
+
     /// <summary>
     /// Get random float between 0 and maximum values
     /// </summary>

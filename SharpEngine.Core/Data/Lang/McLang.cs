@@ -7,10 +7,10 @@ namespace SharpEngine.Core.Data.Lang;
 /// <summary>
 /// Class which represents Lang File with Minecraft Format (allow start line comments)
 /// </summary>
-public class McLang: ILang
+public class McLang : ILang
 {
     private readonly Dictionary<string, string> _translations = new();
-    
+
     /// <summary>
     /// Create MC Lang
     /// </summary>
@@ -31,16 +31,19 @@ public class McLang: ILang
         foreach (var line in System.IO.File.ReadAllLines(file))
         {
             var finalLine = line.Trim();
-            
-            if(finalLine.StartsWith("#") || finalLine.Length == 0) 
+
+            if (finalLine.StartsWith("#") || finalLine.Length == 0)
                 continue;
 
             if (!finalLine.Contains('='))
             {
-                DebugManager.Log(LogLevel.LogWarning, $"SE_MCLANG: Cannot found '=' between key and value : {line} (Skip line)");
+                DebugManager.Log(
+                    LogLevel.LogWarning,
+                    $"SE_MCLANG: Cannot found '=' between key and value : {line} (Skip line)"
+                );
                 continue;
             }
-            
+
             _translations.Add(finalLine.Split("=")[0], finalLine.Split("=")[1]);
         }
     }

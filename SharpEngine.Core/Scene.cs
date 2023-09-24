@@ -38,8 +38,7 @@ public class Scene
     /// <summary>
     /// Create Scene
     /// </summary>
-    public Scene()
-    {}
+    public Scene() { }
 
     /// <summary>
     /// Add Scene System
@@ -52,7 +51,8 @@ public class Scene
     /// </summary>
     /// <typeparam name="T">Type of System</typeparam>
     /// <returns>System or null</returns>
-    public T? GetSceneSystem<T>() where T : ISceneSystem => _sceneSystems.OfType<T>().FirstOrDefault();
+    public T? GetSceneSystem<T>() where T : ISceneSystem =>
+        _sceneSystems.OfType<T>().FirstOrDefault();
 
     /// <summary>
     /// Add Widget to Scene
@@ -63,7 +63,7 @@ public class Scene
     /// <returns>Widget</returns>
     public T AddWidget<T>(T widget, bool delay = false) where T : Widget.Widget
     {
-        if(delay)
+        if (delay)
             _addWidgets.Add(widget);
         else
         {
@@ -79,8 +79,7 @@ public class Scene
     /// </summary>
     /// <typeparam name="T">Type of Widgets</typeparam>
     /// <returns>Widgets</returns>
-    public List<T> GetWidgetsAs<T>() where T : Widget.Widget =>
-        Widgets.OfType<T>().ToList();
+    public List<T> GetWidgetsAs<T>() where T : Widget.Widget => Widgets.OfType<T>().ToList();
 
     /// <summary>
     /// Remove Widget
@@ -89,7 +88,7 @@ public class Scene
     /// <param name="delay">If remove must be delayed</param>
     public void RemoveWidget(Widget.Widget widget, bool delay = false)
     {
-        if(delay)
+        if (delay)
             _removeWidgets.Add(widget);
         else
         {
@@ -117,7 +116,7 @@ public class Scene
     /// <returns>Entity</returns>
     public T AddEntity<T>(T entity, bool delay = false) where T : Entity.Entity
     {
-        if(delay)
+        if (delay)
             _addEntities.Add(entity);
         else
         {
@@ -135,7 +134,7 @@ public class Scene
     /// <param name="delay">If remove must be delayed</param>
     public void RemoveEntity(Entity.Entity entity, bool delay = false)
     {
-        if(delay)
+        if (delay)
             _removeEntities.Add(entity);
         else
         {
@@ -161,7 +160,7 @@ public class Scene
     {
         foreach (var system in _sceneSystems)
             system.Load();
-        
+
         foreach (var entity in Entities)
             entity.Load();
         foreach (var widget in Widgets)
@@ -177,7 +176,7 @@ public class Scene
             entity.Unload();
         foreach (var widget in Widgets)
             widget.Unload();
-        
+
         foreach (var system in _sceneSystems)
             system.Unload();
     }
@@ -190,7 +189,7 @@ public class Scene
     {
         foreach (var system in _sceneSystems)
             system.Update(delta);
-        
+
         foreach (var removeEntity in _removeEntities)
             RemoveEntity(removeEntity);
         foreach (var removeWidget in _removeWidgets)
@@ -199,22 +198,26 @@ public class Scene
             AddEntity(addEntity).Load();
         foreach (var addWidget in _addWidgets)
             AddWidget(addWidget).Load();
-        
+
         _removeEntities.Clear();
         _removeWidgets.Clear();
         _addEntities.Clear();
         _addWidgets.Clear();
 
         for (var i = Entities.Count - 1; i > -1; i--)
-            if(Entities[i].PauseState is PauseState.Enabled ||
-               !Paused && Entities[i].PauseState is PauseState.Normal ||
-               Paused && Entities[i].PauseState is PauseState.WhenPaused)
+            if (
+                Entities[i].PauseState is PauseState.Enabled
+                || !Paused && Entities[i].PauseState is PauseState.Normal
+                || Paused && Entities[i].PauseState is PauseState.WhenPaused
+            )
                 Entities[i].Update(delta);
-        
-        for(var i = Widgets.Count - 1; i > -1; i--)
-            if(Widgets[i].PauseState is PauseState.Enabled ||
-               !Paused && Widgets[i].PauseState is PauseState.Normal ||
-               Paused && Widgets[i].PauseState is PauseState.WhenPaused)
+
+        for (var i = Widgets.Count - 1; i > -1; i--)
+            if (
+                Widgets[i].PauseState is PauseState.Enabled
+                || !Paused && Widgets[i].PauseState is PauseState.Normal
+                || Paused && Widgets[i].PauseState is PauseState.WhenPaused
+            )
                 Widgets[i].Update(delta);
     }
 
@@ -225,7 +228,7 @@ public class Scene
     {
         foreach (var system in _sceneSystems)
             system.Draw();
-        
+
         foreach (var ent in Entities)
             ent.Draw();
         foreach (var widget in Widgets)
@@ -235,15 +238,17 @@ public class Scene
     /// <summary>
     /// Function call when Scene is opened
     /// </summary>
-    public virtual void OpenScene() {
+    public virtual void OpenScene()
+    {
         foreach (var system in _sceneSystems)
-            system.OpenScene(); 
+            system.OpenScene();
     }
 
     /// <summary>
     /// Function call when Scene is closed
     /// </summary>
-    public virtual void CloseScene() {
+    public virtual void CloseScene()
+    {
         foreach (var system in _sceneSystems)
             system.CloseScene();
     }

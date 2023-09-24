@@ -11,19 +11,18 @@ public struct Vec2
     /// <summary>
     /// Vector 2D with 0 on X and Y
     /// </summary>
-    public static readonly Vec2 Zero  = new(0);
-    
+    public static readonly Vec2 Zero = new(0);
+
     /// <summary>
     /// Vector 2D with 1 on X and Y
     /// </summary>
     public static readonly Vec2 One = new(1);
-    
-    
+
     /// <summary>
     /// X Position
     /// </summary>
     public float X { get; set; }
-    
+
     /// <summary>
     /// Y Position
     /// </summary>
@@ -55,7 +54,7 @@ public struct Vec2
     /// </summary>
     /// <returns>Length</returns>
     public float Length() => MathF.Sqrt(X * X + Y * Y);
-    
+
     /// <summary>
     /// Squared Length of Vector 2D
     /// </summary>
@@ -113,16 +112,15 @@ public struct Vec2
     /// <param name="vec2">Second Vector 2D</param>
     /// <returns>If first is equals to second</returns>
     public static bool operator ==(Vec2 vec1, Vec2 vec2) =>
-        System.Math.Abs(vec1.X - vec2.X) < 0.001f &&
-        System.Math.Abs(vec1.Y - vec2.Y) < 0.001f;
-    
+        System.Math.Abs(vec1.X - vec2.X) < 0.001f && System.Math.Abs(vec1.Y - vec2.Y) < 0.001f;
+
     /// <summary>
     /// Operator Negation
     /// </summary>
     /// <param name="vec">Vector 2D</param>
     /// <returns>Negative Vector 2D</returns>
     public static Vec2 operator -(Vec2 vec) => new(-vec.X, -vec.Y);
-    
+
     /// <summary>
     /// Operator Subtraction
     /// </summary>
@@ -130,7 +128,7 @@ public struct Vec2
     /// <param name="vec2">Second Vector 2D</param>
     /// <returns>Vector 2D with first values subtracted by second values</returns>
     public static Vec2 operator -(Vec2 vec, Vec2 vec2) => new(vec.X - vec2.X, vec.Y - vec2.Y);
-    
+
     /// <summary>
     /// Operator Subtraction
     /// </summary>
@@ -138,7 +136,7 @@ public struct Vec2
     /// <param name="factor"></param>
     /// <returns>Vector 2D with values subtracted by factor</returns>
     public static Vec2 operator -(Vec2 vec, float factor) => new(vec.X - factor, vec.Y - factor);
-    
+
     /// <summary>
     /// Operator Addition
     /// </summary>
@@ -146,7 +144,7 @@ public struct Vec2
     /// <param name="vec2">Second Vector 2D</param>
     /// <returns>Vector 2D with first values added with second values</returns>
     public static Vec2 operator +(Vec2 vec, Vec2 vec2) => new(vec.X + vec2.X, vec.Y + vec2.Y);
-    
+
     /// <summary>
     /// Operator Addition
     /// </summary>
@@ -154,7 +152,7 @@ public struct Vec2
     /// <param name="factor"></param>
     /// <returns>Vector 2D with values added with factor</returns>
     public static Vec2 operator +(Vec2 vec, float factor) => new(vec.X + factor, vec.Y + factor);
-    
+
     /// <summary>
     /// Operator Multiplication
     /// </summary>
@@ -162,7 +160,7 @@ public struct Vec2
     /// <param name="vec2">Second Vector 2D</param>
     /// <returns>Vector 2D with first values multiplied by second values</returns>
     public static Vec2 operator *(Vec2 vec, Vec2 vec2) => new(vec.X * vec2.X, vec.Y * vec2.Y);
-    
+
     /// <summary>
     /// Operator Multiplication
     /// </summary>
@@ -170,7 +168,7 @@ public struct Vec2
     /// <param name="factor"></param>
     /// <returns>Vector 2D with values multiplied by factor</returns>
     public static Vec2 operator *(Vec2 vec, float factor) => new(vec.X * factor, vec.Y * factor);
-    
+
     /// <summary>
     /// Operator Division
     /// </summary>
@@ -178,7 +176,7 @@ public struct Vec2
     /// <param name="vec2">Second Vector 2D</param>
     /// <returns>Vector 2D with first values divided by second values</returns>
     public static Vec2 operator /(Vec2 vec, Vec2 vec2) => new(vec.X / vec2.X, vec.Y / vec2.Y);
-    
+
     /// <summary>
     /// Operator Division
     /// </summary>
@@ -186,14 +184,14 @@ public struct Vec2
     /// <param name="factor"></param>
     /// <returns>Vector 2D with values divided by factor</returns>
     public static Vec2 operator /(Vec2 vec, float factor) => new(vec.X / factor, vec.Y / factor);
-    
+
     /// <summary>
     /// Convert Vector2 to Vec2
     /// </summary>
     /// <param name="vec">Vector2</param>
     /// <returns>Vec2</returns>
     public static implicit operator Vec2(Vector2 vec) => new(vec.X, vec.Y);
-    
+
     /// <summary>
     /// Convert Vec2 to Vector2
     /// </summary>

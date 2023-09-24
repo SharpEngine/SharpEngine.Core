@@ -9,7 +9,7 @@ public enum InstructionSource
     /// Instruction created by Entity
     /// </summary>
     Entity,
-    
+
     /// <summary>
     /// Instruction created by UI
     /// </summary>

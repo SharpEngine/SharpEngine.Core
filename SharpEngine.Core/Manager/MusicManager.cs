@@ -24,7 +24,7 @@ public class MusicManager
     /// <param name="file">Music File</param>
     public void AddMusic(string name, string file)
     {
-        if(!_musics.TryAdd(name, Raylib.LoadMusicStream(file)))
+        if (!_musics.TryAdd(name, Raylib.LoadMusicStream(file)))
             DebugManager.Log(LogLevel.LogWarning, $"SE_MUSICMANAGER: Music already exist : {name}");
     }
 

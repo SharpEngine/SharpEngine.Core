@@ -7,7 +7,7 @@ namespace SharpEngine.Core.Data.Lang;
 /// <summary>
 /// Class which represents Lang File with Json
 /// </summary>
-public class JsonLang: ILang
+public class JsonLang : ILang
 {
     private Dictionary<string, string> _translations = new();
 
@@ -24,11 +24,11 @@ public class JsonLang: ILang
     public string GetTranslation(string key, string defaultTranslation) =>
         _translations.GetValueOrDefault(key, defaultTranslation);
 
-
     /// <inheritdoc />
     public void Reload(string file)
     {
-        _translations = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(file)) ??
-                        new Dictionary<string, string>();
+        _translations =
+            JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(file))
+            ?? new Dictionary<string, string>();
     }
 }

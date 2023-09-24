@@ -87,18 +87,16 @@ public class Window
         }
     }
 
-
     /// <summary>
     /// Camera Manager of Window
     /// </summary>
     public CameraManager CameraManager { get; }
 
-
     /// <summary>
     /// Texture Manager of Window
     /// </summary>
     public TextureManager TextureManager { get; }
-    
+
     /// <summary>
     /// Shader Manager of Window
     /// </summary>
@@ -118,7 +116,7 @@ public class Window
     /// Music Manager of Window
     /// </summary>
     public MusicManager MusicManager { get; }
-    
+
     /// <summary>
     /// ImGui Management of Window
     /// </summary>
@@ -178,11 +176,16 @@ public class Window
     /// <param name="debug">Debug Mode (false)</param>
     /// <param name="consoleLog">Log in Console</param>
     /// <param name="fileLog">Log in File (log.txt)</param>
-    public Window(int width, int height, string title, Color? backgroundColor = null, int? fps = 60, bool debug = false,
-        bool consoleLog = true, bool fileLog = false) :
-        this(new Vec2(width, height), title, backgroundColor, fps, debug, consoleLog, fileLog)
-    {
-    }
+    public Window(
+        int width,
+        int height,
+        string title,
+        Color? backgroundColor = null,
+        int? fps = 60,
+        bool debug = false,
+        bool consoleLog = true,
+        bool fileLog = false
+    ) : this(new Vec2(width, height), title, backgroundColor, fps, debug, consoleLog, fileLog) { }
 
     /// <summary>
     /// Create and Init Window
@@ -194,8 +197,15 @@ public class Window
     /// <param name="debug">Debug Mode (false)</param>
     /// <param name="consoleLog">Log in Console</param>
     /// <param name="fileLog">Log in File (log.txt)</param>
-    public Window(Vec2 screenSize, string title, Color? backgroundColor = null, int? fps = 60, bool debug = false,
-        bool consoleLog = true, bool fileLog = false)
+    public Window(
+        Vec2 screenSize,
+        string title,
+        Color? backgroundColor = null,
+        int? fps = 60,
+        bool debug = false,
+        bool consoleLog = true,
+        bool fileLog = false
+    )
     {
         _consoleLog = consoleLog;
         _fileLog = fileLog;
@@ -206,7 +216,6 @@ public class Window
 
         if (_fileLog && File.Exists("log.txt"))
             File.Delete("log.txt");
-
         unsafe
         {
             Raylib.SetTraceLogCallback(&LogCustom);
@@ -282,7 +291,7 @@ public class Window
     {
         var args = new BoolEventArgs();
         StartCallback?.Invoke(this, args);
-        if(!args.Result)
+        if (!args.Result)
             return;
 
         #region Load
@@ -293,13 +302,13 @@ public class Window
         DebugManager.Log(LogLevel.LogInfo, "SE: Scenes loaded !");
 
         #endregion
-        
+
         CurrentScene.OpenScene();
 
         while (!Raylib.WindowShouldClose() && !_closeWindow)
         {
             #region Update Pressed Keys and Chars
-            
+
             InputManager.InternalPressedChars.Clear();
             InputManager.InternalPressedKeys.Clear();
 
@@ -309,7 +318,7 @@ public class Window
                 InputManager.InternalPressedKeys.Add(key);
                 key = Raylib.GetKeyPressed();
             }
-            
+
             var charGot = Raylib.GetCharPressed();
             while (charGot > 0)
             {
@@ -322,24 +331,24 @@ public class Window
             #region Update
 
             var delta = Raylib.GetFrameTime();
-            
+
             SeImGui.Update(delta);
-            
+
             CurrentScene.Update(delta);
             CameraManager.Update(delta);
 
             #endregion
 
             #region Draw
-            
-            if(Debug)
+
+            if (Debug)
                 RenderImGui?.Invoke(this);
-            
+
             CurrentScene.Draw();
-            
+
             Raylib.BeginDrawing();
             Raylib.ClearBackground(BackgroundColor);
-            
+
             SERender.Draw(this);
 
             if (Debug)
@@ -351,12 +360,12 @@ public class Window
         }
 
         #region Unload
-        
+
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Scenes...");
         foreach (var scene in Scenes)
             scene.Unload();
         DebugManager.Log(LogLevel.LogInfo, "SE: Scenes unloaded !");
-        
+
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Textures...");
         TextureManager.Unload();
         DebugManager.Log(LogLevel.LogInfo, "SE: Textures unloaded !");
@@ -369,7 +378,7 @@ public class Window
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading SeImGui...");
         SeImGui.Dispose();
         DebugManager.Log(LogLevel.LogInfo, "SE: SeImGui unloaded !");
-        
+
         DebugManager.Log(LogLevel.LogInfo, "SE: Closing Window.");
         Raylib.CloseAudioDevice();
         Raylib.CloseWindow();
@@ -384,11 +393,11 @@ public class Window
     {
         var args = new BoolEventArgs();
         StopCallback?.Invoke(this, args);
-        if(args.Result)
+        if (args.Result)
             _closeWindow = true;
     }
-    
-    [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl)})]
+
+    [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
     private static unsafe void LogCustom(int logLevel, sbyte* text, sbyte* args)
     {
         var message = Logging.GetLogMessage(new IntPtr(text), new IntPtr(args));
@@ -405,11 +414,10 @@ public class Window
         };
 
         message = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {message}";
-        
-        if(_consoleLog)
+
+        if (_consoleLog)
             Console.WriteLine(message);
-        if(_fileLog)
-            File.AppendAllText("log.txt", message+"\n");
-            
+        if (_fileLog)
+            File.AppendAllText("log.txt", message + "\n");
     }
 }

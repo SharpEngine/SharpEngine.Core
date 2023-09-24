@@ -13,7 +13,7 @@ public struct Color
     private int _g;
     private int _b;
     private int _a;
-    
+
     /// <summary>
     /// Get Red Component of Color
     /// </summary>
@@ -22,7 +22,7 @@ public struct Color
         get => _r;
         set => _r = MathHelper.Clamp(value, 0, 255);
     }
-    
+
     /// <summary>
     /// Get Green Component of Color
     /// </summary>
@@ -31,7 +31,7 @@ public struct Color
         get => _g;
         set => _g = MathHelper.Clamp(value, 0, 255);
     }
-    
+
     /// <summary>
     /// Get Blue Component of Color
     /// </summary>
@@ -40,7 +40,7 @@ public struct Color
         get => _b;
         set => _b = MathHelper.Clamp(value, 0, 255);
     }
-    
+
     /// <summary>
     /// Get Alpha Component of Color
     /// </summary>
@@ -90,22 +90,29 @@ public struct Color
     /// </summary>
     /// <param name="vector4">Vector 4</param>
     /// <returns>Color</returns>
-    public static Color FromVec4(Vector4 vector4) => new((int)(vector4.X * 255), (int)(vector4.Y * 255),
-        (int)(vector4.Z * 255), (int)(vector4.W * 255));
-    
+    public static Color FromVec4(Vector4 vector4) =>
+        new(
+            (int)(vector4.X * 255),
+            (int)(vector4.Y * 255),
+            (int)(vector4.Z * 255),
+            (int)(vector4.W * 255)
+        );
+
     /// <summary>
     /// Return Darker Color
     /// </summary>
     /// <param name="force">Force of Darker Color</param>
     /// <returns>Darker Color</returns>
-    public Color Darker(int force = 1) => new(_r - 10 * force, _g - 10 * force, _b - 10 * force, _a);
+    public Color Darker(int force = 1) =>
+        new(_r - 10 * force, _g - 10 * force, _b - 10 * force, _a);
 
     /// <summary>
     /// Return Lighter Color
     /// </summary>
     /// <param name="force">Force of Lighter Color</param>
     /// <returns>Lighter Color</returns>
-    public Color Lighter(int force = 1) => new(_r + 10 * force, _g + 10 * force, _b + 10 * force, _a);
+    public Color Lighter(int force = 1) =>
+        new(_r + 10 * force, _g + 10 * force, _b + 10 * force, _a);
 
     /// <summary>
     /// Transition Color to target color
@@ -159,14 +166,15 @@ public struct Color
     /// <returns>If first is equals to second</returns>
     public static bool operator ==(Color color, Color color2) =>
         color.R == color2.R && color.G == color2.G && color.B == color2.B && color.A == color2.A;
-    
+
     /// <summary>
     /// Convert SharpEngine.Core Color to Raylib Color
     /// </summary>
     /// <param name="color">SharpEngine.Core Color</param>
     /// <returns>Raylib</returns>
-    public static implicit operator Raylib_cs.Color(Color color) => new(color.R, color.G, color.B, color.A);
-    
+    public static implicit operator Raylib_cs.Color(Color color) =>
+        new(color.R, color.G, color.B, color.A);
+
 #pragma warning disable CS1591
     public static readonly Color MediumAquamarine = new(102, 205, 170, 255);
     public static readonly Color MediumBlue = new(0, 0, 205, 255);

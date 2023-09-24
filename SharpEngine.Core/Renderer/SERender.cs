@@ -25,7 +25,7 @@ public static class SERender
     /// Number of Last UI Instructions
     /// </summary>
     public static int LastUIInstructionsNumber;
-    
+
     /// <summary>
     /// Current Instructions to be rendered
     /// </summary>
@@ -40,54 +40,97 @@ public static class SERender
                 LastEntityInstructionsNumber++;
             else
                 LastUIInstructionsNumber++;
-            
+
             switch (instruction.Type)
             {
                 case InstructionType.ShaderMode:
                     Raylib.BeginShaderMode((Shader)instruction.Parameters[0]);
-                    DrawInstructions(instruction.Parameters.GetRange(1, instruction.Parameters.Count - 1)
-                        .Select(x => (Instruction)x).ToList());
+                    DrawInstructions(
+                        instruction.Parameters
+                            .GetRange(1, instruction.Parameters.Count - 1)
+                            .Select(x => (Instruction)x)
+                            .ToList()
+                    );
                     Raylib.EndShaderMode();
                     break;
                 case InstructionType.ScissorMode:
-                    Raylib.BeginScissorMode((int)instruction.Parameters[0], (int)instruction.Parameters[1],
-                        (int)instruction.Parameters[2], (int)instruction.Parameters[3]);
-                    DrawInstructions(instruction.Parameters.GetRange(4, instruction.Parameters.Count - 4)
-                        .Select(x => (Instruction)x).ToList());
+                    Raylib.BeginScissorMode(
+                        (int)instruction.Parameters[0],
+                        (int)instruction.Parameters[1],
+                        (int)instruction.Parameters[2],
+                        (int)instruction.Parameters[3]
+                    );
+                    DrawInstructions(
+                        instruction.Parameters
+                            .GetRange(4, instruction.Parameters.Count - 4)
+                            .Select(x => (Instruction)x)
+                            .ToList()
+                    );
                     Raylib.EndScissorMode();
                     break;
                 case InstructionType.DrawRectangle:
-                    Raylib.DrawRectangle((int)instruction.Parameters[0], (int)instruction.Parameters[1],
-                        (int)instruction.Parameters[2], (int)instruction.Parameters[3],
-                        (Utils.Color)instruction.Parameters[4]);
+                    Raylib.DrawRectangle(
+                        (int)instruction.Parameters[0],
+                        (int)instruction.Parameters[1],
+                        (int)instruction.Parameters[2],
+                        (int)instruction.Parameters[3],
+                        (Utils.Color)instruction.Parameters[4]
+                    );
                     break;
                 case InstructionType.DrawRectanglePro:
-                    Raylib.DrawRectanglePro((Rect)instruction.Parameters[0], (Vec2)instruction.Parameters[1],
-                        (float)instruction.Parameters[2], (Utils.Color)instruction.Parameters[3]);
+                    Raylib.DrawRectanglePro(
+                        (Rect)instruction.Parameters[0],
+                        (Vec2)instruction.Parameters[1],
+                        (float)instruction.Parameters[2],
+                        (Utils.Color)instruction.Parameters[3]
+                    );
                     break;
                 case InstructionType.DrawTexturePro:
-                    Raylib.DrawTexturePro((Texture2D)instruction.Parameters[0], (Rect)instruction.Parameters[1],
-                        (Rect)instruction.Parameters[2], (Vec2)instruction.Parameters[3],
-                        (float)instruction.Parameters[4], (Utils.Color)instruction.Parameters[5]);
+                    Raylib.DrawTexturePro(
+                        (Texture2D)instruction.Parameters[0],
+                        (Rect)instruction.Parameters[1],
+                        (Rect)instruction.Parameters[2],
+                        (Vec2)instruction.Parameters[3],
+                        (float)instruction.Parameters[4],
+                        (Utils.Color)instruction.Parameters[5]
+                    );
                     break;
                 case InstructionType.DrawTextPro:
-                    Raylib.DrawTextPro((Font)instruction.Parameters[0], (string)instruction.Parameters[1],
-                        (Vec2)instruction.Parameters[2], (Vec2)instruction.Parameters[3],
-                        (float)instruction.Parameters[4], (int)instruction.Parameters[5],
-                        (int)instruction.Parameters[6], (Utils.Color)instruction.Parameters[7]);
+                    Raylib.DrawTextPro(
+                        (Font)instruction.Parameters[0],
+                        (string)instruction.Parameters[1],
+                        (Vec2)instruction.Parameters[2],
+                        (Vec2)instruction.Parameters[3],
+                        (float)instruction.Parameters[4],
+                        (int)instruction.Parameters[5],
+                        (int)instruction.Parameters[6],
+                        (Utils.Color)instruction.Parameters[7]
+                    );
                     break;
                 case InstructionType.DrawRectangleLinesEx:
-                    Raylib.DrawRectangleLinesEx((Rect)instruction.Parameters[0], (int)instruction.Parameters[1],
-                        (Utils.Color)instruction.Parameters[2]);
+                    Raylib.DrawRectangleLinesEx(
+                        (Rect)instruction.Parameters[0],
+                        (int)instruction.Parameters[1],
+                        (Utils.Color)instruction.Parameters[2]
+                    );
                     break;
                 case InstructionType.DrawCircleLines:
-                    Raylib.DrawCircleLines((int)instruction.Parameters[0], (int)instruction.Parameters[1],
-                        (float)instruction.Parameters[2], (Utils.Color)instruction.Parameters[3]);
+                    Raylib.DrawCircleLines(
+                        (int)instruction.Parameters[0],
+                        (int)instruction.Parameters[1],
+                        (float)instruction.Parameters[2],
+                        (Utils.Color)instruction.Parameters[3]
+                    );
                     break;
                 case InstructionType.DrawTextEx:
-                    Raylib.DrawTextEx((Font)instruction.Parameters[0], (string)instruction.Parameters[1],
-                        (Vec2)instruction.Parameters[2], (int)instruction.Parameters[3],
-                        (int)instruction.Parameters[4], (Utils.Color)instruction.Parameters[5]);
+                    Raylib.DrawTextEx(
+                        (Font)instruction.Parameters[0],
+                        (string)instruction.Parameters[1],
+                        (Vec2)instruction.Parameters[2],
+                        (int)instruction.Parameters[3],
+                        (int)instruction.Parameters[4],
+                        (Utils.Color)instruction.Parameters[5]
+                    );
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -121,16 +164,16 @@ public static class SERender
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         entityInstructions.Sort((i1, i2) => i1.ZLayer.CompareTo(i2.ZLayer));
         uiInstructions.Sort((i1, i2) => i1.ZLayer.CompareTo(i2.ZLayer));
-        
+
         Raylib.BeginMode2D(window.CameraManager.Camera2D);
         DrawInstructions(entityInstructions);
         Raylib.EndMode2D();
-        
+
         DrawInstructions(uiInstructions);
-        
+
         Instructions.Clear();
     }
 
@@ -141,7 +184,12 @@ public static class SERender
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
     /// <param name="shaderAction">Function which render in shader mode</param>
-    public static void ShaderMode(Shader shader, InstructionSource source, float zLayer, Action shaderAction)
+    public static void ShaderMode(
+        Shader shader,
+        InstructionSource source,
+        float zLayer,
+        Action shaderAction
+    )
     {
         var instructions = new List<Instruction>(Instructions);
         Instructions.Clear();
@@ -168,7 +216,15 @@ public static class SERender
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
     /// <param name="scissorAction">Function which render in scissor mode</param>
-    public static void ScissorMode(int posX, int posY, int width, int height, InstructionSource source, float zLayer, Action scissorAction)
+    public static void ScissorMode(
+        int posX,
+        int posY,
+        int width,
+        int height,
+        InstructionSource source,
+        float zLayer,
+        Action scissorAction
+    )
     {
         var instructions = new List<Instruction>(Instructions);
         Instructions.Clear();
@@ -194,15 +250,24 @@ public static class SERender
     /// <param name="color">Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawRectangle(Rect rectangle, Vec2 origin, float rotation, Utils.Color color, InstructionSource source, float zLayer)
+    public static void DrawRectangle(
+        Rect rectangle,
+        Vec2 origin,
+        float rotation,
+        Utils.Color color,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawRectanglePro,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { rectangle, origin, rotation, color }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawRectanglePro,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object> { rectangle, origin, rotation, color }
+            }
+        );
     }
 
     /// <summary>
@@ -215,16 +280,25 @@ public static class SERender
     /// <param name="color">Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawRectangle(int posX, int posY, int width, int height, Utils.Color color,
-        InstructionSource source, float zLayer)
+    public static void DrawRectangle(
+        int posX,
+        int posY,
+        int width,
+        int height,
+        Utils.Color color,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawRectangle,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { posX, posY, width, height, color }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawRectangle,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object> { posX, posY, width, height, color }
+            }
+        );
     }
 
     /// <summary>
@@ -235,16 +309,23 @@ public static class SERender
     /// <param name="borderColor">Border Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawRectangleLines(Rect rect, int borderSize, Utils.Color borderColor,
-        InstructionSource source, float zLayer)
+    public static void DrawRectangleLines(
+        Rect rect,
+        int borderSize,
+        Utils.Color borderColor,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawRectangleLinesEx,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { rect, borderSize, borderColor }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawRectangleLinesEx,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object> { rect, borderSize, borderColor }
+            }
+        );
     }
 
     /// <summary>
@@ -256,16 +337,24 @@ public static class SERender
     /// <param name="borderColor">Border Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawCircleLines(int posX, int posY, float radius, Utils.Color borderColor, InstructionSource source,
-        float zLayer)
+    public static void DrawCircleLines(
+        int posX,
+        int posY,
+        float radius,
+        Utils.Color borderColor,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawCircleLines,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { posX, posY, radius, borderColor }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawCircleLines,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object> { posX, posY, radius, borderColor }
+            }
+        );
     }
 
     /// <summary>
@@ -279,16 +368,26 @@ public static class SERender
     /// <param name="tint">Color Tint</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawTexture(Texture2D texture, Rect src, Rect dest, Vec2 origin, float rotation, Utils.Color tint,
-        InstructionSource source, float zLayer)
+    public static void DrawTexture(
+        Texture2D texture,
+        Rect src,
+        Rect dest,
+        Vec2 origin,
+        float rotation,
+        Utils.Color tint,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawTexturePro,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { texture, src, dest, origin, rotation, tint }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawTexturePro,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object> { texture, src, dest, origin, rotation, tint }
+            }
+        );
     }
 
     /// <summary>
@@ -304,16 +403,38 @@ public static class SERender
     /// <param name="color">Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawText(Font font, string text, Vec2 position, Vec2 origin, float rotation, int fontSize,
-        int spacing, Utils.Color color, InstructionSource source, float zLayer)
+    public static void DrawText(
+        Font font,
+        string text,
+        Vec2 position,
+        Vec2 origin,
+        float rotation,
+        int fontSize,
+        int spacing,
+        Utils.Color color,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawTextPro,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { font, text, position, origin, rotation, fontSize, spacing, color }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawTextPro,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object>
+                {
+                    font,
+                    text,
+                    position,
+                    origin,
+                    rotation,
+                    fontSize,
+                    spacing,
+                    color
+                }
+            }
+        );
     }
 
     /// <summary>
@@ -327,15 +448,25 @@ public static class SERender
     /// <param name="color">Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    public static void DrawText(Font font, string text, Vec2 position, int fontSize, int spacing, Utils.Color color,
-        InstructionSource source, float zLayer)
+    public static void DrawText(
+        Font font,
+        string text,
+        Vec2 position,
+        int fontSize,
+        int spacing,
+        Utils.Color color,
+        InstructionSource source,
+        float zLayer
+    )
     {
-        Instructions.Add(new Instruction
-        {
-            Type = InstructionType.DrawTextEx,
-            Source = source,
-            ZLayer = zLayer,
-            Parameters = new List<object> { font, text, position, fontSize, spacing, color }
-        });
+        Instructions.Add(
+            new Instruction
+            {
+                Type = InstructionType.DrawTextEx,
+                Source = source,
+                ZLayer = zLayer,
+                Parameters = new List<object> { font, text, position, fontSize, spacing, color }
+            }
+        );
     }
 }

@@ -16,7 +16,7 @@ public class TextureManager
     /// Get All Textures
     /// </summary>
     public List<Texture2D> Textures => new(_texture2Ds.Values);
-    
+
     /// <summary>
     /// Add texture to manager
     /// </summary>
@@ -24,8 +24,11 @@ public class TextureManager
     /// <param name="texture2D">Texture</param>
     public void AddTexture(string name, Texture2D texture2D)
     {
-        if(!_texture2Ds.TryAdd(name, texture2D))
-            DebugManager.Log(LogLevel.LogWarning, $"SE_TEXTUREMANAGER: Texture already exist : {name}");
+        if (!_texture2Ds.TryAdd(name, texture2D))
+            DebugManager.Log(
+                LogLevel.LogWarning,
+                $"SE_TEXTUREMANAGER: Texture already exist : {name}"
+            );
     }
 
     /// <summary>
@@ -35,8 +38,11 @@ public class TextureManager
     /// <param name="file">Texture File</param>
     public void AddTexture(string name, string file)
     {
-        if(!_texture2Ds.TryAdd(name, Raylib.LoadTexture(file)))
-            DebugManager.Log(LogLevel.LogWarning, $"SE_TEXTUREMANAGER: Texture already exist : {name}");
+        if (!_texture2Ds.TryAdd(name, Raylib.LoadTexture(file)))
+            DebugManager.Log(
+                LogLevel.LogWarning,
+                $"SE_TEXTUREMANAGER: Texture already exist : {name}"
+            );
     }
 
     /// <summary>

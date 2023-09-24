@@ -136,10 +136,18 @@ public class SeImGui : IDisposable
         var io = ImGui.GetIO();
 
         // Modifiers are not reliable across systems
-        io.KeyCtrl = io.KeysDown[(int)KeyboardKey.KEY_LEFT_CONTROL] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_CONTROL];
-        io.KeyShift = io.KeysDown[(int)KeyboardKey.KEY_LEFT_SHIFT] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SHIFT];
-        io.KeyAlt = io.KeysDown[(int)KeyboardKey.KEY_LEFT_ALT] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_ALT];
-        io.KeySuper = io.KeysDown[(int)KeyboardKey.KEY_LEFT_SUPER] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SUPER];
+        io.KeyCtrl =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_CONTROL]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_CONTROL];
+        io.KeyShift =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_SHIFT]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SHIFT];
+        io.KeyAlt =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_ALT]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_ALT];
+        io.KeySuper =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_SUPER]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SUPER];
 
         // Key states
         for (var i = (int)KeyboardKey.KEY_SPACE; i < (int)KeyboardKey.KEY_KB_MENU + 1; i++)
@@ -150,7 +158,7 @@ public class SeImGui : IDisposable
         // Key input
         foreach (var charGot in InputManager.InternalPressedChars)
         {
-            if(charGot != 0)
+            if (charGot != 0)
                 io.AddInputCharacter((uint)charGot);
         }
     }
@@ -222,7 +230,14 @@ public class SeImGui : IDisposable
     }
 
     // Draw the imgui triangle data
-    private void DrawTriangles(uint count, int idxOffset, int vtxOffset, ImVector<ushort> idxBuffer, ImPtrVector<ImDrawVertPtr> idxVert, IntPtr textureId)
+    private void DrawTriangles(
+        uint count,
+        int idxOffset,
+        int vtxOffset,
+        ImVector<ushort> idxBuffer,
+        ImPtrVector<ImDrawVertPtr> idxVert,
+        IntPtr textureId
+    )
     {
         if (Rlgl.rlCheckRenderBatchLimit((int)count * 3))
             Rlgl.rlDrawRenderBatchActive();
@@ -288,7 +303,14 @@ public class SeImGui : IDisposable
                     idxOffset += (int)pcmd.ElemCount;
                 else
                 {
-                    DrawTriangles(pcmd.ElemCount, idxOffset, (int)pcmd.VtxOffset, idxBuffer, vtxBuffer, pcmd.TextureId);
+                    DrawTriangles(
+                        pcmd.ElemCount,
+                        idxOffset,
+                        (int)pcmd.VtxOffset,
+                        idxBuffer,
+                        vtxBuffer,
+                        pcmd.TextureId
+                    );
                     idxOffset += (int)pcmd.ElemCount;
                     Rlgl.rlDrawRenderBatchActive();
                 }
@@ -299,7 +321,7 @@ public class SeImGui : IDisposable
         Rlgl.rlDisableScissorTest();
         Rlgl.rlEnableBackfaceCulling();
     }
-    
+
     /// <summary>
     /// Render Raylib Texture2D to ImGui
     /// </summary>
@@ -333,7 +355,7 @@ public class SeImGui : IDisposable
             uv0.Y = source.Y / image.height;
             uv1.Y = uv0.Y + source.Height / image.height;
         }
-        
+
         ImGui.Image(new IntPtr(image.id), new Vector2(width, height), uv0, uv1);
     }
 
@@ -361,7 +383,12 @@ public class SeImGui : IDisposable
             ImGui.SetCursorPosX(area.X / 2 - sizeX / 2f);
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (area.Y / 2 - sizeY / 2f));
         }
-        
-        ImageRect(image.texture, sizeX, sizeY, new Rect(0, 0, image.texture.width, -image.texture.height));
+
+        ImageRect(
+            image.texture,
+            sizeX,
+            sizeY,
+            new Rect(0, 0, image.texture.width, -image.texture.height)
+        );
     }
 }

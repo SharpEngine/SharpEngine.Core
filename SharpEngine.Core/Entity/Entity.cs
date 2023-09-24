@@ -12,7 +12,7 @@ public class Entity
     /// <summary>
     /// How Entity must be updated when paused
     /// </summary>
-    public PauseState PauseState  { get; set; } = PauseState.Normal;
+    public PauseState PauseState { get; set; } = PauseState.Normal;
 
     /// <summary>
     /// Tag of Entity
@@ -41,13 +41,13 @@ public class Entity
     /// <returns>Components of type T</returns>
     public List<T> GetComponentsAs<T>() where T : Component.Component =>
         Components.OfType<T>().ToList();
-    
+
     /// <summary>
     /// Get Component of one Type
     /// </summary>
     /// <typeparam name="T">Type of Component</typeparam>
     /// <returns>Component of type T</returns>
-    public T? GetComponentAs<T>() where T: Component.Component =>
+    public T? GetComponentAs<T>() where T : Component.Component =>
         Components.OfType<T>().FirstOrDefault();
 
     /// <summary>
