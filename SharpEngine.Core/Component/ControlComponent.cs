@@ -114,44 +114,44 @@ public class ControlComponent: Component
 
         if(_transform == null) return;
 
-        var posX = 0f;
-        var posY = 0f;
+        var dirX = 0f;
+        var dirY = 0f;
 
         switch (ControlType)
         {
             case ControlType.MouseFollow:
                 var mp = InputManager.GetMousePosition();
-                if (posX < mp.X - Speed * delta)
-                    posX++;
-                else if (posX > mp.X + Speed * delta)
-                    posX--;
-
-                if (posY < mp.Y - Speed * delta)
-                    posY++;
-                else
-                    posY--;
+                var dist = mp - _transform.Position;
+                if (MathF.Abs(dist.X) > 1)
+                {
+                    dirX = dist.X;
+                }
+                if (MathF.Abs(dist.Y) > 1)
+                {
+                    dirY = dist.Y;
+                }
                 break;
             case ControlType.LeftRight:
                 if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0)
-                    posX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
+                    dirX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
                 else
                 {
                     if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
-                        posX--;
+                        dirX--;
                     if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
-                        posX++;
+                        dirX++;
                 }
 
                 break;
             case ControlType.UpDown:
                 if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY) != 0)
-                    posY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
+                    dirY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
                 else
                 {
                     if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                        posY--;
+                        dirY--;
                     if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
-                        posY++;
+                        dirY++;
                 }
 
                 break;
@@ -159,33 +159,33 @@ public class ControlComponent: Component
                 if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0 ||
                     InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY) != 0)
                 {
-                    posX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
-                    posY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
+                    dirX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
+                    dirY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
                 }
                 else
                 {
                     if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
-                        posX--;
+                        dirX--;
                     if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
-                        posX++;
+                        dirX++;
                     if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                        posY--;
+                        dirY--;
                     if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
-                        posY++;
+                        dirY++;
                 }
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(ControlType), ControlType, null);
         }
-        
-        if (posX == 0 && posY == 0) return;
+
+        if (dirX == 0 && dirY == 0) return;
 
         IsMoving = true;
-        Direction = new Vec2(posX, posY).Normalized();
-        var newPos = new Vec2(_transform.Position.X + Direction.X * Speed * delta,
-            _transform.Position.Y + Direction.Y * Speed * delta);
-        var newPosX = new Vec2(_transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1 ), _transform.Position.Y);
-        var newPosY = new Vec2(_transform.Position.X, _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1 ));
+        Direction = new Vec2(dirX, dirY).Normalized();
+        var newPos = new Vec2(_transform.Position.X + Direction.X * Speed
+            * delta, _transform.Position.Y + Direction.Y * Speed * delta);
+        var newPosX = new Vec2(_transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1), _transform.Position.Y);
+        var newPosY = new Vec2(_transform.Position.X, _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1));
         if (_basicPhysics == null || _basicPhysics.CanGo(newPos))
             _transform.Position = newPos;
         else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX))
