@@ -19,37 +19,37 @@ public abstract class Widget
     /// Z Layer of Widget
     /// </summary>
     public int ZLayer { get; set; } = 0;
-    
+
     /// <summary>
     /// If Widget is Display
     /// </summary>
     public bool Displayed { get; set; } = true;
-    
+
     /// <summary>
     /// If Widget is Active
     /// </summary>
     public bool Active { get; set; } = true;
-    
+
     /// <summary>
     /// Parent of Widget (can be null)
     /// </summary>
     public Widget? Parent { get; set; }
-    
+
     /// <summary>
     /// How Widget must be updated when paused
     /// </summary>
     public PauseState PauseState { get; set; } = PauseState.Normal;
-    
+
     /// <summary>
     /// Name of Widgets
     /// </summary>
     public string Name { get; set; } = "";
-    
+
     /// <summary>
     /// Get Real Position (Position + Parent RealPostion if widget has Parent)
     /// </summary>
     public Vec2 RealPosition => Parent != null ? Position + Parent.RealPosition : Position;
-    
+
     /// <summary>
     /// Get All Direct Children of Widget
     /// </summary>
@@ -81,17 +81,17 @@ public abstract class Widget
         Position = position;
         ZLayer = zLayer;
     }
-    
+
     /// <summary>
     /// Get All Direct Children of one Type
     /// </summary>
     /// <typeparam name="T">Type of Children</typeparam>
     /// <returns>Children of type T</returns>
-    public List<T> GetChildrenAs<T>() where T : Widget =>
-        Children.FindAll(w => w.GetType() == typeof(T)).Cast<T>().ToList();
+    public List<T> GetChildrenAs<T>()
+        where T : Widget => Children.FindAll(w => w.GetType() == typeof(T)).Cast<T>().ToList();
 
     /// <summary>
-    /// Get All Recursive Children 
+    /// Get All Recursive Children
     /// </summary>
     /// <returns>All Children</returns>
     public List<Widget> GetAllChildren()
@@ -107,7 +107,8 @@ public abstract class Widget
     /// </summary>
     /// <typeparam name="T">Scene Type</typeparam>
     /// <returns>Scene casted as T</returns>
-    public T? GetSceneAs<T>() where T : Scene => (T?)Scene;
+    public T? GetSceneAs<T>()
+        where T : Scene => (T?)Scene;
 
     /// <summary>
     /// Add Child and return it
@@ -115,7 +116,8 @@ public abstract class Widget
     /// <param name="widget">Widget which be added</param>
     /// <typeparam name="T">Type of Widget</typeparam>
     /// <returns>Child</returns>
-    public T AddChild<T>(T widget) where T : Widget
+    public T AddChild<T>(T widget)
+        where T : Widget
     {
         if (_scene != null)
             widget.Scene = _scene;
@@ -177,8 +179,9 @@ public abstract class Widget
     /// </summary>
     public virtual void Draw()
     {
-        if(!Displayed) return;
-        
+        if (!Displayed)
+            return;
+
         foreach (var child in Children)
             child.Draw();
     }

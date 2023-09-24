@@ -16,7 +16,7 @@ public class CameraManager
     /// <seealso cref="Mode"/>
     /// </summary>
     public Entity.Entity? FollowEntity { get; set; }
-    
+
     /// <summary>
     /// Camera Mode
     /// </summary>
@@ -36,7 +36,7 @@ public class CameraManager
     /// Fraction Speed used when mode is FollowSmooth
     /// </summary>
     public float FractionSpeed { get; set; } = 0.8f;
-    
+
     internal Camera2D Camera2D;
 
     /// <summary>
@@ -47,7 +47,7 @@ public class CameraManager
         get => Camera2D.rotation;
         set => Camera2D.rotation = value;
     }
-    
+
     /// <summary>
     /// Zoom of Camera
     /// </summary>
@@ -69,7 +69,7 @@ public class CameraManager
     internal void SetScreenSize(Vec2 screenSize)
     {
         Camera2D.offset = screenSize / 2;
-        if(Mode == Utils.CameraMode.Basic)
+        if (Mode == Utils.CameraMode.Basic)
             Camera2D.target = Camera2D.offset;
     }
 

@@ -134,7 +134,7 @@ public class ParticleEmitter
     /// SpawnSize of Particle Emitter
     /// </summary>
     public Vec2 SpawnSize { get; set; }
-    
+
     /// <summary>
     /// MaxParticles of Particle Emitter
     /// </summary>
@@ -144,7 +144,7 @@ public class ParticleEmitter
     /// Active of Particle Emitter
     /// </summary>
     public bool Active { get; set; }
-    
+
     /// <summary>
     /// ZLayer of Particle Emitter
     /// </summary>
@@ -188,15 +188,35 @@ public class ParticleEmitter
     /// <param name="sizeFunction">Particle Emitter SizeFunction</param>
     /// <param name="sizeFunctionValue">Particle Emitter SizeFunctionValue</param>
     /// <param name="zLayer">Particle Emitter ZLayer</param>
-    public ParticleEmitter(Color[] beginColors, Color[]? endColors = null, Vec2? spawnSize = null, Vec2? offset = null,
-        float minVelocity = 20, float maxVelocity = 20,
-        float minAcceleration = 0, float maxAcceleration = 0, float minRotationSpeed = 0, float maxRotationSpeed = 0,
-        float minRotation = 0, float maxRotation = 0,
-        float minLifetime = 2, float maxLifetime = 2, float minDirection = 0, float maxDirection = 0,
-        float minTimerBeforeSpawn = 0.3f, float maxTimerBeforeSpawn = 0.3f,
-        float minSize = 5, float maxSize = 5, int minNbParticlesPerSpawn = 4, int maxNbParticlesPerSpawn = 4,
-        int maxParticles = -1, bool active = false,
-        ParticleParametersFunction sizeFunction = ParticleParametersFunction.Normal, float sizeFunctionValue = 0, int zLayer = 0)
+    public ParticleEmitter(
+        Color[] beginColors,
+        Color[]? endColors = null,
+        Vec2? spawnSize = null,
+        Vec2? offset = null,
+        float minVelocity = 20,
+        float maxVelocity = 20,
+        float minAcceleration = 0,
+        float maxAcceleration = 0,
+        float minRotationSpeed = 0,
+        float maxRotationSpeed = 0,
+        float minRotation = 0,
+        float maxRotation = 0,
+        float minLifetime = 2,
+        float maxLifetime = 2,
+        float minDirection = 0,
+        float maxDirection = 0,
+        float minTimerBeforeSpawn = 0.3f,
+        float maxTimerBeforeSpawn = 0.3f,
+        float minSize = 5,
+        float maxSize = 5,
+        int minNbParticlesPerSpawn = 4,
+        int maxNbParticlesPerSpawn = 4,
+        int maxParticles = -1,
+        bool active = false,
+        ParticleParametersFunction sizeFunction = ParticleParametersFunction.Normal,
+        float sizeFunctionValue = 0,
+        int zLayer = 0
+    )
     {
         BeginColors = beginColors;
         EndColors = endColors;
@@ -239,12 +259,15 @@ public class ParticleEmitter
         else
             position = new Vec2(
                 Rand.GetRandF(-SpawnSize.X / 2, SpawnSize.X / 2) + Offset.X + objectPosition.X,
-                Rand.GetRandF(-SpawnSize.Y / 2, SpawnSize.Y / 2) + Offset.Y + objectPosition.Y);
+                Rand.GetRandF(-SpawnSize.Y / 2, SpawnSize.Y / 2) + Offset.Y + objectPosition.Y
+            );
         var angle = Rand.GetRandF(MinDirection, MaxDirection);
-        var velocity = new Vec2(MathF.Cos(MathHelper.ToRadians(angle)), MathF.Sin(MathHelper.ToRadians(angle))) *
-                       Rand.GetRandF(MinVelocity, MaxVelocity);
-        var acceleration = new Vec2(MathF.Cos(MathHelper.ToRadians(angle)), MathF.Sin(MathHelper.ToRadians(angle))) *
-                           Rand.GetRandF(MinAcceleration, MaxAcceleration);
+        var velocity =
+            new Vec2(MathF.Cos(MathHelper.ToRadians(angle)), MathF.Sin(MathHelper.ToRadians(angle)))
+            * Rand.GetRandF(MinVelocity, MaxVelocity);
+        var acceleration =
+            new Vec2(MathF.Cos(MathHelper.ToRadians(angle)), MathF.Sin(MathHelper.ToRadians(angle)))
+            * Rand.GetRandF(MinAcceleration, MaxAcceleration);
         var rotation = Rand.GetRandF(MinRotation, MaxRotation);
         var rotationSpeed = Rand.GetRandF(MinRotationSpeed, MaxRotationSpeed);
         var lifetime = Rand.GetRandF(MinLifetime, MaxLifetime);
@@ -254,8 +277,20 @@ public class ParticleEmitter
         if (EndColors != null)
             endColor = EndColors[Rand.GetRand(0, EndColors.Length - 1)];
 
-        var particle = new Particle(position, velocity, acceleration, lifetime, size, rotation,
-            rotationSpeed, beginColor, endColor, SizeFunction, SizeFunctionValue, ZLayer);
+        var particle = new Particle(
+            position,
+            velocity,
+            acceleration,
+            lifetime,
+            size,
+            rotation,
+            rotationSpeed,
+            beginColor,
+            endColor,
+            SizeFunction,
+            SizeFunctionValue,
+            ZLayer
+        );
         Particles.Add(particle);
     }
 
@@ -279,7 +314,8 @@ public class ParticleEmitter
 
         _mustBeDeleted.Clear();
 
-        if (!Active) return;
+        if (!Active)
+            return;
 
         if (_timerBeforeSpawn <= 0)
         {

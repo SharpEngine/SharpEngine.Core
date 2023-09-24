@@ -8,23 +8,23 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which represents Scroll Frame
 /// </summary>
-public class ScrollFrame: Widget
+public class ScrollFrame : Widget
 {
     /// <summary>
     /// Color of Scroll Frame Border
     /// </summary>
     public Color BorderColor { get; set; }
-    
+
     /// <summary>
     /// Size of Scroll Frame
     /// </summary>
     public Vec2 Size { get; set; }
-    
+
     /// <summary>
-    /// Size of Scroll Frame Border 
+    /// Size of Scroll Frame Border
     /// </summary>
     public int BorderSize { get; set; }
-    
+
     /// <summary>
     /// Color of Scroll Frame Background
     /// </summary>
@@ -34,7 +34,7 @@ public class ScrollFrame: Widget
     /// Scroll Factor of Scroll Frame
     /// </summary>
     public int ScrollFactor { get; set; }
-    
+
     /// <summary>
     /// Create Scroll Frame
     /// </summary>
@@ -45,8 +45,16 @@ public class ScrollFrame: Widget
     /// <param name="borderColor">Scroll Frame Border Color (Color.Black)</param>
     /// <param name="backgroundColor">Scroll Frame Background Color (null)</param>
     /// <param name="zLayer">Z Layer</param>
-    public ScrollFrame(Vec2 position, Vec2 size, int scrollFactor = 5, int borderSize = 3, Color? borderColor = null,
-        Color? backgroundColor = null, int zLayer = 0) : base(position, zLayer)
+    public ScrollFrame(
+        Vec2 position,
+        Vec2 size,
+        int scrollFactor = 5,
+        int borderSize = 3,
+        Color? borderColor = null,
+        Color? backgroundColor = null,
+        int zLayer = 0
+    )
+        : base(position, zLayer)
     {
         BorderColor = borderColor ?? Color.Black;
         Size = size;
@@ -70,20 +78,39 @@ public class ScrollFrame: Widget
     /// <inheritdoc />
     public override void Draw()
     {
-        if(!Displayed || Scene == null ) return;
+        if (!Displayed || Scene == null)
+            return;
 
         var position = RealPosition;
 
         if (BackgroundColor != null)
-            SERender.DrawRectangle(new Rect(position.X, position.Y, Size.X, Size.Y), Size / 2, 0, BackgroundColor.Value,
-                InstructionSource.UI, ZLayer);
-        SERender.DrawRectangleLines(new Rect(position.X - Size.X / 2, position.Y - Size.Y / 2, Size.X, Size.Y),
-            BorderSize, BorderColor, InstructionSource.UI, ZLayer + 0.00001f);
+            SERender.DrawRectangle(
+                new Rect(position.X, position.Y, Size.X, Size.Y),
+                Size / 2,
+                0,
+                BackgroundColor.Value,
+                InstructionSource.UI,
+                ZLayer
+            );
+        SERender.DrawRectangleLines(
+            new Rect(position.X - Size.X / 2, position.Y - Size.Y / 2, Size.X, Size.Y),
+            BorderSize,
+            BorderColor,
+            InstructionSource.UI,
+            ZLayer + 0.00001f
+        );
 
-        SERender.ScissorMode((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y,
-            InstructionSource.UI, ZLayer + 0.00002f, () =>
+        SERender.ScissorMode(
+            (int)(position.X - Size.X / 2),
+            (int)(position.Y - Size.Y / 2),
+            (int)Size.X,
+            (int)Size.Y,
+            InstructionSource.UI,
+            ZLayer + 0.00002f,
+            () =>
             {
                 base.Draw();
-            });
+            }
+        );
     }
 }

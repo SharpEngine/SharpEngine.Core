@@ -32,7 +32,7 @@ public class FontManager
             throw new FileNotFoundException($"Font not found : {file}");
         }
 
-        if(!_fonts.TryAdd(name, Raylib.LoadFontEx(file, fontSize, null, 250)))
+        if (!_fonts.TryAdd(name, Raylib.LoadFontEx(file, fontSize, null, 250)))
             DebugManager.Log(LogLevel.LogWarning, $"SE_FONTMANAGER: Font already exist : {name}");
     }
 
@@ -46,7 +46,7 @@ public class FontManager
     {
         if (name == "RAYLIB_DEFAULT")
             return Raylib.GetFontDefault();
-        
+
         if (_fonts.TryGetValue(name, out var font))
             return font;
         DebugManager.Log(LogLevel.LogError, $"SE_FONTMANAGER: Font not found : {name}");

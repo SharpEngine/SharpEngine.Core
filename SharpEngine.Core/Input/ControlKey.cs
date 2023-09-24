@@ -9,17 +9,17 @@ public enum ControlKey
     /// Up Key
     /// </summary>
     Up,
-    
+
     /// <summary>
     /// Down Key
     /// </summary>
     Down,
-    
+
     /// <summary>
     /// Left Key
     /// </summary>
     Left,
-    
+
     /// <summary>
     /// Right Key
     /// </summary>

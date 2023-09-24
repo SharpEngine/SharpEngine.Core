@@ -6,7 +6,7 @@ namespace SharpEngine.Core.Data.Save;
 /// <summary>
 /// Class which represents Save with binary data
 /// </summary>
-public class BinarySave: ISave
+public class BinarySave : ISave
 {
     private readonly Dictionary<string, object> _data = new();
 
@@ -31,7 +31,7 @@ public class BinarySave: ISave
                 _data.Add(key, value);
             }
         }
-        catch(EndOfStreamException) {}
+        catch (EndOfStreamException) { }
     }
 
     /// <inheritdoc />
@@ -64,7 +64,8 @@ public class BinarySave: ISave
     }
 
     /// <inheritdoc />
-    public object GetObject(string key, object defaultValue) => _data.GetValueOrDefault(key, defaultValue);
+    public object GetObject(string key, object defaultValue) =>
+        _data.GetValueOrDefault(key, defaultValue);
 
     /// <inheritdoc />
     public T GetObjectAs<T>(string key, T defaultValue) =>

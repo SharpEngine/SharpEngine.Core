@@ -24,7 +24,7 @@ public class SoundManager
     /// <param name="file">Sound File</param>
     public void AddSound(string name, string file)
     {
-        if(!_sounds.TryAdd(name, Raylib.LoadSound(file)))
+        if (!_sounds.TryAdd(name, Raylib.LoadSound(file)))
             DebugManager.Log(LogLevel.LogWarning, $"SE_SOUNDMANAGER: Sound already exist : {name}");
     }
 

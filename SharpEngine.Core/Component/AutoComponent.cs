@@ -5,13 +5,13 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which create automatic movements
 /// </summary>
-public class AutoComponent: Component
+public class AutoComponent : Component
 {
     /// <summary>
     /// Automatic Direction
     /// </summary>
     public Vec2 Direction { get; set; }
-    
+
     /// <summary>
     /// Automatic Rotation
     /// </summary>
@@ -42,15 +42,16 @@ public class AutoComponent: Component
     public override void Update(float delta)
     {
         base.Update(delta);
-        
-        if(_transform == null) return;
+
+        if (_transform == null)
+            return;
 
         if (Direction.Length() != 0)
         {
             _transform.Position = new Vec2(
                 _transform.Position.X + Direction.X * delta,
                 _transform.Position.Y + Direction.Y * delta
-                );
+            );
         }
 
         if (Rotation != 0)

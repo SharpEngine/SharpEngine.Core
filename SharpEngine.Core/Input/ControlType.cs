@@ -9,22 +9,22 @@ public enum ControlType
     /// Follow Mouse
     /// </summary>
     MouseFollow,
-    
+
     /// <summary>
     /// Only Left and Right Movements
     /// </summary>
     LeftRight,
-    
+
     /// <summary>
     /// Only Up and Down Movements
     /// </summary>
     UpDown,
-    
+
     /// <summary>
     /// Up, Down, Left and Right Movements
     /// </summary>
     FourDirection,
-    
+
     /// <summary>
     /// Classic Platformer Movements
     /// </summary>

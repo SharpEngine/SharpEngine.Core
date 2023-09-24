@@ -9,17 +9,17 @@ public enum PauseState
     /// Will be updated only when not paused
     /// </summary>
     Normal,
-    
+
     /// <summary>
     /// Will never be updated
     /// </summary>
     Disabled,
-    
+
     /// <summary>
     /// Will always be updated
     /// </summary>
     Enabled,
-    
+
     /// <summary>
     /// Will be updated only when paused
     /// </summary>

@@ -9,43 +9,43 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which represents Controls
 /// </summary>
-public class ControlComponent: Component
+public class ControlComponent : Component
 {
     /// <summary>
     /// Type of Control
     /// </summary>
     public ControlType ControlType { get; set; }
-    
+
     /// <summary>
     /// Speed of Control
     /// </summary>
     public int Speed { get; set; }
-    
+
     /// <summary>
     /// If Control use GamePad
     /// </summary>
     public bool UseGamePad { get; set; }
-    
+
     /// <summary>
     /// Index of GamePad
     /// </summary>
     public int GamePadIndex { get; set; }
-    
+
     /// <summary>
     /// Jump force
     /// </summary>
     public float JumpForce { get; set; }
-    
+
     /// <summary>
     /// If Entity is moving
     /// </summary>
     public bool IsMoving { get; protected set; }
-    
+
     /// <summary>
     /// If Entity can jump
     /// </summary>
     public bool CanJump { get; protected set; }
-    
+
     /// <summary>
     /// Direction of Control
     /// </summary>
@@ -63,8 +63,13 @@ public class ControlComponent: Component
     /// <param name="jumpForce">Jump Force (3)</param>
     /// <param name="useGamePad">Use Game Pad (false)</param>
     /// <param name="gamePadIndex">Game Pad Index (1)</param>
-    public ControlComponent(ControlType controlType = ControlType.FourDirection, int speed = 300, float jumpForce = 2,
-        bool useGamePad = false, int gamePadIndex = 1)
+    public ControlComponent(
+        ControlType controlType = ControlType.FourDirection,
+        int speed = 300,
+        float jumpForce = 2,
+        bool useGamePad = false,
+        int gamePadIndex = 1
+    )
     {
         ControlType = controlType;
         Speed = speed;
@@ -88,7 +93,7 @@ public class ControlComponent: Component
     /// <param name="controlKey">Key Control</param>
     /// <returns>Key</returns>
     public Key GetKey(ControlKey controlKey) => _keys[controlKey];
-    
+
     /// <summary>
     /// Set Key for a Control
     /// </summary>
@@ -112,7 +117,8 @@ public class ControlComponent: Component
 
         IsMoving = false;
 
-        if(_transform == null) return;
+        if (_transform == null)
+            return;
 
         var dirX = 0f;
         var dirY = 0f;
@@ -156,8 +162,10 @@ public class ControlComponent: Component
 
                 break;
             case ControlType.FourDirection:
-                if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0 ||
-                    InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY) != 0)
+                if (
+                    UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0
+                    || InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY) != 0
+                )
                 {
                     dirX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
                     dirY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
@@ -178,14 +186,23 @@ public class ControlComponent: Component
                 throw new ArgumentOutOfRangeException(nameof(ControlType), ControlType, null);
         }
 
-        if (dirX == 0 && dirY == 0) return;
+        if (dirX == 0 && dirY == 0)
+            return;
 
         IsMoving = true;
         Direction = new Vec2(dirX, dirY).Normalized();
-        var newPos = new Vec2(_transform.Position.X + Direction.X * Speed
-            * delta, _transform.Position.Y + Direction.Y * Speed * delta);
-        var newPosX = new Vec2(_transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1), _transform.Position.Y);
-        var newPosY = new Vec2(_transform.Position.X, _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1));
+        var newPos = new Vec2(
+            _transform.Position.X + Direction.X * Speed * delta,
+            _transform.Position.Y + Direction.Y * Speed * delta
+        );
+        var newPosX = new Vec2(
+            _transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
+            _transform.Position.Y
+        );
+        var newPosY = new Vec2(
+            _transform.Position.X,
+            _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
+        );
         if (_basicPhysics == null || _basicPhysics.CanGo(newPos))
             _transform.Position = newPos;
         else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX))
@@ -200,6 +217,5 @@ public class ControlComponent: Component
         }
         else
             IsMoving = false;
-
     }
 }

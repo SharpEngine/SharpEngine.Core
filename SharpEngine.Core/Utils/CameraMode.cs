@@ -9,12 +9,12 @@ public enum CameraMode
     /// Basic Camera
     /// </summary>
     Basic,
-    
+
     /// <summary>
     /// Camera which follow entity
     /// </summary>
     Follow,
-    
+
     /// <summary>
     /// Camera which follow entity with smooth movements
     /// </summary>

@@ -16,22 +16,22 @@ public class CollisionComponent : Component
     /// Size
     /// </summary>
     public Vec2 Size { get; set; }
-    
+
     /// <summary>
     /// Offset
     /// </summary>
     public Vec2 Offset { get; set; }
-    
+
     /// <summary>
     /// If Collision is Solid
     /// </summary>
     public bool Solid { get; set; }
-    
+
     /// <summary>
     /// Collision Callback
     /// </summary>
     public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; }
-    
+
     /// <summary>
     /// If must draw collision
     /// </summary>
@@ -47,8 +47,13 @@ public class CollisionComponent : Component
     /// <param name="solid">If Collision is Solid (true)</param>
     /// <param name="collisionCallback">Action called when collision (null)</param>
     /// <param name="drawDebug">Draw collision for debug (false)</param>
-    public CollisionComponent(Vec2 size, Vec2? offset = null, bool solid = true,
-        Action<Entity.Entity, Entity.Entity>? collisionCallback = null, bool drawDebug = false)
+    public CollisionComponent(
+        Vec2 size,
+        Vec2? offset = null,
+        bool solid = true,
+        Action<Entity.Entity, Entity.Entity>? collisionCallback = null,
+        bool drawDebug = false
+    )
     {
         Size = size;
         Offset = offset ?? Vec2.Zero;
@@ -65,7 +70,11 @@ public class CollisionComponent : Component
     public Rect GetCollisionRect(Vec2? position = null)
     {
         position ??= _transformComponent?.Position;
-        return new Rect(position?.X + Offset.X - Size.X / 2 ?? 0, position?.Y + Offset.Y - Size.Y / 2 ?? 0, Size);
+        return new Rect(
+            position?.X + Offset.X - Size.X / 2 ?? 0,
+            position?.Y + Offset.Y - Size.Y / 2 ?? 0,
+            Size
+        );
     }
 
     /// <summary>
@@ -78,12 +87,15 @@ public class CollisionComponent : Component
         var canGo = true;
         foreach (var entity in Entity?.Scene?.Entities!)
         {
-            if (entity == Entity) continue;
-            
-            if (entity.GetComponentAs<CollisionComponent>() is { } entityPhysics && 
-                entityPhysics.GetCollisionRect() is var entityRect &&
-                GetCollisionRect(position) is var selfRect &&
-                Raylib.CheckCollisionRecs(entityRect, selfRect))
+            if (entity == Entity)
+                continue;
+
+            if (
+                entity.GetComponentAs<CollisionComponent>() is { } entityPhysics
+                && entityPhysics.GetCollisionRect() is var entityRect
+                && GetCollisionRect(position) is var selfRect
+                && Raylib.CheckCollisionRecs(entityRect, selfRect)
+            )
             {
                 CollisionCallback?.Invoke(Entity, entity);
                 entityPhysics.CollisionCallback?.Invoke(Entity, entity);
@@ -107,13 +119,22 @@ public class CollisionComponent : Component
     public override void Draw()
     {
         base.Draw();
-        if (_transformComponent == null) return;
+        if (_transformComponent == null)
+            return;
 
         if (DrawDebug)
             SERender.DrawRectangleLines(
                 new Rect(
-                    new Vec2(_transformComponent.Position.X - Size.X / 2 + Offset.X,
-                        _transformComponent.Position.Y - Size.Y / 2 + Offset.Y), Size), 2, Color.Red,
-                InstructionSource.Entity, float.MaxValue);
+                    new Vec2(
+                        _transformComponent.Position.X - Size.X / 2 + Offset.X,
+                        _transformComponent.Position.Y - Size.Y / 2 + Offset.Y
+                    ),
+                    Size
+                ),
+                2,
+                Color.Red,
+                InstructionSource.Entity,
+                float.MaxValue
+            );
     }
 }

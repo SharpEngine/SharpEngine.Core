@@ -1,10 +1,10 @@
 ﻿namespace SharpEngine.Core.Utils.EventArgs;
 
 /// <summary>
-/// Event Args which have old and new value 
+/// Event Args which have old and new value
 /// </summary>
 /// <typeparam name="T">Type of Value</typeparam>
-public class ValueEventArgs<T>: System.EventArgs
+public class ValueEventArgs<T> : System.EventArgs
 {
     /// <summary>
     /// Old Value

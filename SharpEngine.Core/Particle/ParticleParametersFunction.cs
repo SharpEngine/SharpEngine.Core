@@ -9,12 +9,12 @@ public enum ParticleParametersFunction
     /// Decrease function
     /// </summary>
     Decrease,
-    
+
     /// <summary>
     /// Increase function
     /// </summary>
     Increase,
-    
+
     /// <summary>
     /// Normal function
     /// </summary>

@@ -3,7 +3,7 @@
 /// <summary>
 /// Event Args which have a boolean result
 /// </summary>
-public class BoolEventArgs: System.EventArgs
+public class BoolEventArgs : System.EventArgs
 {
     /// <summary>
     /// Result of Event

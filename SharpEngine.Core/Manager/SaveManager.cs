@@ -22,7 +22,7 @@ public static class SaveManager
     /// <param name="save">Save Object</param>
     public static void AddSave(string name, ISave save)
     {
-        if(!InternalSaves.TryAdd(name, save))
+        if (!InternalSaves.TryAdd(name, save))
             DebugManager.Log(LogLevel.LogWarning, $"SE_SAVEMANAGER: Save already exist : {name}");
     }
 
