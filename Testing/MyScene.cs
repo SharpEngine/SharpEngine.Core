@@ -1,6 +1,7 @@
 using SharpEngine.Core;
 using SharpEngine.Core.Component;
 using SharpEngine.Core.Entity;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Math;
 
 namespace Testing;
@@ -12,6 +13,7 @@ public class MyScene: Scene
         var e = new Entity();
         e.AddComponent(new TransformComponent(new Vec2(640, 480)));
         e.AddComponent(new SpriteComponent("outline", shader: "outline"));
+        e.AddComponent(new ControlComponent(controlType: ControlType.MouseFollow));
         AddEntity(e);
     }
 }
