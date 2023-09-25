@@ -162,4 +162,27 @@ public static class InputManager
     /// <returns>Value</returns>
     public static float GetGamePadAxis(int index, GamePadAxis axis) =>
         Raylib.GetGamepadAxisMovement(index, axis.ToRayLib());
+
+    /// <summary>
+    /// Updates the input.
+    /// </summary>
+    internal static void UpdateInput()
+    {
+        InternalPressedChars.Clear();
+        InternalPressedKeys.Clear();
+
+        var key = Raylib.GetKeyPressed();
+        while (key > 0)
+        {
+            InternalPressedKeys.Add(key);
+            key = Raylib.GetKeyPressed();
+        }
+
+        var charGot = Raylib.GetCharPressed();
+        while (charGot > 0)
+        {
+            InternalPressedChars.Add(charGot);
+            charGot = Raylib.GetCharPressed();
+        }
+    }
 }
