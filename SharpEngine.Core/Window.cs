@@ -320,22 +320,7 @@ public class Window
         {
             #region Update Pressed Keys and Chars
 
-            InputManager.InternalPressedChars.Clear();
-            InputManager.InternalPressedKeys.Clear();
-
-            var key = Raylib.GetKeyPressed();
-            while (key > 0)
-            {
-                InputManager.InternalPressedKeys.Add(key);
-                key = Raylib.GetKeyPressed();
-            }
-
-            var charGot = Raylib.GetCharPressed();
-            while (charGot > 0)
-            {
-                InputManager.InternalPressedChars.Add(charGot);
-                charGot = Raylib.GetCharPressed();
-            }
+            InputManager.UpdateInput();
 
             #endregion
 
