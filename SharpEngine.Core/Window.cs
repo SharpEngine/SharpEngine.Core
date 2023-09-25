@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Raylib_cs;
@@ -297,6 +298,12 @@ public class Window
         StartCallback?.Invoke(this, args);
         if (!args.Result)
             return;
+
+        if (!Scenes.Any())
+        {
+            DebugManager.Log(LogLevel.LogError, "SE: There are no scenes in window.");
+            return;
+        }
 
         #region Load
 
