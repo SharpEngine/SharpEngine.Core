@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Raylib_cs;
 using SharpEngine.Core.Math;
+using SharpEngine.Core.Renderer.Instructions;
 
 namespace SharpEngine.Core.Renderer;
 
@@ -29,9 +30,9 @@ public static class SERender
     /// <summary>
     /// Current Instructions to be rendered
     /// </summary>
-    public static List<Instruction> Instructions = new();
+    internal static List<Instruction> Instructions = new();
 
-    private static void DrawInstructions(List<Instruction> instructions)
+    internal static void DrawInstructions(List<Instruction> instructions)
     {
         foreach (var instruction in instructions)
         {
@@ -40,101 +41,7 @@ public static class SERender
                 LastEntityInstructionsNumber++;
             else
                 LastUIInstructionsNumber++;
-
-            switch (instruction.Type)
-            {
-                case InstructionType.ShaderMode:
-                    Raylib.BeginShaderMode((Shader)instruction.Parameters[0]);
-                    DrawInstructions(
-                        instruction.Parameters
-                            .GetRange(1, instruction.Parameters.Count - 1)
-                            .Select(x => (Instruction)x)
-                            .ToList()
-                    );
-                    Raylib.EndShaderMode();
-                    break;
-                case InstructionType.ScissorMode:
-                    Raylib.BeginScissorMode(
-                        (int)instruction.Parameters[0],
-                        (int)instruction.Parameters[1],
-                        (int)instruction.Parameters[2],
-                        (int)instruction.Parameters[3]
-                    );
-                    DrawInstructions(
-                        instruction.Parameters
-                            .GetRange(4, instruction.Parameters.Count - 4)
-                            .Select(x => (Instruction)x)
-                            .ToList()
-                    );
-                    Raylib.EndScissorMode();
-                    break;
-                case InstructionType.DrawRectangle:
-                    Raylib.DrawRectangle(
-                        (int)instruction.Parameters[0],
-                        (int)instruction.Parameters[1],
-                        (int)instruction.Parameters[2],
-                        (int)instruction.Parameters[3],
-                        (Utils.Color)instruction.Parameters[4]
-                    );
-                    break;
-                case InstructionType.DrawRectanglePro:
-                    Raylib.DrawRectanglePro(
-                        (Rect)instruction.Parameters[0],
-                        (Vec2)instruction.Parameters[1],
-                        (float)instruction.Parameters[2],
-                        (Utils.Color)instruction.Parameters[3]
-                    );
-                    break;
-                case InstructionType.DrawTexturePro:
-                    Raylib.DrawTexturePro(
-                        (Texture2D)instruction.Parameters[0],
-                        (Rect)instruction.Parameters[1],
-                        (Rect)instruction.Parameters[2],
-                        (Vec2)instruction.Parameters[3],
-                        (float)instruction.Parameters[4],
-                        (Utils.Color)instruction.Parameters[5]
-                    );
-                    break;
-                case InstructionType.DrawTextPro:
-                    Raylib.DrawTextPro(
-                        (Font)instruction.Parameters[0],
-                        (string)instruction.Parameters[1],
-                        (Vec2)instruction.Parameters[2],
-                        (Vec2)instruction.Parameters[3],
-                        (float)instruction.Parameters[4],
-                        (int)instruction.Parameters[5],
-                        (int)instruction.Parameters[6],
-                        (Utils.Color)instruction.Parameters[7]
-                    );
-                    break;
-                case InstructionType.DrawRectangleLinesEx:
-                    Raylib.DrawRectangleLinesEx(
-                        (Rect)instruction.Parameters[0],
-                        (int)instruction.Parameters[1],
-                        (Utils.Color)instruction.Parameters[2]
-                    );
-                    break;
-                case InstructionType.DrawCircleLines:
-                    Raylib.DrawCircleLines(
-                        (int)instruction.Parameters[0],
-                        (int)instruction.Parameters[1],
-                        (float)instruction.Parameters[2],
-                        (Utils.Color)instruction.Parameters[3]
-                    );
-                    break;
-                case InstructionType.DrawTextEx:
-                    Raylib.DrawTextEx(
-                        (Font)instruction.Parameters[0],
-                        (string)instruction.Parameters[1],
-                        (Vec2)instruction.Parameters[2],
-                        (int)instruction.Parameters[3],
-                        (int)instruction.Parameters[4],
-                        (Utils.Color)instruction.Parameters[5]
-                    );
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            instruction.Execute();
         }
     }
 
@@ -194,9 +101,8 @@ public static class SERender
         var instructions = new List<Instruction>(Instructions);
         Instructions.Clear();
         shaderAction();
-        var instruction = new Instruction
+        var instruction = new ShaderMode
         {
-            Type = InstructionType.ShaderMode,
             Source = source,
             ZLayer = zLayer,
             Parameters = new List<object> { shader }
@@ -229,9 +135,8 @@ public static class SERender
         var instructions = new List<Instruction>(Instructions);
         Instructions.Clear();
         scissorAction();
-        var instruction = new Instruction
+        var instruction = new ScissorMode
         {
-            Type = InstructionType.ScissorMode,
             Source = source,
             ZLayer = zLayer,
             Parameters = new List<object> { posX, posY, width, height }
@@ -260,9 +165,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawRectanglePro
             {
-                Type = InstructionType.DrawRectanglePro,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object> { rectangle, origin, rotation, color }
@@ -291,9 +195,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawRectangle
             {
-                Type = InstructionType.DrawRectangle,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object> { posX, posY, width, height, color }
@@ -318,9 +221,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawRectangleLinesEx
             {
-                Type = InstructionType.DrawRectangleLinesEx,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object> { rect, borderSize, borderColor }
@@ -347,9 +249,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawCircleLines
             {
-                Type = InstructionType.DrawCircleLines,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object> { posX, posY, radius, borderColor }
@@ -380,9 +281,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawTexturePro
             {
-                Type = InstructionType.DrawTexturePro,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object> { texture, src, dest, origin, rotation, tint }
@@ -417,9 +317,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawTextPro
             {
-                Type = InstructionType.DrawTextPro,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object>
@@ -460,9 +359,8 @@ public static class SERender
     )
     {
         Instructions.Add(
-            new Instruction
+            new DrawTextEx
             {
-                Type = InstructionType.DrawTextEx,
                 Source = source,
                 ZLayer = zLayer,
                 Parameters = new List<object> { font, text, position, fontSize, spacing, color }

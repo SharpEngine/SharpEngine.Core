@@ -5,13 +5,8 @@ namespace SharpEngine.Core.Renderer;
 /// <summary>
 /// Struct which represents renderer instruction
 /// </summary>
-public struct Instruction
+internal abstract record Instruction
 {
-    /// <summary>
-    /// Type of Instruction
-    /// </summary>
-    public InstructionType Type;
-
     /// <summary>
     /// if Instruction is for entities or ui
     /// </summary>
@@ -26,4 +21,9 @@ public struct Instruction
     /// Parameters of Instruction
     /// </summary>
     public List<object> Parameters;
+
+    /// <summary>
+    /// Executes the instruction.
+    /// </summary>
+    internal virtual void Execute() { }
 }
