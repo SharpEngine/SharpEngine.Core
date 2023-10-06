@@ -16,4 +16,30 @@ public class MyScene : Scene
         e.AddComponent(new ControlComponent(controlType: ControlType.MouseFollow));
         AddEntity(e);
     }
+
+    public override void Load()
+    {
+        base.Load();
+
+        Window?.TimerManager.AddTimer(
+            "outlineTimer",
+            new SharpEngine.Core.Utils.Timer(
+                2,
+                () =>
+                {
+                    Window?.ShaderManager.SetShaderValue("outline", "outlineSize", 8f);
+                    Window?.TimerManager.AddTimer(
+                        "outlineTimer2",
+                        new SharpEngine.Core.Utils.Timer(
+                            2,
+                            () =>
+                            {
+                                Window?.ShaderManager.SetShaderValue("outline", "outlineSize", 2f);
+                            }
+                        )
+                    );
+                }
+            )
+        );
+    }
 }

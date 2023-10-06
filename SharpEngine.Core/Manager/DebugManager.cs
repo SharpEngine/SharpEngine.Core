@@ -54,6 +54,7 @@ public static class DebugManager
         ImGui.Text($"Fonts Number : {window.FontManager.Fonts.Count}");
         ImGui.Text($"Sounds Number : {window.SoundManager.Sounds.Count}");
         ImGui.Text($"Musics Number : {window.MusicManager.Musics.Count}");
+        ImGui.Text($"Timers Number : {window.TimerManager.Timers.Count}");
         ImGui.Text($"Langs Number : {LangManager.Langs.Count}");
         ImGui.Text($"Saves Number : {SaveManager.Saves.Count}");
         ImGui.Text($"DataTable Number : {DataTableManager.DataTableNames.Count}");
