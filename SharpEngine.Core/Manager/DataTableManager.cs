@@ -39,7 +39,7 @@ public static class DataTableManager
     /// <typeparam name="T">Type of Object</typeparam>
     /// <returns>Object</returns>
     /// <exception cref="Exception">If DataTable not found</exception>
-    public static T? Get<T>(string dataTable, Predicate<dynamic> predicate)
+    public static T? Get<T>(string dataTable, Predicate<dynamic?> predicate)
     {
         if (DataTables.TryGetValue(dataTable, out var dTable))
             return dTable.Get(predicate);
