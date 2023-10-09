@@ -129,13 +129,9 @@ public class ControlComponent : Component
                 var mp = InputManager.GetMousePosition();
                 var dist = mp - _transform.Position;
                 if (MathF.Abs(dist.X) > 1)
-                {
                     dirX = dist.X;
-                }
                 if (MathF.Abs(dist.Y) > 1)
-                {
                     dirY = dist.Y;
-                }
                 break;
             case ControlType.LeftRight:
                 if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0)
