@@ -7,6 +7,16 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.5.0 - 09/10/2023
+[+] TimerManager, Timer<br/>
+[+] InputManager : UpdateInput<br/>
+[+] Window : Guard when no scene<br/>
+[\~] Instructions : Move instructions into records<br/>
+[#] ControlComponent : Fix MouseFollow<br/>
+[#] DataTableManager : Remove null warning<br/>
+[.] Reformat<br/>
+[.] Refactor
+
 ### V 1.4.3 - 20/09/2023
 [+] Color : FromVec4<br/>
 [.] Update ImGui.NET to 1.89.9.1
