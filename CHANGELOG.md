@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.X.X - XX/XX/2023
+[.] Update ImGui.NET to 1.89.9.3
+
 ### V 1.5.0 - 09/10/2023
 [+] TimerManager, Timer<br/>
 [+] InputManager : UpdateInput<br/>
