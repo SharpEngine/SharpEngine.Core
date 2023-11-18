@@ -36,7 +36,10 @@ public class MusicManager
     public void PlayMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
+        {
             Raylib.PlayMusicStream(music);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
         throw new Exception($"Music not found : {name}");
     }
@@ -49,7 +52,10 @@ public class MusicManager
     public void StopMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
+        {
             Raylib.StopMusicStream(music);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
         throw new Exception($"Music not found : {name}");
     }
@@ -62,7 +68,10 @@ public class MusicManager
     public void ResumeMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
+        {
             Raylib.ResumeMusicStream(music);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
         throw new Exception($"Music not found : {name}");
     }
@@ -75,7 +84,10 @@ public class MusicManager
     public void PauseMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
+        {
             Raylib.PauseMusicStream(music);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
         throw new Exception($"Music not found : {name}");
     }
@@ -89,7 +101,10 @@ public class MusicManager
     public void SeekMusic(string name, float position)
     {
         if (_musics.TryGetValue(name, out var music))
+        {
             Raylib.SeekMusicStream(music, position);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
         throw new Exception($"Music not found : {name}");
     }

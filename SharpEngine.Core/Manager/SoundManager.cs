@@ -36,7 +36,10 @@ public class SoundManager
     public void PlaySound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
+        {
             Raylib.PlaySound(sound);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
         throw new Exception($"Sound not found : {name}");
     }
@@ -49,7 +52,10 @@ public class SoundManager
     public void StopSound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
+        {
             Raylib.StopSound(sound);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
         throw new Exception($"Sound not found : {name}");
     }
@@ -62,7 +68,10 @@ public class SoundManager
     public void ResumeSound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
+        {
             Raylib.ResumeSound(sound);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
         throw new Exception($"Sound not found : {name}");
     }
@@ -75,7 +84,10 @@ public class SoundManager
     public void PauseSound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
+        {
             Raylib.PauseSound(sound);
+            return;
+        }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
         throw new Exception($"Sound not found : {name}");
     }
