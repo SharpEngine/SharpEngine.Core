@@ -7,8 +7,12 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.5.2 - 19/11/2023
+[#] SoundManager : Can't use functions without throwing exceptions<br/>
+[#] MusicManager : Can't use functions without throwing exceptions
+
 ### V 1.5.1 - 18/11/2023
-[.] Update Raylib-cs to 5.0.0
+[.] Update Raylib-cs to 5.0.0<br/>
 [.] Update ImGui.NET to 1.89.9.3
 
 ### V 1.5.0 - 09/10/2023
