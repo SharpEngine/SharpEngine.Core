@@ -98,7 +98,7 @@ public class TextureButton : Widget
         {
             var texture = Scene?.Window?.TextureManager.GetTexture(Texture);
             if (texture != null)
-                Size = new Vec2(texture.Value.width, texture.Value.height);
+                Size = new Vec2(texture.Value.Width, texture.Value.Height);
         }
 
         if (!Active)
@@ -125,7 +125,7 @@ public class TextureButton : Widget
         var texture = Scene?.Window?.TextureManager.GetTexture(Texture);
 
         if (Size == Vec2.Zero && texture != null)
-            Size = new Vec2(texture.Value.width, texture.Value.height);
+            Size = new Vec2(texture.Value.Width, texture.Value.Height);
 
         if (
             !Displayed
@@ -161,7 +161,7 @@ public class TextureButton : Widget
         );
         SERender.DrawTexture(
             texture.Value,
-            new Rect(0, 0, texture.Value.width, texture.Value.height),
+            new Rect(0, 0, texture.Value.Width, texture.Value.Height),
             new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4),
             Size / 2,
             0,
@@ -170,7 +170,7 @@ public class TextureButton : Widget
             ZLayer + 0.00002f
         );
 
-        var fontSize = FontSize ?? font.Value.baseSize;
+        var fontSize = FontSize ?? font.Value.BaseSize;
         var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
         SERender.DrawText(
             font.Value,

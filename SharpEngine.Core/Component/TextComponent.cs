@@ -100,7 +100,7 @@ public class TextComponent : Component
             return;
 
         var font = window.FontManager.GetFont(Font);
-        var fontSize = FontSize ?? font.baseSize;
+        var fontSize = FontSize ?? font.BaseSize;
         var position = _transformComponent.GetTransformedPosition(Offset);
         var textSize = Raylib.MeasureTextEx(font, Text, fontSize, 2);
 

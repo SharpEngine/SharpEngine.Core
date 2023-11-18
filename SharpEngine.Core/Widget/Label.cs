@@ -91,7 +91,7 @@ public class Label : Widget
             return;
 
         var realPosition = RealPosition;
-        var fontSize = FontSize ?? font.Value.baseSize;
+        var fontSize = FontSize ?? font.Value.BaseSize;
 
         var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
 

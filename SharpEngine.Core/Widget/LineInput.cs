@@ -154,7 +154,7 @@ public class LineInput : Widget
         if (Font.Length <= 0 || font == null)
             return;
 
-        var fontSize = FontSize ?? font.Value.baseSize;
+        var fontSize = FontSize ?? font.Value.BaseSize;
         var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
         var offset = textSize.X - (Size.X - 20);
 

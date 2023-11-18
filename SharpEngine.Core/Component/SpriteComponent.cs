@@ -102,18 +102,18 @@ public class SpriteComponent : Component
                 new Rect(
                     0,
                     0,
-                    FlipX ? -texture.width : texture.width,
-                    FlipY ? -texture.height : texture.height
+                    FlipX ? -texture.Width : texture.Width,
+                    FlipY ? -texture.Height : texture.Height
                 ),
                 new Rect(
                     position.X,
                     position.Y,
-                    texture.width * _transformComponent.Scale.X,
-                    texture.height * _transformComponent.Scale.Y
+                    texture.Width * _transformComponent.Scale.X,
+                    texture.Height * _transformComponent.Scale.Y
                 ),
                 new Vec2(
-                    texture.width / 2f * _transformComponent.Scale.X,
-                    texture.height / 2f * _transformComponent.Scale.Y
+                    texture.Width / 2f * _transformComponent.Scale.X,
+                    texture.Height / 2f * _transformComponent.Scale.Y
                 ),
                 _transformComponent.Rotation,
                 Utils.Color.White,
@@ -135,18 +135,18 @@ public class SpriteComponent : Component
                         new Rect(
                             0,
                             0,
-                            FlipX ? -texture.width : texture.width,
-                            FlipY ? -texture.height : texture.height
+                            FlipX ? -texture.Width : texture.Width,
+                            FlipY ? -texture.Height : texture.Height
                         ),
                         new Rect(
                             position.X,
                             position.Y,
-                            texture.width * _transformComponent.Scale.X,
-                            texture.height * _transformComponent.Scale.Y
+                            texture.Width * _transformComponent.Scale.X,
+                            texture.Height * _transformComponent.Scale.Y
                         ),
                         new Vec2(
-                            texture.width / 2f * _transformComponent.Scale.X,
-                            texture.height / 2f * _transformComponent.Scale.Y
+                            texture.Width / 2f * _transformComponent.Scale.X,
+                            texture.Height / 2f * _transformComponent.Scale.Y
                         ),
                         _transformComponent.Rotation,
                         Utils.Color.White,

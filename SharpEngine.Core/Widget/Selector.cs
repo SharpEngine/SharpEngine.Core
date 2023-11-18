@@ -142,7 +142,7 @@ public class Selector : Widget
 
         if (font != null)
         {
-            var fontSize = FontSize ?? font.Value.baseSize;
+            var fontSize = FontSize ?? font.Value.BaseSize;
             var maxSizeX = 0f;
             foreach (var value in Values)
             {

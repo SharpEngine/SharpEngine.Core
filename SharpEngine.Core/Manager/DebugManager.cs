@@ -29,9 +29,9 @@ public static class DebugManager
     public static readonly Dictionary<string, string> Versions =
         new()
         {
-            { "Raylib-cs", "4.5.0.4" },
+            { "Raylib-cs", "5.0.0" },
             { "ImGui.NET", "1.89.9.3" },
-            { "SharpEngine.Core", "1.5.0" }
+            { "SharpEngine.Core", "1.5.1" }
         };
 
     /// <summary>
@@ -68,7 +68,7 @@ public static class DebugManager
         );
         ImGui.Separator();
         ImGui.Text($"Camera Mode : {window.CameraManager.Mode}");
-        ImGui.Text($"Camera Position : {window.CameraManager.Camera2D.target}");
+        ImGui.Text($"Camera Position : {window.CameraManager.Camera2D.Target}");
         ImGui.Text($"Camera Rotation : {window.CameraManager.Rotation}");
         ImGui.Separator();
         ImGui.Text($"Number of Render Instructions : {SERender.LastInstructionsNumber}");

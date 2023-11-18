@@ -151,7 +151,7 @@ public class Button : Widget
             ZLayer + 0.00002f
         );
 
-        var fontSize = FontSize ?? font.Value.baseSize;
+        var fontSize = FontSize ?? font.Value.BaseSize;
         var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
         SERender.DrawText(
             font.Value,

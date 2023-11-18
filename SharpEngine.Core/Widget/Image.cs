@@ -60,9 +60,9 @@ public class Image : Widget
         var position = RealPosition;
         SERender.DrawTexture(
             texture,
-            new Rect(0, 0, texture.width, texture.height),
-            new Rect(position.X, position.Y, texture.width * Scale.X, texture.height * Scale.Y),
-            new Vec2(texture.width / 2f * Scale.X, texture.height / 2f * Scale.Y),
+            new Rect(0, 0, texture.Width, texture.Height),
+            new Rect(position.X, position.Y, texture.Width * Scale.X, texture.Height * Scale.Y),
+            new Vec2(texture.Width / 2f * Scale.X, texture.Height / 2f * Scale.Y),
             Rotation,
             Color.White,
             InstructionSource.UI,

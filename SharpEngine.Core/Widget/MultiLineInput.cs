@@ -163,7 +163,7 @@ public class MultiLineInput : Widget
         if (Text.Length <= 0 || Font.Length <= 0 || font == null)
             return;
 
-        var fontSize = FontSize ?? font.Value.baseSize;
+        var fontSize = FontSize ?? font.Value.BaseSize;
 
         var textSize = Raylib.MeasureTextEx(font.Value, Text.Split("\n")[^1], fontSize, 2);
 

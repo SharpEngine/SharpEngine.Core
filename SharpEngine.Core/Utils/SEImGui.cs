@@ -53,16 +53,16 @@ public class SeImGui : IDisposable
         var data = new IntPtr(pixels);
         var image = new Image
         {
-            data = (void*)data,
-            width = width,
-            height = height,
-            mipmaps = 1,
-            format = PixelFormat.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+            Data = (void*)data,
+            Width = width,
+            Height = height,
+            Mipmaps = 1,
+            Format = PixelFormat.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
         };
         _fontTexture = Raylib.LoadTextureFromImage(image);
 
         // Store texture id in imgui font
-        io.Fonts.SetTexID(new IntPtr(_fontTexture.id));
+        io.Fonts.SetTexID(new IntPtr(_fontTexture.Id));
 
         // Clears font data on the CPU side
         io.Fonts.ClearTexData();
@@ -211,22 +211,21 @@ public class SeImGui : IDisposable
     // Returns a Color struct from hexadecimal value
     private Raylib_cs.Color GetColor(uint hexValue)
     {
-        Raylib_cs.Color color;
-
-        color.r = (byte)(hexValue & 0xFF);
-        color.g = (byte)((hexValue >> 8) & 0xFF);
-        color.b = (byte)((hexValue >> 16) & 0xFF);
-        color.a = (byte)((hexValue >> 24) & 0xFF);
-
+        Raylib_cs.Color color = new Raylib_cs.Color(
+            (byte)(hexValue & 0xFF),
+            (byte)((hexValue >> 8) & 0xFF),
+            (byte)((hexValue >> 16) & 0xFF),
+            (byte)((hexValue >> 24) & 0xFF)
+        );
         return color;
     }
 
     private void DrawTriangleVertex(ImDrawVertPtr idxVert)
     {
         var c = GetColor(idxVert.col);
-        Rlgl.rlColor4ub(c.r, c.g, c.b, c.a);
-        Rlgl.rlTexCoord2f(idxVert.uv.X, idxVert.uv.Y);
-        Rlgl.rlVertex2f(idxVert.pos.X, idxVert.pos.Y);
+        Rlgl.Color4ub(c.R, c.G, c.B, c.A);
+        Rlgl.TexCoord2f(idxVert.uv.X, idxVert.uv.Y);
+        Rlgl.Vertex2f(idxVert.pos.X, idxVert.pos.Y);
     }
 
     // Draw the imgui triangle data
@@ -239,11 +238,11 @@ public class SeImGui : IDisposable
         IntPtr textureId
     )
     {
-        if (Rlgl.rlCheckRenderBatchLimit((int)count * 3))
-            Rlgl.rlDrawRenderBatchActive();
+        if (Rlgl.CheckRenderBatchLimit((int)count * 3))
+            Rlgl.DrawRenderBatchActive();
 
-        Rlgl.rlBegin(DrawMode.TRIANGLES); // RL_TRIANGLES
-        Rlgl.rlSetTexture((uint)textureId);
+        Rlgl.Begin(DrawMode.TRIANGLES); // RL_TRIANGLES
+        Rlgl.SetTexture((uint)textureId);
 
         for (var i = 0; i <= count - 3; i += 3)
         {
@@ -259,7 +258,7 @@ public class SeImGui : IDisposable
             vertex = idxVert[vtxOffset + index];
             DrawTriangleVertex(vertex);
         }
-        Rlgl.rlEnd();
+        Rlgl.End();
     }
 
     private void RenderCommandLists(ImDrawDataPtr data)
@@ -272,9 +271,9 @@ public class SeImGui : IDisposable
         if (fbWidth <= 0 || fbHeight <= 0 || data.CmdListsCount == 0)
             return;
 
-        Rlgl.rlDrawRenderBatchActive();
-        Rlgl.rlDisableBackfaceCulling();
-        Rlgl.rlEnableScissorTest();
+        Rlgl.DrawRenderBatchActive();
+        Rlgl.DisableBackfaceCulling();
+        Rlgl.EnableScissorTest();
 
         data.ScaleClipRects(ImGui.GetIO().DisplayFramebufferScale);
 
@@ -297,7 +296,7 @@ public class SeImGui : IDisposable
                 var rectY = (int)((pcmd.ClipRect.Y - pos.Y) * data.FramebufferScale.Y);
                 var rectW = (int)((pcmd.ClipRect.Z - rectX) * data.FramebufferScale.Y);
                 var rectH = (int)((pcmd.ClipRect.W - rectY) * data.FramebufferScale.Y);
-                Rlgl.rlScissor(rectX, Raylib.GetScreenHeight() - (rectY + rectH), rectW, rectH);
+                Rlgl.Scissor(rectX, Raylib.GetScreenHeight() - (rectY + rectH), rectW, rectH);
 
                 if (pcmd.UserCallback != IntPtr.Zero)
                     idxOffset += (int)pcmd.ElemCount;
@@ -312,14 +311,14 @@ public class SeImGui : IDisposable
                         pcmd.TextureId
                     );
                     idxOffset += (int)pcmd.ElemCount;
-                    Rlgl.rlDrawRenderBatchActive();
+                    Rlgl.DrawRenderBatchActive();
                 }
             }
         }
 
-        Rlgl.rlSetTexture(0);
-        Rlgl.rlDisableScissorTest();
-        Rlgl.rlEnableBackfaceCulling();
+        Rlgl.SetTexture(0);
+        Rlgl.DisableScissorTest();
+        Rlgl.EnableBackfaceCulling();
     }
 
     /// <summary>
@@ -336,27 +335,27 @@ public class SeImGui : IDisposable
 
         if (source.Width < 0)
         {
-            uv0.X = -(source.X / image.width);
-            uv1.X = uv0.X - MathF.Abs(source.Width) / image.width;
+            uv0.X = -(source.X / image.Width);
+            uv1.X = uv0.X - MathF.Abs(source.Width) / image.Width;
         }
         else
         {
-            uv0.X = source.X / image.width;
-            uv1.X = uv0.X + source.Width / image.width;
+            uv0.X = source.X / image.Width;
+            uv1.X = uv0.X + source.Width / image.Width;
         }
 
         if (source.Height < 0)
         {
-            uv0.Y = -(source.Y / image.height);
-            uv1.Y = uv0.Y - MathF.Abs(source.Height) / image.height;
+            uv0.Y = -(source.Y / image.Height);
+            uv1.Y = uv0.Y - MathF.Abs(source.Height) / image.Height;
         }
         else
         {
-            uv0.Y = source.Y / image.height;
-            uv1.Y = uv0.Y + source.Height / image.height;
+            uv0.Y = source.Y / image.Height;
+            uv1.Y = uv0.Y + source.Height / image.Height;
         }
 
-        ImGui.Image(new IntPtr(image.id), new Vector2(width, height), uv0, uv1);
+        ImGui.Image(new IntPtr(image.Id), new Vector2(width, height), uv0, uv1);
     }
 
     /// <summary>
@@ -368,14 +367,14 @@ public class SeImGui : IDisposable
     {
         var area = ImGui.GetContentRegionAvail();
 
-        var scale = area.X / image.texture.width;
+        var scale = area.X / image.Texture.Width;
 
-        var y = image.texture.height * scale;
+        var y = image.Texture.Height * scale;
         if (y > area.Y)
-            scale = area.Y / image.texture.height;
+            scale = area.Y / image.Texture.Height;
 
-        var sizeX = (int)(image.texture.width * scale);
-        var sizeY = (int)(image.texture.height * scale);
+        var sizeX = (int)(image.Texture.Width * scale);
+        var sizeY = (int)(image.Texture.Height * scale);
 
         if (center)
         {
@@ -385,10 +384,10 @@ public class SeImGui : IDisposable
         }
 
         ImageRect(
-            image.texture,
+            image.Texture,
             sizeX,
             sizeY,
-            new Rect(0, 0, image.texture.width, -image.texture.height)
+            new Rect(0, 0, image.Texture.Width, -image.Texture.Height)
         );
     }
 }

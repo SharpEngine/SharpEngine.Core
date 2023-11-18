@@ -172,10 +172,10 @@ public class SpriteSheetComponent : Component
         SERender.DrawTexture(
             texture,
             new Rect(
-                SpriteSize.X * (anim.Value.Indices[_currentImage] % (texture.width / SpriteSize.X)),
+                SpriteSize.X * (anim.Value.Indices[_currentImage] % (texture.Width / SpriteSize.X)),
                 SpriteSize.Y
                     * (int)(
-                        anim.Value.Indices[_currentImage] / (int)(texture.width / SpriteSize.X)
+                        anim.Value.Indices[_currentImage] / (int)(texture.Width / SpriteSize.X)
                     ),
                 FlipX ? -SpriteSize.X : SpriteSize.X,
                 FlipY ? -SpriteSize.Y : SpriteSize.Y

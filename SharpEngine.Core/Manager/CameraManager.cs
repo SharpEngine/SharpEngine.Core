@@ -44,8 +44,8 @@ public class CameraManager
     /// </summary>
     public float Rotation
     {
-        get => Camera2D.rotation;
-        set => Camera2D.rotation = value;
+        get => Camera2D.Rotation;
+        set => Camera2D.Rotation = value;
     }
 
     /// <summary>
@@ -53,8 +53,8 @@ public class CameraManager
     /// </summary>
     public float Zoom
     {
-        get => Camera2D.zoom;
-        set => Camera2D.zoom = value;
+        get => Camera2D.Zoom;
+        set => Camera2D.Zoom = value;
     }
 
     /// <summary>
@@ -68,9 +68,9 @@ public class CameraManager
 
     internal void SetScreenSize(Vec2 screenSize)
     {
-        Camera2D.offset = screenSize / 2;
+        Camera2D.Offset = screenSize / 2;
         if (Mode == Utils.CameraMode.Basic)
-            Camera2D.target = Camera2D.offset;
+            Camera2D.Target = Camera2D.Offset;
     }
 
     /// <summary>
@@ -83,17 +83,17 @@ public class CameraManager
         {
             case Utils.CameraMode.Follow:
                 if (FollowEntity?.GetComponentAs<TransformComponent>() is { } transform)
-                    Camera2D.target = transform.Position;
+                    Camera2D.Target = transform.Position;
                 break;
             case Utils.CameraMode.FollowSmooth:
                 if (FollowEntity?.GetComponentAs<TransformComponent>() is { } transformSmooth)
                 {
-                    var diff = transformSmooth.Position - (Vec2)Camera2D.target;
+                    var diff = transformSmooth.Position - (Vec2)Camera2D.Target;
                     var length = diff.Length();
                     if (length > MinEffectLength)
                     {
                         var speed = MathF.Max(FractionSpeed * length, MinSpeed);
-                        Camera2D.target += new Vector2(
+                        Camera2D.Target += new Vector2(
                             diff.X * (speed * delta / length),
                             diff.Y * (speed * delta / length)
                         );
