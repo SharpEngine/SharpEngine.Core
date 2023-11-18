@@ -7,7 +7,8 @@
 [#] Bug Fixes<br>
 [.] Others
 
-### V 1.X.X - XX/XX/2023
+### V 1.5.1 - 18/11/2023
+[.] Update Raylib-cs to 5.0.0
 [.] Update ImGui.NET to 1.89.9.3
 
 ### V 1.5.0 - 09/10/2023
