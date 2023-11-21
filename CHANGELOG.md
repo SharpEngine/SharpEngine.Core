@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.6.0 - 21/11/2023
+[.] Net 8
+
 ### V 1.5.2 - 19/11/2023
 [#] SoundManager : Can't use functions without throwing exceptions<br/>
 [#] MusicManager : Can't use functions without throwing exceptions
