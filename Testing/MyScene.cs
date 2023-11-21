@@ -17,10 +17,7 @@ public class MyScene : Scene
             new SpriteSheetComponent(
                 "portal",
                 new Vec2(100),
-                new List<Animation>
-                {
-                    new("idle", Enumerable.Range(0, 41).Select(x => (uint)x).ToList(), 0.01f)
-                },
+                [ new("idle", Enumerable.Range(0, 41).Select(x => (uint)x).ToList(), 0.01f) ],
                 currentAnim: "idle",
                 zLayerOffset: 1
             )

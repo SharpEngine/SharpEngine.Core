@@ -8,60 +8,47 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which represents Scroll Frame
 /// </summary>
-public class ScrollFrame : Widget
+/// <param name="position">Scroll Frame Position</param>
+/// <param name="size">Scroll Frame Size</param>
+/// <param name="scrollFactor">Scroll Frame Scroll Frame (5)</param>
+/// <param name="borderSize">Scroll Frame Border Size (3)</param>
+/// <param name="borderColor">Scroll Frame Border Color (Color.Black)</param>
+/// <param name="backgroundColor">Scroll Frame Background Color (null)</param>
+/// <param name="zLayer">Z Layer</param>
+public class ScrollFrame(
+    Vec2 position,
+    Vec2 size,
+    int scrollFactor = 5,
+    int borderSize = 3,
+    Color? borderColor = null,
+    Color? backgroundColor = null,
+    int zLayer = 0
+) : Widget(position, zLayer)
 {
     /// <summary>
     /// Color of Scroll Frame Border
     /// </summary>
-    public Color BorderColor { get; set; }
+    public Color BorderColor { get; set; } = borderColor ?? Color.Black;
 
     /// <summary>
     /// Size of Scroll Frame
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// Size of Scroll Frame Border
     /// </summary>
-    public int BorderSize { get; set; }
+    public int BorderSize { get; set; } = borderSize;
 
     /// <summary>
     /// Color of Scroll Frame Background
     /// </summary>
-    public Color? BackgroundColor { get; set; }
+    public Color? BackgroundColor { get; set; } = backgroundColor;
 
     /// <summary>
     /// Scroll Factor of Scroll Frame
     /// </summary>
-    public int ScrollFactor { get; set; }
-
-    /// <summary>
-    /// Create Scroll Frame
-    /// </summary>
-    /// <param name="position">Scroll Frame Position</param>
-    /// <param name="size">Scroll Frame Size</param>
-    /// <param name="scrollFactor">Scroll Frame Scroll Frame (5)</param>
-    /// <param name="borderSize">Scroll Frame Border Size (3)</param>
-    /// <param name="borderColor">Scroll Frame Border Color (Color.Black)</param>
-    /// <param name="backgroundColor">Scroll Frame Background Color (null)</param>
-    /// <param name="zLayer">Z Layer</param>
-    public ScrollFrame(
-        Vec2 position,
-        Vec2 size,
-        int scrollFactor = 5,
-        int borderSize = 3,
-        Color? borderColor = null,
-        Color? backgroundColor = null,
-        int zLayer = 0
-    )
-        : base(position, zLayer)
-    {
-        BorderColor = borderColor ?? Color.Black;
-        Size = size;
-        ScrollFactor = scrollFactor;
-        BorderSize = borderSize;
-        BackgroundColor = backgroundColor;
-    }
+    public int ScrollFactor { get; set; } = scrollFactor;
 
     /// <inheritdoc />
     public override void Update(float delta)

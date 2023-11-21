@@ -53,7 +53,7 @@ public abstract class Widget
     /// <summary>
     /// Get All Direct Children of Widget
     /// </summary>
-    public List<Widget> Children { get; } = new();
+    public List<Widget> Children { get; } = [];
 
     /// <summary>
     /// Scene of Widget

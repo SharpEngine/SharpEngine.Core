@@ -5,30 +5,21 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which create automatic movements
 /// </summary>
-public class AutoComponent : Component
+/// <param name="direction">Direction</param>
+/// <param name="rotation">Rotation</param>
+public class AutoComponent(Vec2? direction = null, int rotation = 0) : Component
 {
     /// <summary>
     /// Automatic Direction
     /// </summary>
-    public Vec2 Direction { get; set; }
+    public Vec2 Direction { get; set; } = direction ?? Vec2.Zero;
 
     /// <summary>
     /// Automatic Rotation
     /// </summary>
-    public int Rotation { get; set; }
+    public int Rotation { get; set; } = rotation;
 
     private TransformComponent? _transform;
-
-    /// <summary>
-    /// Create Auto Component
-    /// </summary>
-    /// <param name="direction">Direction</param>
-    /// <param name="rotation">Rotation</param>
-    public AutoComponent(Vec2? direction = null, int rotation = 0)
-    {
-        Direction = direction ?? Vec2.Zero;
-        Rotation = rotation;
-    }
 
     /// <inheritdoc />
     public override void Load()

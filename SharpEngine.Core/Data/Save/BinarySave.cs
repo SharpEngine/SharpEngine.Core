@@ -8,7 +8,7 @@ namespace SharpEngine.Core.Data.Save;
 /// </summary>
 public class BinarySave : ISave
 {
-    private readonly Dictionary<string, object> _data = new();
+    private readonly Dictionary<string, object> _data = [];
 
     /// <inheritdoc />
     public void Read(string file)

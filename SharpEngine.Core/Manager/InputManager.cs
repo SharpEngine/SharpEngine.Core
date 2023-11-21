@@ -12,8 +12,8 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public static class InputManager
 {
-    internal static List<int> InternalPressedChars { get; } = new();
-    internal static List<int> InternalPressedKeys { get; set; } = new();
+    internal static List<int> InternalPressedChars { get; } = [];
+    internal static List<int> InternalPressedKeys { get; set; } = [];
 
     /// <summary>
     /// List of Pressed Chars in Frame

@@ -179,7 +179,7 @@ public class ControlComponent : Component
                 }
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(ControlType), ControlType, null);
+                throw new Exception("Unknown Control Type");
         }
 
         if (dirX == 0 && dirY == 0)

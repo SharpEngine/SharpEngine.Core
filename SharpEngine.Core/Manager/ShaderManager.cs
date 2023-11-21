@@ -13,7 +13,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class ShaderManager
 {
-    private readonly Dictionary<string, Shader> _shaders = new();
+    private readonly Dictionary<string, Shader> _shaders = [];
 
     /// <summary>
     /// Get All Shaders

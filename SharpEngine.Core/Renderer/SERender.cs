@@ -15,22 +15,22 @@ public static class SERender
     /// <summary>
     /// Number of Last Instructions
     /// </summary>
-    public static int LastInstructionsNumber;
+    public static int LastInstructionsNumber { get; set; }
 
     /// <summary>
     /// Number of Last Entity Instructions
     /// </summary>
-    public static int LastEntityInstructionsNumber;
+    public static int LastEntityInstructionsNumber { get; set; }
 
     /// <summary>
     /// Number of Last UI Instructions
     /// </summary>
-    public static int LastUIInstructionsNumber;
+    public static int LastUIInstructionsNumber { get; set; }
 
     /// <summary>
     /// Current Instructions to be rendered
     /// </summary>
-    internal static List<Instruction> Instructions = new();
+    internal static List<Instruction> Instructions = [];
 
     internal static void DrawInstructions(List<Instruction> instructions)
     {
@@ -54,8 +54,8 @@ public static class SERender
         LastInstructionsNumber = 0;
         LastEntityInstructionsNumber = 0;
         LastUIInstructionsNumber = 0;
-        var entityInstructions = new List<Instruction>();
-        var uiInstructions = new List<Instruction>();
+        List<Instruction> entityInstructions = [];
+        List<Instruction> uiInstructions = [];
 
         foreach (var instruction in Instructions)
         {
@@ -68,7 +68,7 @@ public static class SERender
                     uiInstructions.Add(instruction);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new Exception("Unknown instruction source");
             }
         }
 
@@ -105,7 +105,7 @@ public static class SERender
         {
             Source = source,
             ZLayer = zLayer,
-            Parameters = new List<object> { shader }
+            Parameters = [shader]
         };
         instruction.Parameters.AddRange(Instructions.Select(x => (object)x));
         Instructions = instructions;
@@ -139,7 +139,7 @@ public static class SERender
         {
             Source = source,
             ZLayer = zLayer,
-            Parameters = new List<object> { posX, posY, width, height }
+            Parameters = [posX, posY, width, height]
         };
         instruction.Parameters.AddRange(Instructions.Select(x => (object)x));
         Instructions = instructions;
@@ -169,7 +169,7 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object> { rectangle, origin, rotation, color }
+                Parameters = [rectangle, origin, rotation, color]
             }
         );
     }
@@ -199,7 +199,7 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object> { posX, posY, width, height, color }
+                Parameters = [posX, posY, width, height, color]
             }
         );
     }
@@ -225,7 +225,7 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object> { rect, borderSize, borderColor }
+                Parameters = [rect, borderSize, borderColor]
             }
         );
     }
@@ -253,7 +253,7 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object> { posX, posY, radius, borderColor }
+                Parameters = [posX, posY, radius, borderColor]
             }
         );
     }
@@ -285,7 +285,7 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object> { texture, src, dest, origin, rotation, tint }
+                Parameters = [texture, src, dest, origin, rotation, tint]
             }
         );
     }
@@ -321,8 +321,8 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object>
-                {
+                Parameters =
+                [
                     font,
                     text,
                     position,
@@ -331,7 +331,7 @@ public static class SERender
                     fontSize,
                     spacing,
                     color
-                }
+                ]
             }
         );
     }
@@ -363,7 +363,7 @@ public static class SERender
             {
                 Source = source,
                 ZLayer = zLayer,
-                Parameters = new List<object> { font, text, position, fontSize, spacing, color }
+                Parameters = [font, text, position, fontSize, spacing, color]
             }
         );
     }

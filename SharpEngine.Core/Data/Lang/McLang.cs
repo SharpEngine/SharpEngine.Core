@@ -9,7 +9,7 @@ namespace SharpEngine.Core.Data.Lang;
 /// </summary>
 public class McLang : ILang
 {
-    private readonly Dictionary<string, string> _translations = new();
+    private readonly Dictionary<string, string> _translations = [];
 
     /// <summary>
     /// Create MC Lang
@@ -32,7 +32,7 @@ public class McLang : ILang
         {
             var finalLine = line.Trim();
 
-            if (finalLine.StartsWith("#") || finalLine.Length == 0)
+            if (finalLine.StartsWith('#') || finalLine.Length == 0)
                 continue;
 
             if (!finalLine.Contains('='))

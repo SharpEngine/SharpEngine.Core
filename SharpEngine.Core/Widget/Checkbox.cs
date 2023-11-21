@@ -11,36 +11,27 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which display Checkbox
 /// </summary>
-public class Checkbox : Widget
+/// <param name="position">Checkbox Position</param>
+/// <param name="size">Checkbox Size</param>
+/// <param name="isChecked">If Checkbox is Checked</param>
+/// <param name="zLayer">Z Layer</param>
+public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, int zLayer = 0)
+    : Widget(position, zLayer)
 {
     /// <summary>
     /// Size of Checkbox
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size ?? new Vec2(20);
 
     /// <summary>
     /// If Checkbox is Checked
     /// </summary>
-    public bool IsChecked { get; set; }
+    public bool IsChecked { get; set; } = isChecked;
 
     /// <summary>
     /// Event trigger when value is changed
     /// </summary>
     public event EventHandler<ValueEventArgs<bool>>? ValueChanged;
-
-    /// <summary>
-    /// Create Checkbox
-    /// </summary>
-    /// <param name="position">Checkbox Position</param>
-    /// <param name="size">Checkbox Size</param>
-    /// <param name="isChecked">If Checkbox is Checked</param>
-    /// <param name="zLayer">Z Layer</param>
-    public Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, int zLayer = 0)
-        : base(position, zLayer)
-    {
-        Size = size ?? new Vec2(20);
-        IsChecked = isChecked;
-    }
 
     /// <inheritdoc />
     public override void Update(float delta)

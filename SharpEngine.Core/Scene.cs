@@ -22,18 +22,18 @@ public class Scene
     /// <summary>
     /// All Widgets of Scene
     /// </summary>
-    public List<Widget.Widget> Widgets { get; } = new();
+    public List<Widget.Widget> Widgets { get; } = [];
 
     /// <summary>
     /// All Entities of Scene
     /// </summary>
-    public List<Entity.Entity> Entities { get; } = new();
+    public List<Entity.Entity> Entities { get; } = [];
 
-    private readonly List<Entity.Entity> _addEntities = new();
-    private readonly List<Widget.Widget> _addWidgets = new();
-    private readonly List<Entity.Entity> _removeEntities = new();
-    private readonly List<Widget.Widget> _removeWidgets = new();
-    private readonly List<ISceneSystem> _sceneSystems = new();
+    private readonly List<Entity.Entity> _addEntities = [];
+    private readonly List<Widget.Widget> _addWidgets = [];
+    private readonly List<Entity.Entity> _removeEntities = [];
+    private readonly List<Widget.Widget> _removeWidgets = [];
+    private readonly List<ISceneSystem> _sceneSystems = [];
 
     /// <summary>
     /// Create Scene

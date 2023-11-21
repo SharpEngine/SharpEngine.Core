@@ -7,73 +7,59 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which display Text
 /// </summary>
-public class TextComponent : Component
+/// <param name="text">Text</param>
+/// <param name="font">Font Name (RAYLIB_DEFAULT)</param>
+/// <param name="color">Color (Color.Black)</param>
+/// <param name="displayed">If Text is Displayed (true)</param>
+/// <param name="fontSize">Font Size (null)</param>
+/// <param name="offset">Offset (Vec2(0))</param>
+/// <param name="zLayerOffset">Offset of zLayer</param>
+public class TextComponent(
+    string text,
+    string font = "RAYLIB_DEFAULT",
+    Utils.Color? color = null,
+    bool displayed = true,
+    int? fontSize = null,
+    Vec2? offset = null,
+    int zLayerOffset = 0
+) : Component
 {
     /// <summary>
     /// Text which be displayed
     /// </summary>
-    public string Text { get; set; }
+    public string Text { get; set; } = text;
 
     /// <summary>
     /// Name of Font
     /// </summary>
-    public string Font { get; set; }
+    public string Font { get; set; } = font;
 
     /// <summary>
     /// Color of Text
     /// </summary>
-    public Utils.Color Color { get; set; }
+    public Utils.Color Color { get; set; } = color ?? Utils.Color.Black;
 
     /// <summary>
     /// Define if Text is displayed
     /// </summary>
-    public bool Displayed { get; set; }
+    public bool Displayed { get; set; } = displayed;
 
     /// <summary>
     /// Offset of Text
     /// </summary>
-    public Vec2 Offset { get; set; }
+    public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// Font Size (can be null and use basic size of Font)
     /// </summary>
-    public int? FontSize;
+    public int? FontSize = fontSize;
 
     /// <summary>
     /// Offset of ZLayer of Text
     /// </summary>
-    public int ZLayerOffset { get; set; }
+    public int ZLayerOffset { get; set; } = zLayerOffset;
 
     private TransformComponent? _transformComponent;
-
-    /// <summary>
-    /// Create TextComponent
-    /// </summary>
-    /// <param name="text">Text</param>
-    /// <param name="font">Font Name (RAYLIB_DEFAULT)</param>
-    /// <param name="color">Color (Color.Black)</param>
-    /// <param name="displayed">If Text is Displayed (true)</param>
-    /// <param name="fontSize">Font Size (null)</param>
-    /// <param name="offset">Offset (Vec2(0))</param>
-    /// <param name="zLayerOffset">Offset of zLayer</param>
-    public TextComponent(
-        string text,
-        string font = "RAYLIB_DEFAULT",
-        Utils.Color? color = null,
-        bool displayed = true,
-        int? fontSize = null,
-        Vec2? offset = null,
-        int zLayerOffset = 0
-    )
-    {
-        Text = text;
-        Font = font;
-        Color = color ?? Utils.Color.Black;
-        Displayed = displayed;
-        Offset = offset ?? Vec2.Zero;
-        FontSize = fontSize;
-        ZLayerOffset = zLayerOffset;
-    }
 
     /// <inheritdoc />
     public override void Load()

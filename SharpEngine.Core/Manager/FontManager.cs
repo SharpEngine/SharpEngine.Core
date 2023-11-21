@@ -11,7 +11,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class FontManager
 {
-    private readonly Dictionary<string, Font> _fonts = new();
+    private readonly Dictionary<string, Font> _fonts = [];
 
     /// <summary>
     /// Get All Fonts

@@ -9,47 +9,66 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which draw animations with sprite sheet
 /// </summary>
-public class SpriteSheetComponent : Component
+/// <param name="texture">Texture Name</param>
+/// <param name="spriteSize">Frame Size</param>
+/// <param name="animations">Animation List</param>
+/// <param name="currentAnim">Current Animation</param>
+/// <param name="displayed">If Displayed</param>
+/// <param name="offset">Offset</param>
+/// <param name="flipX">If Sprite is Flip Horizontally</param>
+/// <param name="flipY">If Sprite is Flip Vertically</param>
+/// <param name="zLayerOffset">Offset of zLayer</param>
+public class SpriteSheetComponent(
+    string texture,
+    Vec2 spriteSize,
+    List<Animation> animations,
+    string currentAnim = "",
+    bool displayed = true,
+    Vec2? offset = null,
+    bool flipX = false,
+    bool flipY = false,
+    int zLayerOffset = 0
+) : Component
 {
     /// <summary>
     /// Name of Texture
     /// </summary>
-    public string Texture { get; set; }
+    public string Texture { get; set; } = texture;
 
     /// <summary>
     /// Size of one frame
     /// </summary>
-    public Vec2 SpriteSize { get; set; }
+    public Vec2 SpriteSize { get; set; } = spriteSize;
 
     /// <summary>
     /// List of Animations
     /// </summary>
-    public List<Animation> Animations { get; set; }
+    public List<Animation> Animations { get; set; } = animations;
 
     /// <summary>
     /// If component is displayed
     /// </summary>
-    public bool Displayed { get; set; }
+    public bool Displayed { get; set; } = displayed;
 
     /// <summary>
     /// Offset
     /// </summary>
-    public Vec2 Offset { get; set; }
+    public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// If Sprite is Flip Horizontally
     /// </summary>
-    public bool FlipX { get; set; }
+    public bool FlipX { get; set; } = flipX;
 
     /// <summary>
     /// If Sprite is Flip Vertically
     /// </summary>
-    public bool FlipY { get; set; }
+    public bool FlipY { get; set; } = flipY;
 
     /// <summary>
     /// Offset of ZLayer of Sprite Sheet
     /// </summary>
-    public int ZLayerOffset { get; set; }
+    public int ZLayerOffset { get; set; } = zLayerOffset;
 
     /// <summary>
     /// Current animation
@@ -65,46 +84,11 @@ public class SpriteSheetComponent : Component
         }
     }
 
-    private string _currentAnim;
+    private string _currentAnim = currentAnim;
     private int _currentImage;
     private float _internalTimer;
 
     private TransformComponent? _transform;
-
-    /// <summary>
-    /// Create Sprite Sheet Component
-    /// </summary>
-    /// <param name="texture">Texture Name</param>
-    /// <param name="spriteSize">Frame Size</param>
-    /// <param name="animations">Animation List</param>
-    /// <param name="currentAnim">Current Animation</param>
-    /// <param name="displayed">If Displayed</param>
-    /// <param name="offset">Offset</param>
-    /// <param name="flipX">If Sprite is Flip Horizontally</param>
-    /// <param name="flipY">If Sprite is Flip Vertically</param>
-    /// <param name="zLayerOffset">Offset of zLayer</param>
-    public SpriteSheetComponent(
-        string texture,
-        Vec2 spriteSize,
-        List<Animation> animations,
-        string currentAnim = "",
-        bool displayed = true,
-        Vec2? offset = null,
-        bool flipX = false,
-        bool flipY = false,
-        int zLayerOffset = 0
-    )
-    {
-        Texture = texture;
-        SpriteSize = spriteSize;
-        Animations = animations;
-        _currentAnim = currentAnim;
-        Displayed = displayed;
-        Offset = offset ?? Vec2.Zero;
-        FlipX = flipX;
-        FlipY = flipY;
-        ZLayerOffset = zLayerOffset;
-    }
 
     /// <summary>
     /// Return Animation by name

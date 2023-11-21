@@ -75,7 +75,7 @@ public class Selector : Widget
     )
         : base(position, zLayer)
     {
-        Values = values ?? new List<string>();
+        Values = values ?? [];
         SelectedIndex = currentIndex;
         Font = font;
         FontSize = fontSize;

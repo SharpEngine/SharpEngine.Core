@@ -11,7 +11,7 @@ public class ParticleComponent : Component
     /// <summary>
     /// Particle Emitters
     /// </summary>
-    public List<ParticleEmitter> ParticleEmitters { get; } = new();
+    public List<ParticleEmitter> ParticleEmitters { get; } = [];
 
     private TransformComponent? _transform;
 

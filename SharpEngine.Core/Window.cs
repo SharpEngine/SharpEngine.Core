@@ -161,7 +161,7 @@ public class Window
     /// <summary>
     /// Get All Scenes
     /// </summary>
-    public List<Scene> Scenes { get; } = new();
+    public List<Scene> Scenes { get; } = [];
 
     private Vec2 _screenSize;
     private string _title;
@@ -305,7 +305,7 @@ public class Window
         if (!args.Result)
             return;
 
-        if (!Scenes.Any())
+        if (Scenes.Count == 0)
         {
             DebugManager.Log(LogLevel.LogError, "SE: There are no scenes in window.");
             return;
@@ -400,7 +400,7 @@ public class Window
             _closeWindow = true;
     }
 
-    [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static unsafe void LogCustom(int logLevel, sbyte* text, sbyte* args)
     {
         var message = Logging.GetLogMessage(new IntPtr(text), new IntPtr(args));

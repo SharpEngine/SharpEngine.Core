@@ -12,7 +12,7 @@ public static class LangManager
     /// <summary>
     /// Current Language Used
     /// </summary>
-    public static string CurrentLang = "default";
+    public static string CurrentLang { get; set; } = "default";
 
     /// <summary>
     /// List of known languages
@@ -59,5 +59,5 @@ public static class LangManager
         return defaultTranslation;
     }
 
-    private static readonly Dictionary<string, ILang> Languages = new();
+    private static readonly Dictionary<string, ILang> Languages = [];
 }

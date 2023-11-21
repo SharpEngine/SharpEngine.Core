@@ -6,27 +6,31 @@ namespace SharpEngine.Core.Math;
 /// <summary>
 /// Struct which represents Rectangle
 /// </summary>
-public struct Rect
+/// <param name="x">X Position</param>
+/// <param name="y">Y Position</param>
+/// <param name="width">Width Size</param>
+/// <param name="height">Height Size</param>
+public struct Rect(float x, float y, float width, float height)
 {
     /// <summary>
     /// X Position
     /// </summary>
-    public float X { get; set; }
+    public float X { get; set; } = x;
 
     /// <summary>
     /// Y Position
     /// </summary>
-    public float Y { get; set; }
+    public float Y { get; set; } = y;
 
     /// <summary>
     /// Width Size
     /// </summary>
-    public float Width { get; set; }
+    public float Width { get; set; } = width;
 
     /// <summary>
     /// Height Size
     /// </summary>
-    public float Height { get; set; }
+    public float Height { get; set; } = height;
 
     /// <summary>
     /// Rectangle
@@ -55,30 +59,15 @@ public struct Rect
         : this(position.X, position.Y, width, height) { }
 
     /// <summary>
-    /// Rectangle
-    /// </summary>
-    /// <param name="x">X Position</param>
-    /// <param name="y">Y Position</param>
-    /// <param name="width">Width Size</param>
-    /// <param name="height">Height Size</param>
-    public Rect(float x, float y, float width, float height)
-    {
-        X = x;
-        Y = y;
-        Width = width;
-        Height = height;
-    }
-
-    /// <summary>
     /// Return if position is in Rect
     /// </summary>
     /// <param name="position">Position</param>
     /// <returns>if Position is in Rect</returns>
-    public bool Contains(Vec2 position) =>
+    public readonly bool Contains(Vec2 position) =>
         X <= position.X && position.X <= X + Width && Y <= position.Y && position.Y <= Y + Height;
 
     /// <inheritdoc />
-    public override bool Equals(object? other)
+    public override readonly bool Equals(object? other)
     {
         if (other is Rect rect)
             return this == rect;
@@ -86,10 +75,11 @@ public struct Rect
     }
 
     /// <inheritdoc />
-    public override int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
+    public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
     /// <inheritdoc />
-    public override string ToString() => $"Rect(X={X}, Y={Y}, Width={Width}, Height={Height})";
+    public override readonly string ToString() =>
+        $"Rect(X={X}, Y={Y}, Width={Width}, Height={Height})";
 
     /// <summary>
     /// Operator inequality

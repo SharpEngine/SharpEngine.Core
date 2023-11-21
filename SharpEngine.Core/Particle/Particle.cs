@@ -166,7 +166,7 @@ public class Particle
             case ParticleParametersFunction.Normal:
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(SizeFunction), SizeFunction, null);
+                throw new Exception("Unknown Size Function");
         }
 
         if (EndColor != BeginColor)

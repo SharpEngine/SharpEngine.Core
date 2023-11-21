@@ -7,52 +7,40 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which display frame
 /// </summary>
-public class Frame : Widget
+/// <param name="position">Frame Position</param>
+/// <param name="size">Frame Size</param>
+/// <param name="borderSize">Frame Border Size (3)</param>
+/// <param name="borderColor">Frame Border Color (Color.Black)</param>
+/// <param name="backgroundColor">Frame Background Color (null)</param>
+/// <param name="zLayer">Z Layer</param>
+public class Frame(
+    Vec2 position,
+    Vec2 size,
+    int borderSize = 3,
+    Color? borderColor = null,
+    Color? backgroundColor = null,
+    int zLayer = 0
+) : Widget(position, zLayer)
 {
     /// <summary>
     /// Color of Frame Border
     /// </summary>
-    public Color BorderColor { get; set; }
+    public Color BorderColor { get; set; } = borderColor ?? Color.Black;
 
     /// <summary>
     /// Size of Frame
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// Size of Frame Border
     /// </summary>
-    public int BorderSize { get; set; }
+    public int BorderSize { get; set; } = borderSize;
 
     /// <summary>
     /// Color of Frame Background
     /// </summary>
-    public Color? BackgroundColor { get; set; }
-
-    /// <summary>
-    /// Create Frame
-    /// </summary>
-    /// <param name="position">Frame Position</param>
-    /// <param name="size">Frame Size</param>
-    /// <param name="borderSize">Frame Border Size (3)</param>
-    /// <param name="borderColor">Frame Border Color (Color.Black)</param>
-    /// <param name="backgroundColor">Frame Background Color (null)</param>
-    /// <param name="zLayer">Z Layer</param>
-    public Frame(
-        Vec2 position,
-        Vec2 size,
-        int borderSize = 3,
-        Color? borderColor = null,
-        Color? backgroundColor = null,
-        int zLayer = 0
-    )
-        : base(position, zLayer)
-    {
-        BorderColor = borderColor ?? Color.Black;
-        Size = size;
-        BorderSize = borderSize;
-        BackgroundColor = backgroundColor;
-    }
+    public Color? BackgroundColor { get; set; } = backgroundColor;
 
     /// <inheritdoc />
     public override void Draw()

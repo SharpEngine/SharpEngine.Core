@@ -10,7 +10,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class TextureManager
 {
-    private readonly Dictionary<string, Texture2D> _texture2Ds = new();
+    private readonly Dictionary<string, Texture2D> _texture2Ds = [];
 
     /// <summary>
     /// Get All Textures

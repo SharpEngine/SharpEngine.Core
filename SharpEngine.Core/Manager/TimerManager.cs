@@ -9,7 +9,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class TimerManager
 {
-    private readonly Dictionary<string, Timer> _timers = new();
+    private readonly Dictionary<string, Timer> _timers = [];
 
     /// <summary>
     /// Get All Musics

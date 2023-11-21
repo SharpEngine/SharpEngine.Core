@@ -6,57 +6,45 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which draw rectangle
 /// </summary>
-public class RectComponent : Component
+/// <param name="color">Rectangle Color</param>
+/// <param name="size">Rectangle Size</param>
+/// <param name="displayed">If displayed</param>
+/// <param name="offset">Rectangle Offset</param>
+/// <param name="zLayerOffset">Offset of zLayer</param>
+public class RectComponent(
+    Utils.Color color,
+    Vec2 size,
+    bool displayed = true,
+    Vec2? offset = null,
+    int zLayerOffset = 0
+) : Component
 {
     /// <summary>
     /// Color of Rectangle
     /// </summary>
-    public Utils.Color Color { get; set; }
+    public Utils.Color Color { get; set; } = color;
 
     /// <summary>
     /// Size of Rectangle
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// If Rectangle is displayed
     /// </summary>
-    public bool Displayed { get; set; }
+    public bool Displayed { get; set; } = displayed;
 
     /// <summary>
     /// Offset of Rectangle
     /// </summary>
-    public Vec2 Offset { get; set; }
+    public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// Offset of ZLayer of Rectangle
     /// </summary>
-    public int ZLayerOffset { get; set; }
+    public int ZLayerOffset { get; set; } = zLayerOffset;
 
     private TransformComponent? _transform;
-
-    /// <summary>
-    /// Create Rect Component
-    /// </summary>
-    /// <param name="color">Rectangle Color</param>
-    /// <param name="size">Rectangle Size</param>
-    /// <param name="displayed">If displayed</param>
-    /// <param name="offset">Rectangle Offset</param>
-    /// <param name="zLayerOffset">Offset of zLayer</param>
-    public RectComponent(
-        Utils.Color color,
-        Vec2 size,
-        bool displayed = true,
-        Vec2? offset = null,
-        int zLayerOffset = 0
-    )
-    {
-        Color = color;
-        Size = size;
-        Displayed = displayed;
-        Offset = offset ?? Vec2.Zero;
-        ZLayerOffset = zLayerOffset;
-    }
 
     /// <inheritdoc />
     public override void Load()

@@ -11,7 +11,24 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which display Button
 /// </summary>
-public class Button : Widget
+/// <param name="position">Button Position</param>
+/// <param name="text">Button Text</param>
+/// <param name="font">Button Font</param>
+/// <param name="size">Button Size</param>
+/// <param name="fontColor">Button Font Color</param>
+/// <param name="backgroundColor">Button Background Color</param>
+/// <param name="fontSize">Button Font Size</param>
+/// <param name="zLayer">Z Layer</param>
+public class Button(
+    Vec2 position,
+    string text = "",
+    string font = "",
+    Vec2? size = null,
+    Color? fontColor = null,
+    Color? backgroundColor = null,
+    int? fontSize = null,
+    int zLayer = 0
+) : Widget(position, zLayer)
 {
     private enum ButtonState
     {
@@ -23,71 +40,39 @@ public class Button : Widget
     /// <summary>
     /// Text of Button
     /// </summary>
-    public string Text { get; set; }
+    public string Text { get; set; } = text;
 
     /// <summary>
     /// Font of Button
     /// </summary>
-    public string Font { get; set; }
+    public string Font { get; set; } = font;
 
     /// <summary>
     /// Size of Button
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size ?? new Vec2(200, 40);
 
     /// <summary>
     /// Color of Button Font
     /// </summary>
-    public Color FontColor { get; set; }
+    public Color FontColor { get; set; } = fontColor ?? Color.Black;
 
     /// <summary>
     /// Color of Button Background
     /// </summary>
-    public Color BackgroundColor { get; set; }
+    public Color BackgroundColor { get; set; } = backgroundColor ?? Color.Gray;
 
     /// <summary>
     /// Font Size of Button (or Null)
     /// </summary>
-    public int? FontSize { get; set; }
+    public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
     /// Event which trigger when button is clicked
     /// </summary>
     public event EventHandler? Clicked;
 
-    private ButtonState _state;
-
-    /// <summary>
-    /// Create Button
-    /// </summary>
-    /// <param name="position">Button Position</param>
-    /// <param name="text">Button Text</param>
-    /// <param name="font">Button Font</param>
-    /// <param name="size">Button Size</param>
-    /// <param name="fontColor">Button Font Color</param>
-    /// <param name="backgroundColor">Button Background Color</param>
-    /// <param name="fontSize">Button Font Size</param>
-    /// <param name="zLayer">Z Layer</param>
-    public Button(
-        Vec2 position,
-        string text = "",
-        string font = "",
-        Vec2? size = null,
-        Color? fontColor = null,
-        Color? backgroundColor = null,
-        int? fontSize = null,
-        int zLayer = 0
-    )
-        : base(position, zLayer)
-    {
-        Text = text;
-        Font = font;
-        Size = size ?? new Vec2(200, 40);
-        FontColor = fontColor ?? Color.Black;
-        BackgroundColor = backgroundColor ?? Color.Gray;
-        FontSize = fontSize;
-        _state = ButtonState.Idle;
-    }
+    private ButtonState _state = ButtonState.Idle;
 
     /// <inheritdoc />
     public override void Update(float delta)

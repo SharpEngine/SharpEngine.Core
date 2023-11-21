@@ -211,12 +211,13 @@ public class SeImGui : IDisposable
     // Returns a Color struct from hexadecimal value
     private Raylib_cs.Color GetColor(uint hexValue)
     {
-        Raylib_cs.Color color = new Raylib_cs.Color(
-            (byte)(hexValue & 0xFF),
-            (byte)((hexValue >> 8) & 0xFF),
-            (byte)((hexValue >> 16) & 0xFF),
-            (byte)((hexValue >> 24) & 0xFF)
-        );
+        Raylib_cs.Color color =
+            new(
+                (byte)(hexValue & 0xFF),
+                (byte)((hexValue >> 8) & 0xFF),
+                (byte)((hexValue >> 16) & 0xFF),
+                (byte)((hexValue >> 24) & 0xFF)
+            );
         return color;
     }
 

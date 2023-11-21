@@ -10,57 +10,46 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which add basic collisions
 /// </summary>
-public class CollisionComponent : Component
+/// <param name="size">Collision Size</param>
+/// <param name="offset">Collision Offset (Vec2(0))</param>
+/// <param name="solid">If Collision is Solid (true)</param>
+/// <param name="collisionCallback">Action called when collision (null)</param>
+/// <param name="drawDebug">Draw collision for debug (false)</param>
+public class CollisionComponent(
+    Vec2 size,
+    Vec2? offset = null,
+    bool solid = true,
+    Action<Entity.Entity, Entity.Entity>? collisionCallback = null,
+    bool drawDebug = false
+) : Component
 {
     /// <summary>
     /// Size
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// Offset
     /// </summary>
-    public Vec2 Offset { get; set; }
+    public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// If Collision is Solid
     /// </summary>
-    public bool Solid { get; set; }
+    public bool Solid { get; set; } = solid;
 
     /// <summary>
     /// Collision Callback
     /// </summary>
-    public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; }
+    public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; } =
+        collisionCallback;
 
     /// <summary>
     /// If must draw collision
     /// </summary>
-    public bool DrawDebug { get; set; }
+    public bool DrawDebug { get; set; } = drawDebug;
 
     private TransformComponent? _transformComponent;
-
-    /// <summary>
-    /// Create Collision Component
-    /// </summary>
-    /// <param name="size">Collision Size</param>
-    /// <param name="offset">Collision Offset (Vec2(0))</param>
-    /// <param name="solid">If Collision is Solid (true)</param>
-    /// <param name="collisionCallback">Action called when collision (null)</param>
-    /// <param name="drawDebug">Draw collision for debug (false)</param>
-    public CollisionComponent(
-        Vec2 size,
-        Vec2? offset = null,
-        bool solid = true,
-        Action<Entity.Entity, Entity.Entity>? collisionCallback = null,
-        bool drawDebug = false
-    )
-    {
-        Size = size;
-        Offset = offset ?? Vec2.Zero;
-        Solid = solid;
-        CollisionCallback = collisionCallback;
-        DrawDebug = drawDebug;
-    }
 
     /// <summary>
     /// Get Collision Rectangle

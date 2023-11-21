@@ -9,7 +9,7 @@ namespace SharpEngine.Core.Data.Lang;
 /// </summary>
 public class JsonLang : ILang
 {
-    private Dictionary<string, string> _translations = new();
+    private Dictionary<string, string> _translations = [];
 
     /// <summary>
     /// Create JsonLang
@@ -29,6 +29,6 @@ public class JsonLang : ILang
     {
         _translations =
             JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(file))
-            ?? new Dictionary<string, string>();
+            ?? [];
     }
 }

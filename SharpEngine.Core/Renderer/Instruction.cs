@@ -20,7 +20,7 @@ internal abstract record Instruction
     /// <summary>
     /// Parameters of Instruction
     /// </summary>
-    public List<object> Parameters;
+    public required List<object> Parameters;
 
     /// <summary>
     /// Executes the instruction.

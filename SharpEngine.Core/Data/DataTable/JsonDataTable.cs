@@ -9,22 +9,14 @@ namespace SharpEngine.Core.Data.DataTable;
 /// <summary>
 /// Json Data Table
 /// </summary>
-public class JsonDataTable<T> : IDataTable
+/// <param name="jsonFile">Json File</param>
+public class JsonDataTable<T>(string jsonFile) : IDataTable
 {
-    private List<dynamic?> Objects { get; }
-
-    /// <summary>
-    /// Create Data Table from Json
-    /// </summary>
-    /// <param name="jsonFile">Json File</param>
-    public JsonDataTable(string jsonFile)
-    {
-        Objects =
+    private List<dynamic?> Objects { get; } =
             JsonSerializer
                 .Deserialize<List<T>>(File.ReadAllText(jsonFile))
                 ?.Select(x => (dynamic?)x)
-                .ToList() ?? new List<dynamic?>();
-    }
+                .ToList() ?? [];
 
     /// <inheritdoc />
     public dynamic? Get(Predicate<dynamic?> predicate)

@@ -5,34 +5,24 @@ namespace SharpEngine.Core.Utils;
 /// <summary>
 /// Class which represents Timer
 /// </summary>
-public class Timer
+/// <param name="startTime">Time of Timer</param>
+/// <param name="endFunction">Function which be called at the end</param>
+public class Timer(float startTime, Action endFunction)
 {
     /// <summary>
     /// Start Time of Timer
     /// </summary>
-    public float StartTime { get; set; }
+    public float StartTime { get; set; } = startTime;
 
     /// <summary>
     /// Current Time of Timer
     /// </summary>
-    public float CurrentTime { get; set; }
+    public float CurrentTime { get; set; } = startTime;
 
     /// <summary>
     /// Function which be called when time is ended
     /// </summary>
-    public Action EndFunction { get; set; }
-
-    /// <summary>
-    /// Create Timer
-    /// </summary>
-    /// <param name="startTime">Time of Timer</param>
-    /// <param name="endFunction">Function which be called at the end</param>
-    public Timer(float startTime, Action endFunction)
-    {
-        StartTime = startTime;
-        CurrentTime = startTime;
-        EndFunction = endFunction;
-    }
+    public Action EndFunction { get; set; } = endFunction;
 
     /// <summary>
     /// Update Timer with Time

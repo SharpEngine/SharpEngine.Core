@@ -10,7 +10,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public static class DataTableManager
 {
-    private static readonly Dictionary<string, IDataTable> DataTables = new();
+    private static readonly Dictionary<string, IDataTable> DataTables = [];
 
     /// <summary>
     /// List of known data tables

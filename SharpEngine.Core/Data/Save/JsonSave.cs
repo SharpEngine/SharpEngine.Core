@@ -9,14 +9,14 @@ namespace SharpEngine.Core.Data.Save;
 /// </summary>
 public class JsonSave : ISave
 {
-    private Dictionary<string, object> _data = new();
+    private Dictionary<string, object> _data = [];
 
     /// <inheritdoc />
     public void Read(string file)
     {
         _data =
             JsonSerializer.Deserialize<Dictionary<string, object>>(File.ReadAllText(file))
-            ?? new Dictionary<string, object>();
+            ?? [];
     }
 
     /// <inheritdoc />

@@ -19,7 +19,7 @@ public struct Color
     /// </summary>
     public int R
     {
-        get => _r;
+        readonly get => _r;
         set => _r = MathHelper.Clamp(value, 0, 255);
     }
 
@@ -28,7 +28,7 @@ public struct Color
     /// </summary>
     public int G
     {
-        get => _g;
+        readonly get => _g;
         set => _g = MathHelper.Clamp(value, 0, 255);
     }
 
@@ -37,7 +37,7 @@ public struct Color
     /// </summary>
     public int B
     {
-        get => _b;
+        readonly get => _b;
         set => _b = MathHelper.Clamp(value, 0, 255);
     }
 
@@ -46,7 +46,7 @@ public struct Color
     /// </summary>
     public int A
     {
-        get => _a;
+        readonly get => _a;
         set => _a = MathHelper.Clamp(value, 0, 255);
     }
 
@@ -83,7 +83,7 @@ public struct Color
     /// Return Vec4
     /// </summary>
     /// <returns>Vec4 format</returns>
-    public Vector4 ToVec4() => new(_r / 255f, _g / 255f, _b / 255f, _a / 255f);
+    public readonly Vector4 ToVec4() => new(_r / 255f, _g / 255f, _b / 255f, _a / 255f);
 
     /// <summary>
     /// Return Color from Vec4
@@ -103,7 +103,7 @@ public struct Color
     /// </summary>
     /// <param name="force">Force of Darker Color</param>
     /// <returns>Darker Color</returns>
-    public Color Darker(int force = 1) =>
+    public readonly Color Darker(int force = 1) =>
         new(_r - 10 * force, _g - 10 * force, _b - 10 * force, _a);
 
     /// <summary>
@@ -111,7 +111,7 @@ public struct Color
     /// </summary>
     /// <param name="force">Force of Lighter Color</param>
     /// <returns>Lighter Color</returns>
-    public Color Lighter(int force = 1) =>
+    public readonly Color Lighter(int force = 1) =>
         new(_r + 10 * force, _g + 10 * force, _b + 10 * force, _a);
 
     /// <summary>
@@ -121,7 +121,7 @@ public struct Color
     /// <param name="currentTime">Current Elapsed Time of Transition</param>
     /// <param name="maxTime">Duration of Transition</param>
     /// <returns>Transited Color</returns>
-    public Color TranslateTo(Color endColor, float currentTime, float maxTime)
+    public readonly Color TranslateTo(Color endColor, float currentTime, float maxTime)
     {
         var stepR = (endColor.R - _r) * currentTime / maxTime;
         var stepG = (endColor.G - _g) * currentTime / maxTime;
@@ -137,7 +137,7 @@ public struct Color
     }
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         if (obj is Color color)
             return this == color;
@@ -145,10 +145,10 @@ public struct Color
     }
 
     /// <inheritdoc />
-    public override int GetHashCode() => HashCode.Combine(_r, _g, _b, _a);
+    public override readonly int GetHashCode() => HashCode.Combine(_r, _g, _b, _a);
 
     /// <inheritdoc />
-    public override string ToString() => $"Color(R={R}, G={G}, B={B}, A={A})";
+    public override readonly string ToString() => $"Color(R={R}, G={G}, B={B}, A={A})";
 
     /// <summary>
     /// Operator Inequality

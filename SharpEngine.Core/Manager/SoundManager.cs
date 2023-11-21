@@ -10,7 +10,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class SoundManager
 {
-    private readonly Dictionary<string, Sound> _sounds = new();
+    private readonly Dictionary<string, Sound> _sounds = [];
 
     /// <summary>
     /// Get All Sounds

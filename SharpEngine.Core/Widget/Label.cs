@@ -9,76 +9,61 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which display Label
 /// </summary>
-public class Label : Widget
+/// <param name="position">Label Position</param>
+/// <param name="text">Label Text</param>
+/// <param name="font">Label Font</param>
+/// <param name="color">Label Color</param>
+/// <param name="style">Label Style</param>
+/// <param name="rotation">Label Rotation</param>
+/// <param name="centerAllLines">If Label Lines is Centered</param>
+/// <param name="fontSize">Label Font Size (or null)</param>
+/// <param name="zLayer">Z Layer</param>
+public class Label(
+    Vec2 position,
+    string text = "",
+    string font = "",
+    Color? color = null,
+    LabelStyle style = LabelStyle.None,
+    int rotation = 0,
+    bool centerAllLines = false,
+    int? fontSize = null,
+    int zLayer = 0
+) : Widget(position, zLayer)
 {
     /// <summary>
     /// Text of Label
     /// </summary>
-    public string Text { get; set; }
+    public string Text { get; set; } = text;
 
     /// <summary>
     /// Font of Label
     /// </summary>
-    public string Font { get; set; }
+    public string Font { get; set; } = font;
 
     /// <summary>
     /// Color of Label
     /// </summary>
-    public Color Color { get; set; }
+    public Color Color { get; set; } = color ?? Color.Black;
 
     /// <summary>
     /// If Lines is Centered
     /// </summary>
-    public bool CenterAllLines { get; set; }
+    public bool CenterAllLines { get; set; } = centerAllLines;
 
     /// <summary>
     /// Rotation of Label
     /// </summary>
-    public int Rotation { get; set; }
+    public int Rotation { get; set; } = rotation;
 
     /// <summary>
     /// Font Size of Label (or Null)
     /// </summary>
-    public int? FontSize { get; set; }
+    public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
     /// Style of Label
     /// </summary>
-    public LabelStyle Style { get; set; }
-
-    /// <summary>
-    /// Create Label
-    /// </summary>
-    /// <param name="position">Label Position</param>
-    /// <param name="text">Label Text</param>
-    /// <param name="font">Label Font</param>
-    /// <param name="color">Label Color</param>
-    /// <param name="style">Label Style</param>
-    /// <param name="rotation">Label Rotation</param>
-    /// <param name="centerAllLines">If Label Lines is Centered</param>
-    /// <param name="fontSize">Label Font Size (or null)</param>
-    /// <param name="zLayer">Z Layer</param>
-    public Label(
-        Vec2 position,
-        string text = "",
-        string font = "",
-        Color? color = null,
-        LabelStyle style = LabelStyle.None,
-        int rotation = 0,
-        bool centerAllLines = false,
-        int? fontSize = null,
-        int zLayer = 0
-    )
-        : base(position, zLayer)
-    {
-        Text = text;
-        Font = font;
-        Color = color ?? Color.Black;
-        Rotation = rotation;
-        CenterAllLines = centerAllLines;
-        FontSize = fontSize;
-        Style = style;
-    }
+    public LabelStyle Style { get; set; } = style;
 
     /// <inheritdoc />
     public override void Draw()

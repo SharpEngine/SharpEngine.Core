@@ -10,7 +10,7 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class MusicManager
 {
-    private readonly Dictionary<string, Music> _musics = new();
+    private readonly Dictionary<string, Music> _musics = [];
 
     /// <summary>
     /// Get All Musics

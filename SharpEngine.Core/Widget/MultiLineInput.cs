@@ -13,63 +13,50 @@ namespace SharpEngine.Core.Widget;
 /// <summary>
 /// Class which represents Multi Line Input
 /// </summary>
-public class MultiLineInput : Widget
+/// <param name="position">Multi Line Edit Position</param>
+/// <param name="text">Multi Line Edit Text ("")</param>
+/// <param name="font">Multi Line Edit Font ("")</param>
+/// <param name="size">Multi Line Edit Size (Vec2(500, 200))</param>
+/// <param name="fontSize">Multi Line Edit Font Size (null)</param>
+/// <param name="zLayer">Z Layer</param>
+public class MultiLineInput(
+    Vec2 position,
+    string text = "",
+    string font = "",
+    Vec2? size = null,
+    int? fontSize = null,
+    int zLayer = 0
+) : Widget(position, zLayer)
 {
     /// <summary>
     /// Current Text of Multi Line Input
     /// </summary>
-    public string Text { get; set; }
+    public string Text { get; set; } = text;
 
     /// <summary>
     /// Font of Multi Line Input
     /// </summary>
-    public string Font { get; set; }
+    public string Font { get; set; } = font;
 
     /// <summary>
     /// Size of Multi Line Input
     /// </summary>
-    public Vec2 Size { get; set; }
+    public Vec2 Size { get; set; } = size ?? new Vec2(500, 200);
 
     /// <summary>
     /// If Multi Line Input is Focused
     /// </summary>
-    public bool Focused { get; private set; }
+    public bool Focused { get; private set; } = false;
 
     /// <summary>
     /// Font Size of Multi Line Input (or null)
     /// </summary>
-    public int? FontSize { get; set; }
+    public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
     /// Event trigger when value is changed
     /// </summary>
     public event EventHandler<ValueEventArgs<string>>? ValueChanged;
-
-    /// <summary>
-    /// Create Multi Line Input
-    /// </summary>
-    /// <param name="position">Multi Line Edit Position</param>
-    /// <param name="text">Multi Line Edit Text ("")</param>
-    /// <param name="font">Multi Line Edit Font ("")</param>
-    /// <param name="size">Multi Line Edit Size (Vec2(500, 200))</param>
-    /// <param name="fontSize">Multi Line Edit Font Size (null)</param>
-    /// <param name="zLayer">Z Layer</param>
-    public MultiLineInput(
-        Vec2 position,
-        string text = "",
-        string font = "",
-        Vec2? size = null,
-        int? fontSize = null,
-        int zLayer = 0
-    )
-        : base(position, zLayer)
-    {
-        Text = text;
-        Font = font;
-        Size = size ?? new Vec2(500, 200);
-        FontSize = fontSize;
-        Focused = false;
-    }
 
     /// <inheritdoc />
     public override void Update(float delta)

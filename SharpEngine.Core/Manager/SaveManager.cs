@@ -40,5 +40,5 @@ public static class SaveManager
         throw new Exception($"Save not found : {name}");
     }
 
-    private static readonly Dictionary<string, ISave> InternalSaves = new();
+    private static readonly Dictionary<string, ISave> InternalSaves = [];
 }

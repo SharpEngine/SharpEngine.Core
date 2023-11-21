@@ -53,19 +53,19 @@ public struct Vec2
     /// Length of Vector 2D
     /// </summary>
     /// <returns>Length</returns>
-    public float Length() => MathF.Sqrt(X * X + Y * Y);
+    public readonly float Length() => MathF.Sqrt(X * X + Y * Y);
 
     /// <summary>
     /// Squared Length of Vector 2D
     /// </summary>
     /// <returns>Squared Length</returns>
-    public float LengthSquared() => X * X + Y * Y;
+    public readonly float LengthSquared() => X * X + Y * Y;
 
     /// <summary>
     /// Normalized Vector 2D
     /// </summary>
     /// <returns>Normalized Vector</returns>
-    public Vec2 Normalized()
+    public readonly Vec2 Normalized()
     {
         var length = MathF.Sqrt(X * X + Y * Y);
         return length == 0 ? Zero : new Vec2(X / length, Y / length);
@@ -76,7 +76,7 @@ public struct Vec2
     /// </summary>
     /// <param name="vec2">Target</param>
     /// <returns>Distance</returns>
-    public float DistanceTo(Vec2 vec2)
+    public readonly float DistanceTo(Vec2 vec2)
     {
         var x = vec2.X - X;
         var y = vec2.Y - Y;
@@ -84,7 +84,7 @@ public struct Vec2
     }
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         if (obj is Vec2 vec)
             return this == vec;
@@ -92,10 +92,10 @@ public struct Vec2
     }
 
     /// <inheritdoc />
-    public override int GetHashCode() => HashCode.Combine(X, Y);
+    public override readonly int GetHashCode() => HashCode.Combine(X, Y);
 
     /// <inheritdoc />
-    public override string ToString() => $"Vec2(X={X}, Y={Y})";
+    public override readonly string ToString() => $"Vec2(X={X}, Y={Y})";
 
     /// <summary>
     /// Operator inequality

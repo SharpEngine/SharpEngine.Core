@@ -32,7 +32,7 @@ public class Entity
     /// <summary>
     /// Get All Components of Entity
     /// </summary>
-    public List<Component.Component> Components { get; } = new();
+    public List<Component.Component> Components { get; } = [];
 
     /// <summary>
     /// Get All Components of one Type
