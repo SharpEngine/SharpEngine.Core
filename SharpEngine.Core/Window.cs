@@ -49,7 +49,7 @@ public class Window
     /// <summary>
     /// Position of Window
     /// </summary>
-    public Vec2 Position
+    public static Vec2 Position
     {
         get => Raylib.GetWindowPosition();
         set => Raylib.SetWindowPosition((int)value.X, (int)value.Y);
@@ -214,8 +214,8 @@ public class Window
         bool fileLog = false
     )
     {
-        _consoleLog = consoleLog;
-        _fileLog = fileLog;
+        Window._consoleLog = consoleLog;
+        Window._fileLog = fileLog;
         _title = title;
         _screenSize = screenSize;
         BackgroundColor = backgroundColor ?? Color.Black;
@@ -252,13 +252,13 @@ public class Window
     /// Take a screenshot and save it
     /// </summary>
     /// <param name="path">Path of saved screenshot</param>
-    public void TakeScreenshot(string path) => Raylib.TakeScreenshot(path);
+    public static void TakeScreenshot(string path) => Raylib.TakeScreenshot(path);
 
     /// <summary>
     /// Set master volume
     /// </summary>
     /// <param name="volume">Volume (0 to 1)</param>
-    public void SetMasterVolume(float volume) => Raylib.SetMasterVolume(volume);
+    public static void SetMasterVolume(float volume) => Raylib.SetMasterVolume(volume);
 
     /// <summary>
     /// Add Scene to Window and Set Current Scene to it

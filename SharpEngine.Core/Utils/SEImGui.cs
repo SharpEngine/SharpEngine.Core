@@ -30,7 +30,7 @@ public class SeImGui : IDisposable
     }
 
     /// <inheritdoc />
-    public virtual void Dispose(bool disposing)
+    protected virtual void Dispose(bool disposing)
     {
         if (disposing)
         {
@@ -77,7 +77,7 @@ public class SeImGui : IDisposable
         io.Fonts.ClearTexData();
     }
 
-    private void SetupInput()
+    private static void SetupInput()
     {
         var io = ImGui.GetIO();
 
@@ -90,7 +90,7 @@ public class SeImGui : IDisposable
         io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
     }
 
-    private ImGuiKey MapKey(KeyboardKey key)
+    private static ImGuiKey MapKey(KeyboardKey key)
     {
         return key switch
         {
@@ -146,7 +146,7 @@ public class SeImGui : IDisposable
         DebugManager.Log(LogLevel.LogInfo, $"IMGUI: Display size {io.DisplaySize}");
     }
 
-    private void UpdateKeyboard()
+    private static void UpdateKeyboard()
     {
         var io = ImGui.GetIO();
 
@@ -168,7 +168,7 @@ public class SeImGui : IDisposable
         }
     }
 
-    private void UpdateMouse()
+    private static void UpdateMouse()
     {
         var io = ImGui.GetIO();
 
@@ -214,7 +214,7 @@ public class SeImGui : IDisposable
     }
 
     // Returns a Color struct from hexadecimal value
-    private Raylib_cs.Color GetColor(uint hexValue)
+    private static Raylib_cs.Color GetColor(uint hexValue)
     {
         Raylib_cs.Color color =
             new(
@@ -334,7 +334,7 @@ public class SeImGui : IDisposable
     /// <param name="width">Destination Width</param>
     /// <param name="height">Destination Height</param>
     /// <param name="source">Source Rectangle</param>
-    public void ImageRect(Texture2D image, int width, int height, Rect source)
+    public static void ImageRect(Texture2D image, int width, int height, Rect source)
     {
         var uv0 = new Vec2();
         var uv1 = new Vector2();

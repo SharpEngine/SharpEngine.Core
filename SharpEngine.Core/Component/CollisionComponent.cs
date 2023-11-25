@@ -79,18 +79,18 @@ public class CollisionComponent(
             if (entity == Entity)
                 continue;
 
-            if (
-                entity.GetComponentAs<CollisionComponent>() is { } entityPhysics
-                && entityPhysics.GetCollisionRect() is var entityRect
-                && GetCollisionRect(position) is var selfRect
-                && Raylib.CheckCollisionRecs(entityRect, selfRect)
-            )
+            if (entity.GetComponentAs<CollisionComponent>() is { } entityPhysics)
             {
-                CollisionCallback?.Invoke(Entity, entity);
-                entityPhysics.CollisionCallback?.Invoke(Entity, entity);
+                var entityRect = entityPhysics.GetCollisionRect();
+                var selfRect = GetCollisionRect(position);
+                if (Raylib.CheckCollisionRecs(entityRect, selfRect))
+                {
+                    CollisionCallback?.Invoke(Entity, entity);
+                    entityPhysics.CollisionCallback?.Invoke(Entity, entity);
 
-                if (canGo)
-                    canGo = !(Solid && entityPhysics.Solid);
+                    if (canGo)
+                        canGo = !(Solid && entityPhysics.Solid);
+                }
             }
         }
 

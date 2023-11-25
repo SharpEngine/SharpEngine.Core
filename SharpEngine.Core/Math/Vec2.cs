@@ -50,6 +50,12 @@ public struct Vec2
     }
 
     /// <summary>
+    /// If Vector 2D is Zero
+    /// </summary>
+    /// <returns>If is Zero</returns>
+    public readonly bool IsZero() => X == 0 && Y == 0;
+
+    /// <summary>
     /// Length of Vector 2D
     /// </summary>
     /// <returns>Length</returns>

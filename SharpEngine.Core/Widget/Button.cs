@@ -104,12 +104,10 @@ public class Button(
         if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
             return;
 
-        var position = RealPosition;
-
         if (_state == ButtonState.Hover && Active)
             SERender.DrawRectangle(
-                (int)(position.X - (Size.X + 4) / 2),
-                (int)(position.Y - (Size.Y + 4) / 2),
+                (int)(RealPosition.X - (Size.X + 4) / 2),
+                (int)(RealPosition.Y - (Size.Y + 4) / 2),
                 (int)(Size.X + 4),
                 (int)(Size.Y + 4),
                 Color.White,
@@ -118,8 +116,8 @@ public class Button(
             );
 
         SERender.DrawRectangle(
-            (int)(position.X - Size.X / 2),
-            (int)(position.Y - Size.Y / 2),
+            (int)(RealPosition.X - Size.X / 2),
+            (int)(RealPosition.Y - Size.Y / 2),
             (int)Size.X,
             (int)Size.Y,
             Color.Black,
@@ -127,8 +125,8 @@ public class Button(
             ZLayer + 0.00001f
         );
         SERender.DrawRectangle(
-            (int)(position.X - (Size.X - 4) / 2),
-            (int)(position.Y - (Size.Y - 4) / 2),
+            (int)(RealPosition.X - (Size.X - 4) / 2),
+            (int)(RealPosition.Y - (Size.Y - 4) / 2),
             (int)(Size.X - 4),
             (int)(Size.Y - 4),
             BackgroundColor,
@@ -141,7 +139,7 @@ public class Button(
         SERender.DrawText(
             finalFont.Value,
             Text,
-            position,
+            RealPosition,
             textSize / 2,
             0,
             finalFontSize,
@@ -153,8 +151,8 @@ public class Button(
 
         if (_state == ButtonState.Down || !Active)
             SERender.DrawRectangle(
-                (int)(position.X - Size.X / 2),
-                (int)(position.Y - Size.Y / 2),
+                (int)(RealPosition.X - Size.X / 2),
+                (int)(RealPosition.Y - Size.Y / 2),
                 (int)Size.X,
                 (int)Size.Y,
                 new Color(0, 0, 0, 128),

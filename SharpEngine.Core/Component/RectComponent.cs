@@ -61,12 +61,12 @@ public class RectComponent(
         if (_transform == null || !Displayed)
             return;
 
-        var size = Size * _transform.Scale;
+        var finalSize = Size * _transform.Scale;
         var position = _transform.GetTransformedPosition(Offset);
 
         SERender.DrawRectangle(
-            new Rect(position.X, position.Y, size.X, size.Y),
-            size / 2,
+            new Rect(position.X, position.Y, finalSize.X, finalSize.Y),
+            finalSize / 2,
             _transform.Rotation,
             Color,
             InstructionSource.Entity,

@@ -100,7 +100,7 @@ public class Particle
     /// <param name="sizeFunction">Particle Size Function</param>
     /// <param name="sizeFunctionValue">Particle Size Function Value</param>
     /// <param name="zLayer">ZLayer</param>
-    public Particle(
+    public static Particle FromParameters(
         Vec2 position,
         Vec2 velocity,
         Vec2 acceleration,
@@ -115,24 +115,24 @@ public class Particle
         int zLayer = 0
     )
     {
-        Position = position;
-        Velocity = velocity;
-        Acceleration = acceleration;
-        Lifetime = lifetime;
-        TimeSinceStart = 0;
-        MaxSize = size;
-        if (sizeFunction == ParticleParametersFunction.Increase)
-            Size = 0;
-        else
-            Size = size;
-        Rotation = rotation;
-        RotationSpeed = rotationSpeed;
-        BeginColor = beginColor;
-        CurrentColor = beginColor;
-        EndColor = endColor;
-        SizeFunction = sizeFunction;
-        SizeFunctionValue = sizeFunctionValue;
-        ZLayer = zLayer;
+        return new Particle
+        {
+            Position = position,
+            Velocity = velocity,
+            Acceleration = acceleration,
+            Lifetime = lifetime,
+            TimeSinceStart = 0,
+            MaxSize = size,
+            Size = sizeFunction == ParticleParametersFunction.Increase ? 0 : size,
+            Rotation = rotation,
+            RotationSpeed = rotationSpeed,
+            BeginColor = beginColor,
+            CurrentColor = beginColor,
+            EndColor = endColor,
+            SizeFunction = sizeFunction,
+            SizeFunctionValue = sizeFunctionValue,
+            ZLayer = zLayer
+        };
     }
 
     /// <summary>

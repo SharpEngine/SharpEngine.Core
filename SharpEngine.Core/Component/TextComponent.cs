@@ -52,7 +52,7 @@ public class TextComponent(
     /// <summary>
     /// Font Size (can be null and use basic size of Font)
     /// </summary>
-    public int? FontSize = fontSize;
+    public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
     /// Offset of ZLayer of Text
@@ -85,13 +85,13 @@ public class TextComponent(
         )
             return;
 
-        var font = window.FontManager.GetFont(Font);
-        var finalFontSize = FontSize ?? font.BaseSize;
+        var finalFont = window.FontManager.GetFont(Font);
+        var finalFontSize = FontSize ?? finalFont.BaseSize;
         var position = _transformComponent.GetTransformedPosition(Offset);
-        var textSize = Raylib.MeasureTextEx(font, Text, finalFontSize, 2);
+        var textSize = Raylib.MeasureTextEx(finalFont, Text, finalFontSize, 2);
 
         SERender.DrawText(
-            font,
+            finalFont,
             Text,
             position,
             textSize / 2,

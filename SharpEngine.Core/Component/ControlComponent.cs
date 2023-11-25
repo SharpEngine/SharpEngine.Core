@@ -120,12 +120,12 @@ public class ControlComponent : Component
         if (_transform == null)
             return;
 
-        GetMovement(out var dirX, out var dirY);
-        if (dirX == 0 && dirY == 0)
+        var move = GetMovement();
+        if (move.IsZero())
             return;
 
         IsMoving = true;
-        Direction = new Vec2(dirX, dirY).Normalized();
+        Direction = move.Normalized();
         var newPos = new Vec2(
             _transform.Position.X + Direction.X * Speed * delta,
             _transform.Position.Y + Direction.Y * Speed * delta
@@ -154,67 +154,71 @@ public class ControlComponent : Component
             IsMoving = false;
     }
 
-    private void GetMovement(out float dirX, out float dirY)
+    private Vec2 GetMovement()
     {
-        dirX = 0f;
-        dirY = 0f;
-        switch (ControlType)
+        return ControlType switch
         {
-            case ControlType.MouseFollow:
-                var mp = InputManager.GetMousePosition();
-                var dist = mp - _transform.Position;
-                if (MathF.Abs(dist.X) > 1)
-                    dirX = dist.X;
-                if (MathF.Abs(dist.Y) > 1)
-                    dirY = dist.Y;
-                break;
-            case ControlType.LeftRight:
-                if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0)
-                    dirX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
-                else
-                {
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
-                        dirX--;
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
-                        dirX++;
-                }
+            ControlType.MouseFollow => GetMouseFollowMovement(),
+            ControlType.LeftRight => GetLeftRightMovement(),
+            ControlType.UpDown => GetUpDownMovement(),
+            ControlType.FourDirection => GetFourDirectionMovement(),
+            _ => throw new ArgumentException("Unknown Control Type")
+        };
+    }
 
-                break;
-            case ControlType.UpDown:
-                if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY) != 0)
-                    dirY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
-                else
-                {
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                        dirY--;
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
-                        dirY++;
-                }
+    private Vec2 GetMouseFollowMovement()
+    {
+        var mp = InputManager.GetMousePosition();
+        return mp - _transform!.Position;
+    }
 
-                break;
-            case ControlType.FourDirection:
-                if (
-                    UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0
-                    || InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY) != 0
-                )
-                {
-                    dirX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
-                    dirY += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY);
-                }
-                else
-                {
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
-                        dirX--;
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
-                        dirX++;
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                        dirY--;
-                    if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
-                        dirY++;
-                }
-                break;
-            default:
-                throw new ArgumentException("Unknown Control Type");
+    private Vec2 GetFourDirectionMovement()
+    {
+        if (UseGamePad)
+            return new Vec2(InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX), InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY));
+        else
+        {
+            var dirX = 0;
+            var dirY = 0;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
+                dirX--;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
+                dirX++;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
+                dirY++;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
+                dirY--;
+            return new Vec2(dirX, dirY);
+        }
+    }
+
+    private Vec2 GetLeftRightMovement()
+    {
+        if (UseGamePad)
+            return new Vec2(InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX), 0);
+        else
+        {
+            var dirX = 0;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
+                dirX--;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
+                dirX++;
+            return new Vec2(dirX, 0);
+        }
+    }
+
+    private Vec2 GetUpDownMovement()
+    {
+        if (UseGamePad)
+            return new Vec2(0, InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY));
+        else
+        {
+            var dirY = 0;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
+                dirY++;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
+                dirY--;
+            return new Vec2(0, dirY);
         }
     }
 }

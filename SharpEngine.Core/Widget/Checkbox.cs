@@ -62,9 +62,8 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
         if (!Displayed || Size == Vec2.Zero)
             return;
 
-        var position = RealPosition;
         SERender.DrawRectangle(
-            new Rect(position.X, position.Y, Size.X, Size.Y),
+            new Rect(RealPosition.X, RealPosition.Y, Size.X, Size.Y),
             Size / 2,
             0,
             Color.Black,
@@ -72,7 +71,7 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
             ZLayer
         );
         SERender.DrawRectangle(
-            new Rect(position.X, position.Y, Size.X - 4, Size.Y - 4),
+            new Rect(RealPosition.X, RealPosition.Y, Size.X - 4, Size.Y - 4),
             (Size - 4) / 2,
             0,
             Color.White,
@@ -82,7 +81,7 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
 
         if (IsChecked)
             SERender.DrawRectangle(
-                new Rect(position.X, position.Y, Size.X - 6, Size.Y - 6),
+                new Rect(RealPosition.X, RealPosition.Y, Size.X - 6, Size.Y - 6),
                 (Size - 6) / 2,
                 0,
                 Color.Black,

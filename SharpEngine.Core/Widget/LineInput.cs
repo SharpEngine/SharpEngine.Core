@@ -117,8 +117,6 @@ public class LineInput(
         if (!Displayed || Scene == null)
             return;
 
-        var position = RealPosition;
-
         SERender.DrawRectangle(
             new Rect(position.X, position.Y, Size.X, Size.Y),
             Size / 2,
@@ -147,7 +145,7 @@ public class LineInput(
 
         if (Text.Length > 0)
         {
-            var finalPosition = new Vec2(position.X - Size.X / 2 + 4, position.Y - textSize.Y / 2);
+            var finalPosition = new Vec2(RealPosition.X - Size.X / 2 + 4, RealPosition.Y - textSize.Y / 2);
 
             SERender.ScissorMode(
                 (int)finalPosition.X,
@@ -174,8 +172,8 @@ public class LineInput(
 
         if (Focused)
             SERender.DrawRectangle(
-                (int)(position.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
-                (int)(position.Y - textSize.Y / 2 + 4),
+                (int)(RealPosition.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
+                (int)(RealPosition.Y - textSize.Y / 2 + 4),
                 5,
                 (int)textSize.Y - 8,
                 Color.Black,

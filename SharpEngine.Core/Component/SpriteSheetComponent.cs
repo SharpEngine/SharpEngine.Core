@@ -59,7 +59,7 @@ public class SpriteSheetComponent(
     /// <summary>
     /// If Sprite is Flip Vertically
     /// </summary>
-    public bool FlipY { get; set; } = flipY;
+    public bool FlipY { get; set; } = false;
 
     /// <summary>
     /// Offset of ZLayer of Sprite Sheet
@@ -147,15 +147,15 @@ public class SpriteSheetComponent(
         )
             return;
 
-        var texture = window.TextureManager.GetTexture(Texture);
+        var finalTexture = window.TextureManager.GetTexture(Texture);
         var position = _transform.GetTransformedPosition(Offset);
         SERender.DrawTexture(
-            texture,
+            finalTexture,
             new Rect(
-                SpriteSize.X * (anim.Value.Indices[_currentImage] % (texture.Width / SpriteSize.X)),
+                SpriteSize.X * (anim.Value.Indices[_currentImage] % (finalTexture.Width / SpriteSize.X)),
                 SpriteSize.Y
                     * (int)(
-                        anim.Value.Indices[_currentImage] / (int)(texture.Width / SpriteSize.X)
+                        anim.Value.Indices[_currentImage] / (int)(finalTexture.Width / SpriteSize.X)
                     ),
                 FlipX ? -SpriteSize.X : SpriteSize.X,
                 FlipY ? -SpriteSize.Y : SpriteSize.Y

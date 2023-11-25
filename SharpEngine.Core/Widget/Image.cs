@@ -46,11 +46,10 @@ public class Image(
             return;
 
         var finalTexture = window.TextureManager.GetTexture(Texture);
-        var position = RealPosition;
         SERender.DrawTexture(
             finalTexture,
             new Rect(0, 0, finalTexture.Width, finalTexture.Height),
-            new Rect(position.X, position.Y, finalTexture.Width * Scale.X, finalTexture.Height * Scale.Y),
+            new Rect(RealPosition.X, RealPosition.Y, finalTexture.Width * Scale.X, finalTexture.Height * Scale.Y),
             new Vec2(finalTexture.Width / 2f * Scale.X, finalTexture.Height / 2f * Scale.Y),
             Rotation,
             Color.White,

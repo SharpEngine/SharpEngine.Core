@@ -60,9 +60,8 @@ public class ProgressBar : Widget
         if (!Displayed || Size == Vec2.Zero)
             return;
 
-        var position = RealPosition;
         SERender.DrawRectangle(
-            new Rect(position, Size),
+            new Rect(RealPosition, Size),
             Size / 2,
             0,
             Color.Black,
@@ -70,7 +69,7 @@ public class ProgressBar : Widget
             ZLayer
         );
         SERender.DrawRectangle(
-            new Rect(position, Size - 4),
+            new Rect(RealPosition, Size - 4),
             (Size - 4) / 2,
             0,
             Color.White,
@@ -78,7 +77,7 @@ public class ProgressBar : Widget
             ZLayer + 0.00001f
         );
         SERender.DrawRectangle(
-            new Rect(position, (Size.X - 8) * Value / 100, Size.Y - 8),
+            new Rect(RealPosition, (Size.X - 8) * Value / 100, Size.Y - 8),
             (Size - 8) / 2,
             0,
             Color,

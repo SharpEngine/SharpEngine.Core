@@ -79,27 +79,27 @@ public class SpriteComponent(
         if (_transformComponent == null || !Displayed || Texture.Length <= 0 || window == null)
             return;
 
-        var texture = window.TextureManager.GetTexture(Texture);
+        var finalTexture = window.TextureManager.GetTexture(Texture);
         var position = _transformComponent.GetTransformedPosition(Offset);
         if (Shader == "")
         {
             SERender.DrawTexture(
-                texture,
+                finalTexture,
                 new Rect(
                     0,
                     0,
-                    FlipX ? -texture.Width : texture.Width,
-                    FlipY ? -texture.Height : texture.Height
+                    FlipX ? -finalTexture.Width : finalTexture.Width,
+                    FlipY ? -finalTexture.Height : finalTexture.Height
                 ),
                 new Rect(
                     position.X,
                     position.Y,
-                    texture.Width * _transformComponent.Scale.X,
-                    texture.Height * _transformComponent.Scale.Y
+                    finalTexture.Width * _transformComponent.Scale.X,
+                    finalTexture.Height * _transformComponent.Scale.Y
                 ),
                 new Vec2(
-                    texture.Width / 2f * _transformComponent.Scale.X,
-                    texture.Height / 2f * _transformComponent.Scale.Y
+                    finalTexture.Width / 2f * _transformComponent.Scale.X,
+                    finalTexture.Height / 2f * _transformComponent.Scale.Y
                 ),
                 _transformComponent.Rotation,
                 Utils.Color.White,
@@ -116,22 +116,22 @@ public class SpriteComponent(
                 () =>
                 {
                     SERender.DrawTexture(
-                        texture,
+                        finalTexture,
                         new Rect(
                             0,
                             0,
-                            FlipX ? -texture.Width : texture.Width,
-                            FlipY ? -texture.Height : texture.Height
+                            FlipX ? -finalTexture.Width : finalTexture.Width,
+                            FlipY ? -finalTexture.Height : finalTexture.Height
                         ),
                         new Rect(
                             position.X,
                             position.Y,
-                            texture.Width * _transformComponent.Scale.X,
-                            texture.Height * _transformComponent.Scale.Y
+                            finalTexture.Width * _transformComponent.Scale.X,
+                            finalTexture.Height * _transformComponent.Scale.Y
                         ),
                         new Vec2(
-                            texture.Width / 2f * _transformComponent.Scale.X,
-                            texture.Height / 2f * _transformComponent.Scale.Y
+                            finalTexture.Width / 2f * _transformComponent.Scale.X,
+                            finalTexture.Height / 2f * _transformComponent.Scale.Y
                         ),
                         _transformComponent.Rotation,
                         Utils.Color.White,

@@ -69,11 +69,9 @@ public class ScrollFrame(
         if (!Displayed || Scene == null)
             return;
 
-        var position = RealPosition;
-
         if (BackgroundColor != null)
             SERender.DrawRectangle(
-                new Rect(position.X, position.Y, Size.X, Size.Y),
+                new Rect(RealPosition.X, RealPosition.Y, Size.X, Size.Y),
                 Size / 2,
                 0,
                 BackgroundColor.Value,
@@ -81,7 +79,7 @@ public class ScrollFrame(
                 ZLayer
             );
         SERender.DrawRectangleLines(
-            new Rect(position.X - Size.X / 2, position.Y - Size.Y / 2, Size.X, Size.Y),
+            new Rect(RealPosition.X - Size.X / 2, RealPosition.Y - Size.Y / 2, Size.X, Size.Y),
             BorderSize,
             BorderColor,
             InstructionSource.UI,
@@ -89,8 +87,8 @@ public class ScrollFrame(
         );
 
         SERender.ScissorMode(
-            (int)(position.X - Size.X / 2),
-            (int)(position.Y - Size.Y / 2),
+            (int)(RealPosition.X - Size.X / 2),
+            (int)(RealPosition.Y - Size.Y / 2),
             (int)Size.X,
             (int)Size.Y,
             InstructionSource.UI,

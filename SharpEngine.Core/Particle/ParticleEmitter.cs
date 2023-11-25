@@ -205,7 +205,6 @@ public class ParticleEmitter(
     /// </summary>
     public int ZLayer { get; set; } = zLayer;
 
-    private List<Particle> _mustBeDeleted = [];
     private float _timerBeforeSpawn;
 
     /// <summary>
@@ -243,7 +242,7 @@ public class ParticleEmitter(
         if (EndColors != null)
             endColor = EndColors[Rand.GetRand(0, EndColors.Length - 1)];
 
-        var particle = new Particle(
+        var particle = Particle.FromParameters(
             position,
             velocity,
             acceleration,
@@ -267,18 +266,18 @@ public class ParticleEmitter(
     /// <param name="objectPosition">Emitter Position</param>
     public void Update(float delta, Vec2 objectPosition)
     {
-        _mustBeDeleted = [];
+        List<Particle> mustBeDeleted = [];
         foreach (var particle in Particles)
         {
             particle.Update(delta);
             if (particle.TimeSinceStart >= particle.Lifetime)
-                _mustBeDeleted.Add(particle);
+                mustBeDeleted.Add(particle);
         }
 
-        foreach (var particle in _mustBeDeleted)
+        foreach (var particle in mustBeDeleted)
             Particles.Remove(particle);
 
-        _mustBeDeleted.Clear();
+        mustBeDeleted.Clear();
 
         if (!Active)
             return;

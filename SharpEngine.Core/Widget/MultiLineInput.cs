@@ -126,10 +126,8 @@ public class MultiLineInput(
         if (!Displayed || Scene == null)
             return;
 
-        var position = RealPosition;
-
         SERender.DrawRectangle(
-            new Rect(position.X, position.Y, Size.X, Size.Y),
+            new Rect(RealPosition.X, RealPosition.Y, Size.X, Size.Y),
             Size / 2,
             0,
             Color.Black,
@@ -137,7 +135,7 @@ public class MultiLineInput(
             ZLayer
         );
         SERender.DrawRectangle(
-            new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4),
+            new Rect(RealPosition.X + 2, RealPosition.Y + 2, Size.X - 4, Size.Y - 4),
             Size / 2,
             0,
             Color.White,
@@ -154,7 +152,7 @@ public class MultiLineInput(
 
         var textSize = Raylib.MeasureTextEx(finalFont.Value, Text.Split("\n")[^1], finalFontSize, 2);
 
-        var finalPosition = new Vec2(position.X - Size.X / 2 + 4, position.Y - Size.Y / 2 + 4);
+        var finalPosition = new Vec2(RealPosition.X - Size.X / 2 + 4, RealPosition.Y - Size.Y / 2 + 4);
 
         var lines = Text.Split("\n");
         var offsetX = textSize.X - (Size.X - 20);
@@ -167,7 +165,7 @@ public class MultiLineInput(
             (int)Size.Y - 8,
             InstructionSource.UI,
             ZLayer + 0.00002f,
-            () => DrawLines(finalFont, finalFontSize, finalPosition, lines, offsetX, offsetY)
+            () => DrawLines(finalFont!.Value, finalFontSize, finalPosition, lines, offsetX, offsetY)
         );
 
         if (Focused)
@@ -184,17 +182,17 @@ public class MultiLineInput(
             );
     }
 
-    private static void DrawLines(Font? finalFont, int finalFontSize, Vec2 finalPosition, string[] lines, float offsetX, float offsetY)
+    private static void DrawLines(Font finalFont, int finalFontSize, Vec2 finalPosition, string[] lines, float offsetX, float offsetY)
     {
         for (var i = 0; i < lines.Length; i++)
         {
-            var lineSize = Raylib.MeasureTextEx(finalFont.Value, lines[i], finalFontSize, 2);
+            var lineSize = Raylib.MeasureTextEx(finalFont, lines[i], finalFontSize, 2);
             var pos = new Vec2(
                 finalPosition.X - (offsetX > 0 ? offsetX : 0),
                 finalPosition.Y + i * lineSize.Y - (offsetY > 0 ? offsetY : 0)
             );
             SERender.DrawText(
-                finalFont.Value,
+                finalFont,
                 lines[i],
                 pos,
                 finalFontSize,

@@ -75,7 +75,6 @@ public class Label(
         if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
             return;
 
-        var realPosition = RealPosition;
         var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
 
         var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
@@ -85,8 +84,8 @@ public class Label(
         {
             var lineSize = Raylib.MeasureTextEx(finalFont.Value, lines[i], finalFontSize, 2);
             var finalPosition = new Vec2(
-                CenterAllLines ? realPosition.X - lineSize.X / 2 : realPosition.X - textSize.X / 2,
-                realPosition.Y - textSize.Y / 2 + i * lineSize.Y
+                CenterAllLines ? RealPosition.X - lineSize.X / 2 : RealPosition.X - textSize.X / 2,
+                RealPosition.Y - textSize.Y / 2 + i * lineSize.Y
             );
             SERender.DrawText(
                 finalFont.Value,
