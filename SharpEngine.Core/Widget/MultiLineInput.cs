@@ -167,7 +167,7 @@ public class MultiLineInput(
             (int)Size.Y - 8,
             InstructionSource.UI,
             ZLayer + 0.00002f,
-            () => DrawLines(finalFont, finalFontSize, finalPosition, lines, offsetX, offsetY);
+            () => DrawLines(finalFont, finalFontSize, finalPosition, lines, offsetX, offsetY)
         );
 
         if (Focused)
