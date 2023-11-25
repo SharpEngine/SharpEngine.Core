@@ -13,7 +13,7 @@
 [\~] Particle : Constructor use ParticleParameters<br/>
 [\~] ParticleEmitter : Constructor use ParticleEmitterParameters<br/>
 [-] SpriteSheetComponent : flipX and flipY in Constructor<br/>
-[.] Refactor<br/>
+[.] Refactor with SonarCloud<br/>
 [.] ImGui.NET : 1.90.0.1
 
 ### V 1.6.0 - 21/11/2023
