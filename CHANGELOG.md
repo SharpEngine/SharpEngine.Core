@@ -8,6 +8,8 @@
 [.] Others
 
 ### V 1.7.0 - XX/11/2023
+[+] ParticleParameters<br/>
+[\~] Particle : Constructor use ParticleParameters<br/>
 [-] SpriteSheetComponent : flipX and flipY in Constructor<br/>
 [.] Refactor<br/>
 [.] ImGui.NET : 1.90.0.1

@@ -8,132 +8,83 @@ namespace SharpEngine.Core.Particle;
 /// <summary>
 /// CLass which represents Particle
 /// </summary>
-public class Particle
+/// <param name="parameters">Particle Parameters</param>
+public class Particle(ParticleParameters parameters)
 {
     /// <summary>
     /// Position of Particle
     /// </summary>
-    public Vec2 Position { get; set; }
+    public Vec2 Position { get; set; } = parameters.Position;
 
     /// <summary>
     /// Velocity of Particle
     /// </summary>
-    public Vec2 Velocity { get; set; }
+    public Vec2 Velocity { get; set; } = parameters.Velocity;
 
     /// <summary>
     /// Acceleration of Particle
     /// </summary>
-    public Vec2 Acceleration { get; set; }
+    public Vec2 Acceleration { get; set; } = parameters.Acceleration;
 
     /// <summary>
     /// Lifetime of Particle
     /// </summary>
-    public float Lifetime { get; set; }
+    public float Lifetime { get; set; } = parameters.Lifetime;
 
     /// <summary>
     /// Time Since Start of Particle
     /// </summary>
-    public float TimeSinceStart { get; set; }
+    public float TimeSinceStart { get; set; } = 0;
 
     /// <summary>
     /// Size of Particle
     /// </summary>
-    public float Size { get; set; }
+    public float Size { get; set; } = parameters.SizeFunction == ParticleParametersFunction.Increase ? 0 : parameters.Size;
 
     /// <summary>
     /// Max Size of Particle
     /// </summary>
-    public float MaxSize { get; set; }
+    public float MaxSize { get; set; } = parameters.Size;
 
     /// <summary>
     /// Rotation of Particle
     /// </summary>
-    public float Rotation { get; set; }
+    public float Rotation { get; set; } = parameters.Rotation;
 
     /// <summary>
     /// Rotation Speed of Particle
     /// </summary>
-    public float RotationSpeed { get; set; }
+    public float RotationSpeed { get; set; } = parameters.RotationSpeed;
 
     /// <summary>
     /// Begin Color of Particle
     /// </summary>
-    public Color BeginColor { get; set; }
+    public Color BeginColor { get; set; } = parameters.BeginColor;
 
     /// <summary>
     /// Current Color of Particle
     /// </summary>
-    public Color CurrentColor { get; set; }
+    public Color CurrentColor { get; set; } = parameters.BeginColor;
 
     /// <summary>
     /// End Color of Particle
     /// </summary>
-    public Color EndColor { get; set; }
+    public Color EndColor { get; set; } = parameters.EndColor;
 
     /// <summary>
     /// Size Function of Particle
     /// </summary>
-    public ParticleParametersFunction SizeFunction { get; set; }
+    public ParticleParametersFunction SizeFunction { get; set; } = parameters.SizeFunction;
 
     /// <summary>
     /// Size Function Value of Particle
     /// </summary>
-    public float SizeFunctionValue { get; set; }
+    public float SizeFunctionValue { get; set; } = parameters.SizeFunctionValue;
 
     /// <summary>
     /// ZLayer of Particle
     /// </summary>
-    public int ZLayer { get; set; }
-
-    /// <summary>
-    /// Create Particle
-    /// </summary>
-    /// <param name="position">Particle Position</param>
-    /// <param name="velocity">Particle Velocity</param>
-    /// <param name="acceleration">Particle Acceleration</param>
-    /// <param name="lifetime">Particle Lifetime</param>
-    /// <param name="size">Particle Size</param>
-    /// <param name="rotation">Particle Rotation</param>
-    /// <param name="rotationSpeed">Particle Rotation Speed</param>
-    /// <param name="beginColor">Particle Begin Color</param>
-    /// <param name="endColor">Particle End Color</param>
-    /// <param name="sizeFunction">Particle Size Function</param>
-    /// <param name="sizeFunctionValue">Particle Size Function Value</param>
-    /// <param name="zLayer">ZLayer</param>
-    public static Particle FromParameters(
-        Vec2 position,
-        Vec2 velocity,
-        Vec2 acceleration,
-        float lifetime,
-        float size,
-        float rotation,
-        float rotationSpeed,
-        Color beginColor,
-        Color endColor,
-        ParticleParametersFunction sizeFunction = ParticleParametersFunction.Normal,
-        float sizeFunctionValue = 0,
-        int zLayer = 0
-    )
-    {
-        return new Particle
-        {
-            Position = position,
-            Velocity = velocity,
-            Acceleration = acceleration,
-            Lifetime = lifetime,
-            TimeSinceStart = 0,
-            MaxSize = size,
-            Size = sizeFunction == ParticleParametersFunction.Increase ? 0 : size,
-            Rotation = rotation,
-            RotationSpeed = rotationSpeed,
-            BeginColor = beginColor,
-            CurrentColor = beginColor,
-            EndColor = endColor,
-            SizeFunction = sizeFunction,
-            SizeFunctionValue = sizeFunctionValue,
-            ZLayer = zLayer
-        };
-    }
+    public int ZLayer { get; set; } = parameters.ZLayer;
 
     /// <summary>
     /// Update Particle
