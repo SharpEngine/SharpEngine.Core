@@ -36,12 +36,12 @@ public class Slider(
 
         if (InputManager.IsMouseButtonDown(MouseButton.Left))
         {
-            var position = RealPosition - Size / 2;
-            if (!InputManager.IsMouseInRectangle(new Rect(position, Size)))
+            var finalPosition = RealPosition - Size / 2;
+            if (!InputManager.IsMouseInRectangle(new Rect(finalPosition, Size)))
                 return;
 
             var barSize = Size.X;
-            var point = InputManager.GetMousePosition().X - position.X;
+            var point = InputManager.GetMousePosition().X - finalPosition.X;
             var temp = Value;
             Value = (int)System.Math.Round(point * 100 / barSize, MidpointRounding.AwayFromZero);
             if (System.Math.Abs(temp - Value) > 0.001f)

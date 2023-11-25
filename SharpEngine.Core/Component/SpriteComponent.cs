@@ -90,10 +90,7 @@ public class SpriteComponent(
                 window.ShaderManager.GetShader(Shader),
                 InstructionSource.Entity,
                 _transformComponent.ZLayer + ZLayerOffset,
-                () =>
-                {
-                    DrawTexture(finalTexture, position);
-                }
+                () => DrawTexture(finalTexture, position)
             );
         }
     }
@@ -111,7 +108,7 @@ public class SpriteComponent(
             new Rect(
                 position.X,
                 position.Y,
-                finalTexture.Width * _transformComponent.Scale.X,
+                finalTexture.Width * _transformComponent!.Scale.X,
                 finalTexture.Height * _transformComponent.Scale.Y
             ),
             new Vec2(
