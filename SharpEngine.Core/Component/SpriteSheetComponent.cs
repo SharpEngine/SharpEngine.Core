@@ -15,8 +15,6 @@ namespace SharpEngine.Core.Component;
 /// <param name="currentAnim">Current Animation</param>
 /// <param name="displayed">If Displayed</param>
 /// <param name="offset">Offset</param>
-/// <param name="flipX">If Sprite is Flip Horizontally</param>
-/// <param name="flipY">If Sprite is Flip Vertically</param>
 /// <param name="zLayerOffset">Offset of zLayer</param>
 public class SpriteSheetComponent(
     string texture,
@@ -25,8 +23,6 @@ public class SpriteSheetComponent(
     string currentAnim = "",
     bool displayed = true,
     Vec2? offset = null,
-    bool flipX = false,
-    bool flipY = false,
     int zLayerOffset = 0
 ) : Component
 {
@@ -58,7 +54,7 @@ public class SpriteSheetComponent(
     /// <summary>
     /// If Sprite is Flip Horizontally
     /// </summary>
-    public bool FlipX { get; set; } = flipX;
+    public bool FlipX { get; set; } = false;
 
     /// <summary>
     /// If Sprite is Flip Vertically

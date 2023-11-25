@@ -7,7 +7,8 @@
 [#] Bug Fixes<br>
 [.] Others
 
-### V 1.6.1 - XX/11/2023
+### V 1.7.0 - XX/11/2023
+[-] SpriteSheetComponent : flipX and flipY in Constructor<br/>
 [.] Refactor<br/>
 [.] ImGui.NET : 1.90.0.1
 
