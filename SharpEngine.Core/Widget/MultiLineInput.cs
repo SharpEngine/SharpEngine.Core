@@ -26,93 +26,19 @@ public class MultiLineInput(
     Vec2? size = null,
     int? fontSize = null,
     int zLayer = 0
-) : Widget(position, zLayer)
+) : LineInput(position, text, font, size, fontSize, zLayer)
 {
-    /// <summary>
-    /// Current Text of Multi Line Input
-    /// </summary>
-    public string Text { get; set; } = text;
-
-    /// <summary>
-    /// Font of Multi Line Input
-    /// </summary>
-    public string Font { get; set; } = font;
-
-    /// <summary>
-    /// Size of Multi Line Input
-    /// </summary>
-    public Vec2 Size { get; set; } = size ?? new Vec2(500, 200);
-
-    /// <summary>
-    /// If Multi Line Input is Focused
-    /// </summary>
-    public bool Focused { get; private set; } = false;
-
-    /// <summary>
-    /// Font Size of Multi Line Input (or null)
-    /// </summary>
-    public int? FontSize { get; set; } = fontSize;
-
-    /// <summary>
-    /// Event trigger when value is changed
-    /// </summary>
-    public event EventHandler<ValueEventArgs<string>>? ValueChanged;
-
     /// <inheritdoc />
     public override void Update(float delta)
     {
-        if (!Active)
-        {
-            Focused = false;
-            return;
-        }
-
-        if (InputManager.IsMouseButtonPressed(MouseButton.Left))
-            Focused = InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size));
-
-        if (!Focused)
-            return;
+        base.Update(delta);
 
         #region Text Processing
-
-        if (InputManager.IsKeyPressed(Key.Backspace) && Text.Length >= 1)
-        {
-            var old = Text;
-            Text = Text[..^1];
-            ValueChanged?.Invoke(
-                this,
-                new ValueEventArgs<string> { OldValue = old, NewValue = Text }
-            );
-        }
 
         if (InputManager.IsKeyPressed(Key.Enter))
         {
             Text += '\n';
-            ValueChanged?.Invoke(
-                this,
-                new ValueEventArgs<string> { OldValue = Text[..^1], NewValue = Text }
-            );
-        }
-
-        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
-        if (finalFont != null)
-        {
-            foreach (var pressedChar in InputManager.GetPressedChars())
-            {
-                if (
-                    char.IsSymbol(pressedChar)
-                    || char.IsWhiteSpace(pressedChar)
-                    || char.IsLetterOrDigit(pressedChar)
-                    || char.IsPunctuation(pressedChar)
-                )
-                {
-                    Text += pressedChar;
-                    ValueChanged?.Invoke(
-                        this,
-                        new ValueEventArgs<string> { OldValue = Text, NewValue = Text[..^1] }
-                    );
-                }
-            }
+            InvokeValueChanged(new ValueEventArgs<string> { OldValue = Text[..^1], NewValue = Text });
         }
 
         #endregion
@@ -121,9 +47,13 @@ public class MultiLineInput(
     /// <inheritdoc />
     public override void Draw()
     {
-        base.Draw();
+        if (!Displayed)
+            return;
 
-        if (!Displayed || Scene == null)
+        foreach (var child in Children)
+            child.Draw();
+
+        if (Scene == null)
             return;
 
         SERender.DrawRectangle(

@@ -58,6 +58,12 @@ public class LineInput(
     /// </summary>
     public event EventHandler<ValueEventArgs<string>>? ValueChanged;
 
+    /// <summary>
+    /// Invoke ValueChanged Event
+    /// </summary>
+    /// <param name="args">Event Args</param>
+    protected void InvokeValueChanged(ValueEventArgs<string> args) => ValueChanged?.Invoke(this, args);
+
     /// <inheritdoc />
     public override void Update(float delta)
     {

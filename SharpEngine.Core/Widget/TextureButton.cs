@@ -28,57 +28,16 @@ public class TextureButton(
     Color? fontColor = null,
     int? fontSize = null,
     int zLayer = 0
-) : Widget(position, zLayer)
+) : Button(position, text, font, size, fontColor, null, fontSize, zLayer)
 {
-    private enum ButtonState
-    {
-        Idle,
-        Down,
-        Hover
-    }
-
-    /// <summary>
-    /// Text of Texture Button
-    /// </summary>
-    public string Text { get; set; } = text;
-
     /// <summary>
     /// Texture of Texture Button
     /// </summary>
     public string Texture { get; set; } = texture;
 
-    /// <summary>
-    /// Font of Button
-    /// </summary>
-    public string Font { get; set; } = font;
-
-    /// <summary>
-    /// Size of Button
-    /// </summary>
-    public Vec2 Size { get; set; } = size ?? Vec2.Zero;
-
-    /// <summary>
-    /// Color of Button Font
-    /// </summary>
-    public Color FontColor { get; set; } = fontColor ?? Color.Black;
-
-    /// <summary>
-    /// Font Size of Button (or Null)
-    /// </summary>
-    public int? FontSize { get; set; } = fontSize;
-
-    /// <summary>
-    /// Event which trigger when button is clicked
-    /// </summary>
-    public event EventHandler? Clicked;
-
-    private ButtonState _state = ButtonState.Idle;
-
     /// <inheritdoc />
     public override void Update(float delta)
     {
-        base.Update(delta);
-
         if (Size == Vec2.Zero)
         {
             var finalTexture = Scene?.Window?.TextureManager.GetTexture(Texture);
@@ -86,25 +45,17 @@ public class TextureButton(
                 Size = new Vec2(finalTexture.Value.Width, finalTexture.Value.Height);
         }
 
-        if (!Active)
-            return;
-
-        if (InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size)))
-        {
-            _state = ButtonState.Hover;
-            if (InputManager.IsMouseButtonPressed(MouseButton.Left))
-                Clicked?.Invoke(this, EventArgs.Empty);
-            if (InputManager.IsMouseButtonDown(MouseButton.Left))
-                _state = ButtonState.Down;
-        }
-        else
-            _state = ButtonState.Idle;
+        base.Update(delta);
     }
 
     /// <inheritdoc />
     public override void Draw()
     {
-        base.Draw();
+        if (!Displayed)
+            return;
+
+        foreach (var child in Children)
+            child.Draw();
 
         var finalFont = Scene?.Window?.FontManager.GetFont(Font);
         var finalTexture = Scene?.Window?.TextureManager.GetTexture(Texture);
@@ -113,8 +64,7 @@ public class TextureButton(
             Size = new Vec2(finalTexture.Value.Width, finalTexture.Value.Height);
 
         if (
-            !Displayed
-            || Scene == null
+            Scene == null
             || Text.Length <= 0
             || Font.Length <= 0
             || finalFont == null

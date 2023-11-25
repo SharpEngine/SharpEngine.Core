@@ -1,4 +1,5 @@
 ﻿using System;
+using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 
@@ -82,31 +83,7 @@ public class SpriteComponent(
         var finalTexture = window.TextureManager.GetTexture(Texture);
         var position = _transformComponent.GetTransformedPosition(Offset);
         if (Shader == "")
-        {
-            SERender.DrawTexture(
-                finalTexture,
-                new Rect(
-                    0,
-                    0,
-                    FlipX ? -finalTexture.Width : finalTexture.Width,
-                    FlipY ? -finalTexture.Height : finalTexture.Height
-                ),
-                new Rect(
-                    position.X,
-                    position.Y,
-                    finalTexture.Width * _transformComponent.Scale.X,
-                    finalTexture.Height * _transformComponent.Scale.Y
-                ),
-                new Vec2(
-                    finalTexture.Width / 2f * _transformComponent.Scale.X,
-                    finalTexture.Height / 2f * _transformComponent.Scale.Y
-                ),
-                _transformComponent.Rotation,
-                Utils.Color.White,
-                InstructionSource.Entity,
-                _transformComponent.ZLayer + ZLayerOffset
-            );
-        }
+            DrawTexture(finalTexture, position);
         else
         {
             SERender.ShaderMode(
@@ -115,31 +92,36 @@ public class SpriteComponent(
                 _transformComponent.ZLayer + ZLayerOffset,
                 () =>
                 {
-                    SERender.DrawTexture(
-                        finalTexture,
-                        new Rect(
-                            0,
-                            0,
-                            FlipX ? -finalTexture.Width : finalTexture.Width,
-                            FlipY ? -finalTexture.Height : finalTexture.Height
-                        ),
-                        new Rect(
-                            position.X,
-                            position.Y,
-                            finalTexture.Width * _transformComponent.Scale.X,
-                            finalTexture.Height * _transformComponent.Scale.Y
-                        ),
-                        new Vec2(
-                            finalTexture.Width / 2f * _transformComponent.Scale.X,
-                            finalTexture.Height / 2f * _transformComponent.Scale.Y
-                        ),
-                        _transformComponent.Rotation,
-                        Utils.Color.White,
-                        InstructionSource.Entity,
-                        _transformComponent.ZLayer + ZLayerOffset
-                    );
+                    DrawTexture(finalTexture, position);
                 }
             );
         }
+    }
+
+    private void DrawTexture(Texture2D finalTexture, Vec2 position)
+    {
+        SERender.DrawTexture(
+            finalTexture,
+            new Rect(
+                0,
+                0,
+                FlipX ? -finalTexture.Width : finalTexture.Width,
+                FlipY ? -finalTexture.Height : finalTexture.Height
+            ),
+            new Rect(
+                position.X,
+                position.Y,
+                finalTexture.Width * _transformComponent.Scale.X,
+                finalTexture.Height * _transformComponent.Scale.Y
+            ),
+            new Vec2(
+                finalTexture.Width / 2f * _transformComponent.Scale.X,
+                finalTexture.Height / 2f * _transformComponent.Scale.Y
+            ),
+            _transformComponent.Rotation,
+            Utils.Color.White,
+            InstructionSource.Entity,
+            _transformComponent.ZLayer + ZLayerOffset
+        );
     }
 }

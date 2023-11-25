@@ -30,10 +30,24 @@ public class Button(
     int zLayer = 0
 ) : Widget(position, zLayer)
 {
-    private enum ButtonState
+    /// <summary>
+    /// State of Button
+    /// </summary>
+    protected enum ButtonState
     {
+        /// <summary>
+        /// Waiting
+        /// </summary>
         Idle,
+
+        /// <summary>
+        /// Pressed
+        /// </summary>
         Down,
+
+        /// <summary>
+        /// Hover
+        /// </summary>
         Hover
     }
 
@@ -72,7 +86,10 @@ public class Button(
     /// </summary>
     public event EventHandler? Clicked;
 
-    private ButtonState _state = ButtonState.Idle;
+    /// <summary>
+    /// State of Button
+    /// </summary>
+    protected ButtonState _state = ButtonState.Idle;
 
     /// <inheritdoc />
     public override void Update(float delta)
