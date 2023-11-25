@@ -139,7 +139,7 @@ public class Particle
     /// Update Particle
     /// </summary>
     /// <param name="delta">Frame Time</param>
-    /// <exception cref="ArgumentOutOfRangeException">throws if SizeFunctions is out of range</exception>
+    /// <exception cref="ArgumentException">throws if SizeFunction is unknown</exception>
     public void Update(float delta)
     {
         Velocity = new Vec2(
@@ -166,7 +166,7 @@ public class Particle
             case ParticleParametersFunction.Normal:
                 break;
             default:
-                throw new Exception("Unknown Size Function");
+                throw new ArgumentException("Unknown Size Function");
         }
 
         if (EndColor != BeginColor)

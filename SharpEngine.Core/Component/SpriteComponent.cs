@@ -109,9 +109,8 @@ public class SpriteComponent(
         }
         else
         {
-            var shader = window.ShaderManager.GetShader(Shader);
             SERender.ShaderMode(
-                shader,
+                window.ShaderManager.GetShader(Shader),
                 InstructionSource.Entity,
                 _transformComponent.ZLayer + ZLayerOffset,
                 () =>

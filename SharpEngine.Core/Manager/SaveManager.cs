@@ -31,13 +31,13 @@ public static class SaveManager
     /// </summary>
     /// <param name="name">Save Name</param>
     /// <returns>Save</returns>
-    /// <exception cref="Exception">Throws if save not found</exception>
+    /// <exception cref="ArgumentException">Throws if save not found</exception>
     public static ISave GetSave(string name)
     {
         if (InternalSaves.TryGetValue(name, out var save))
             return save;
         DebugManager.Log(LogLevel.LogError, $"SE_SAVEMANAGER: Save not found : {name}");
-        throw new Exception($"Save not found : {name}");
+        throw new ArgumentException($"Save not found : {name}");
     }
 
     private static readonly Dictionary<string, ISave> InternalSaves = [];

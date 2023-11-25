@@ -18,12 +18,12 @@ public static class InputManager
     /// <summary>
     /// List of Pressed Chars in Frame
     /// </summary>
-    public static List<char> PressedChars => InternalPressedChars.Select(x => (char)x).ToList();
+    public static List<char> GetPressedChars() => InternalPressedChars.Select(x => (char)x).ToList();
 
     /// <summary>
     /// List of Pressed Keys in Frame
     /// </summary>
-    public static List<Key> PressedKeys => InternalPressedKeys.Cast<Key>().ToList();
+    public static List<Key> GetPressedKeys() => InternalPressedKeys.Cast<Key>().ToList();
 
     /// <summary>
     /// Check if key is down

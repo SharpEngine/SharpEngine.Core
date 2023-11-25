@@ -6,7 +6,7 @@ namespace SharpEngine.Core.Widget.Utils;
 /// Style for Label
 /// </summary>
 [Flags]
-public enum LabelStyle
+public enum LabelStyles
 {
     /// <summary>
     /// None Style

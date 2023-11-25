@@ -6,8 +6,6 @@ namespace SharpEngine.Core;
 
 internal static class Extensions
 {
-    #region Input Converter
-
     public static Raylib_cs.MouseButton ToRayLib(this Input.MouseButton button) =>
         (Raylib_cs.MouseButton)button;
 
@@ -16,6 +14,8 @@ internal static class Extensions
     public static GamepadButton ToRayLib(this GamePadButton button) => (GamepadButton)button;
 
     public static GamepadAxis ToRayLib(this GamePadAxis axis) => (GamepadAxis)axis;
+
+    public static TraceLogLevel ToRayLib(this LogLevel logLevel) => (TraceLogLevel)logLevel;
 
     public static Input.MouseButton ToSe(this Raylib_cs.MouseButton button) =>
         (Input.MouseButton)button;
@@ -26,13 +26,5 @@ internal static class Extensions
 
     public static GamePadAxis ToSe(this GamepadAxis axis) => (GamePadAxis)axis;
 
-    #endregion
-
-    #region LogLevel Converter
-
-    public static TraceLogLevel ToRayLib(this LogLevel logLevel) => (TraceLogLevel)logLevel;
-
     public static LogLevel ToSe(this TraceLogLevel logLevel) => (LogLevel)logLevel;
-
-    #endregion
 }

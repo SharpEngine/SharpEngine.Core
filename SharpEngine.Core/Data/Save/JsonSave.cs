@@ -27,10 +27,12 @@ public class JsonSave : ISave
         _data.GetValueOrDefault(key, defaultValue);
 
     /// <inheritdoc />
-    public T GetObjectAs<T>(string key, T defaultValue) =>
-        _data.TryGetValue(key, out var value)
-            ? (value is JsonElement element ? element.Deserialize<T>()! : (T)value)
-            : defaultValue;
+    public T GetObjectAs<T>(string key, T defaultValue)
+    {
+        if(_data.TryGetValue(key, out var value))
+            return (value is JsonElement element ? element.Deserialize<T>() : (T) value) ?? defaultValue;
+        return defaultValue;
+    }
 
     /// <inheritdoc />
     public void SetObject(string key, object value) => _data[key] = value;

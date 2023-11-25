@@ -69,7 +69,7 @@ public class ShaderManager
     /// <param name="value">Value</param>
     /// <param name="uniformType">Uniform Type</param>
     /// <typeparam name="T">Value Type</typeparam>
-    /// <exception cref="Exception">Throw if shader not found</exception>
+    /// <exception cref="ArgumentException">Throw if shader not found</exception>
     public void SetShaderValue<T>(
         string name,
         string uniform,
@@ -86,7 +86,7 @@ public class ShaderManager
                 uniformType
             );
         else
-            throw new Exception($"Shader not found : {name}");
+            throw new ArgumentException($"Shader not found : {name}");
     }
 
     /// <summary>
@@ -138,13 +138,13 @@ public class ShaderManager
     /// </summary>
     /// <param name="name">Shader Name</param>
     /// <returns>Shader</returns>
-    /// <exception cref="Exception">Throws if shader not found</exception>
+    /// <exception cref="ArgumentException">Throws if shader not found</exception>
     public Shader GetShader(string name)
     {
         if (_shaders.TryGetValue(name, out var shader))
             return shader;
         DebugManager.Log(LogLevel.LogError, $"SE_SHADERMANAGER: Shader not found : {name}");
-        throw new Exception($"Shader not found : {name}");
+        throw new ArgumentException($"Shader not found : {name}");
     }
 
     internal void Unload()

@@ -58,7 +58,7 @@ public class Window
     /// <summary>
     /// Background Color used in Window
     /// </summary>
-    public Color BackgroundColor;
+    public Color BackgroundColor { get; set; }
 
     /// <summary>
     /// Event which be called in Start of Window (can stop start by set result to false)
@@ -73,7 +73,7 @@ public class Window
     /// <summary>
     /// Function which be called to render something in ImGui
     /// </summary>
-    public Action<Window>? RenderImGui;
+    public Action<Window>? RenderImGui { get; set; }
 
     /// <summary>
     /// Manage Debug Mode of Window
@@ -279,14 +279,6 @@ public class Window
     public Scene GetScene(int index) => Scenes[index];
 
     /// <summary>
-    /// Get Current Scene cast as T
-    /// </summary>
-    /// <typeparam name="T">Type as Scene</typeparam>
-    /// <returns>Current Scene cast as T</returns>
-    public T GetCurrentScene<T>()
-        where T : Scene => (T)Scenes[_internalIndexCurrentScene];
-
-    /// <summary>
     /// Get Scene cast as T
     /// </summary>
     /// <param name="index">Index of Scene</param>
@@ -294,6 +286,14 @@ public class Window
     /// <returns>Scene cast as T</returns>
     public T GetScene<T>(int index)
         where T : Scene => (T)Scenes[index];
+
+    /// <summary>
+    /// Get Current Scene cast as T
+    /// </summary>
+    /// <typeparam name="T">Type as Scene</typeparam>
+    /// <returns>Current Scene cast as T</returns>
+    public T GetCurrentScene<T>()
+        where T : Scene => (T)Scenes[_internalIndexCurrentScene];
 
     /// <summary>
     /// Run Window

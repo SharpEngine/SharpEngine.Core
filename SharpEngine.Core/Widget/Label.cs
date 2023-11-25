@@ -23,7 +23,7 @@ public class Label(
     string text = "",
     string font = "",
     Color? color = null,
-    LabelStyle style = LabelStyle.None,
+    LabelStyles style = LabelStyles.None,
     int rotation = 0,
     bool centerAllLines = false,
     int? fontSize = null,
@@ -63,45 +63,45 @@ public class Label(
     /// <summary>
     /// Style of Label
     /// </summary>
-    public LabelStyle Style { get; set; } = style;
+    public LabelStyles Style { get; set; } = style;
 
     /// <inheritdoc />
     public override void Draw()
     {
         base.Draw();
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
 
-        if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || font == null)
+        if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
             return;
 
         var realPosition = RealPosition;
-        var fontSize = FontSize ?? font.Value.BaseSize;
+        var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
 
-        var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
+        var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
 
         var lines = Text.Split("\n");
         for (var i = 0; i < lines.Length; i++)
         {
-            var lineSize = Raylib.MeasureTextEx(font.Value, lines[i], fontSize, 2);
+            var lineSize = Raylib.MeasureTextEx(finalFont.Value, lines[i], finalFontSize, 2);
             var finalPosition = new Vec2(
                 CenterAllLines ? realPosition.X - lineSize.X / 2 : realPosition.X - textSize.X / 2,
                 realPosition.Y - textSize.Y / 2 + i * lineSize.Y
             );
             SERender.DrawText(
-                font.Value,
+                finalFont.Value,
                 lines[i],
                 finalPosition,
                 Vec2.Zero,
                 Rotation,
-                fontSize,
+                finalFontSize,
                 2,
                 Color,
                 InstructionSource.UI,
                 ZLayer
             );
 
-            if (Style.HasFlag(LabelStyle.Strike))
+            if (Style.HasFlag(LabelStyles.Strike))
                 SERender.DrawRectangle(
                     (int)finalPosition.X,
                     (int)(finalPosition.Y + lineSize.Y / 2),
@@ -111,7 +111,7 @@ public class Label(
                     InstructionSource.UI,
                     ZLayer + 0.00001f
                 );
-            if (Style.HasFlag(LabelStyle.Underline))
+            if (Style.HasFlag(LabelStyles.Underline))
                 SERender.DrawRectangle(
                     (int)finalPosition.X,
                     (int)(finalPosition.Y + lineSize.Y),

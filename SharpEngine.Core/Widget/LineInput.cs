@@ -85,10 +85,10 @@ public class LineInput(
             );
         }
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
-        if (font != null)
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
+        if (finalFont != null)
         {
-            foreach (var pressedChar in InputManager.PressedChars)
+            foreach (var pressedChar in InputManager.GetPressedChars())
             {
                 if (
                     char.IsSymbol(pressedChar)
@@ -136,13 +136,13 @@ public class LineInput(
             ZLayer + 0.00001f
         );
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
 
-        if (Font.Length <= 0 || font == null)
+        if (Font.Length <= 0 || finalFont == null)
             return;
 
-        var fontSize = FontSize ?? font.Value.BaseSize;
-        var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
+        var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
+        var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
         var offset = textSize.X - (Size.X - 20);
 
         if (Text.Length > 0)
@@ -159,10 +159,10 @@ public class LineInput(
                 () =>
                 {
                     SERender.DrawText(
-                        font.Value,
+                        finalFont.Value,
                         Text,
                         new Vec2(finalPosition.X - (offset > 0 ? offset : 0), finalPosition.Y),
-                        fontSize,
+                        finalFontSize,
                         2,
                         Color.Black,
                         InstructionSource.UI,

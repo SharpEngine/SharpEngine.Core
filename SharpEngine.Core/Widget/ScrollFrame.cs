@@ -55,7 +55,8 @@ public class ScrollFrame(
     {
         base.Update(delta);
 
-        if (InputManager.GetMouseWheelMove() is var move && move != 0)
+        var move = InputManager.GetMouseWheelMove();
+        if (move != 0)
         {
             foreach (var child in Children)
                 child.Position = new Vec2(child.Position.X, child.Position.Y + move * ScrollFactor);

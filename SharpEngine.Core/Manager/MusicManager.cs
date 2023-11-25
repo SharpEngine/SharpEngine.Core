@@ -32,7 +32,7 @@ public class MusicManager
     /// Play music
     /// </summary>
     /// <param name="name">Music Name</param>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public void PlayMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
@@ -41,14 +41,14 @@ public class MusicManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
     /// Stop music
     /// </summary>
     /// <param name="name">Music Name</param>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public void StopMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
@@ -57,14 +57,14 @@ public class MusicManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
     /// Resume music
     /// </summary>
     /// <param name="name">Music Name</param>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public void ResumeMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
@@ -73,14 +73,14 @@ public class MusicManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
     /// Pause music
     /// </summary>
     /// <param name="name">Music Name</param>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public void PauseMusic(string name)
     {
         if (_musics.TryGetValue(name, out var music))
@@ -89,7 +89,7 @@ public class MusicManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class MusicManager
     /// </summary>
     /// <param name="name">Music Name</param>
     /// <param name="position">Position in seconds</param>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public void SeekMusic(string name, float position)
     {
         if (_musics.TryGetValue(name, out var music))
@@ -106,7 +106,7 @@ public class MusicManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
@@ -114,13 +114,13 @@ public class MusicManager
     /// </summary>
     /// <param name="name">Music Name</param>
     /// <returns>Length in seconds</returns>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public float GetMusicLength(string name)
     {
         if (_musics.TryGetValue(name, out var music))
             return Raylib.GetMusicTimeLength(music);
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
@@ -128,13 +128,13 @@ public class MusicManager
     /// </summary>
     /// <param name="name">Music Name</param>
     /// <returns>Current Time in seconds</returns>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public float GetMusicCurrentTime(string name)
     {
         if (_musics.TryGetValue(name, out var music))
             return Raylib.GetMusicTimePlayed(music);
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 
     /// <summary>
@@ -142,12 +142,12 @@ public class MusicManager
     /// </summary>
     /// <param name="name">Music Name</param>
     /// <returns>If music is playing</returns>
-    /// <exception cref="Exception">Throws if music not found</exception>
+    /// <exception cref="ArgumentException">Throws if music not found</exception>
     public bool IsMusicPlaying(string name)
     {
         if (_musics.TryGetValue(name, out var music))
             return Raylib.IsMusicStreamPlaying(music);
         DebugManager.Log(LogLevel.LogError, $"SE_MUSICMANAGER: Music not found : {name}");
-        throw new Exception($"Music not found : {name}");
+        throw new ArgumentException($"Music not found : {name}");
     }
 }

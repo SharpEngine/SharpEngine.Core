@@ -50,13 +50,13 @@ public class TextureManager
     /// </summary>
     /// <param name="name">Texture Name</param>
     /// <returns>Texture</returns>
-    /// <exception cref="Exception">Throws if texture not found</exception>
+    /// <exception cref="ArgumentException">Throws if texture not found</exception>
     public Texture2D GetTexture(string name)
     {
         if (_texture2Ds.TryGetValue(name, out var texture))
             return texture;
         DebugManager.Log(LogLevel.LogError, $"SE_TEXTUREMANAGER: Texture not found : {name}");
-        throw new Exception($"Texture not found : {name}");
+        throw new ArgumentException($"Texture not found : {name}");
     }
 
     internal void Unload()

@@ -41,7 +41,7 @@ public class FontManager
     /// </summary>
     /// <param name="name">Font Name</param>
     /// <returns>Font</returns>
-    /// <exception cref="Exception">Throws if font not found</exception>
+    /// <exception cref="ArgumentException">Throws if font not found</exception>
     public Font GetFont(string name)
     {
         if (name == "RAYLIB_DEFAULT")
@@ -50,7 +50,7 @@ public class FontManager
         if (_fonts.TryGetValue(name, out var font))
             return font;
         DebugManager.Log(LogLevel.LogError, $"SE_FONTMANAGER: Font not found : {name}");
-        throw new Exception($"Font not found : {name}");
+        throw new ArgumentException($"Font not found : {name}");
     }
 
     internal void Unload()

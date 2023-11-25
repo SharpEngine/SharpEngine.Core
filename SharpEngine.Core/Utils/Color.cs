@@ -145,7 +145,7 @@ public struct Color
     }
 
     /// <inheritdoc />
-    public override readonly int GetHashCode() => HashCode.Combine(_r, _g, _b, _a);
+    public override readonly int GetHashCode() => base.GetHashCode();
 
     /// <inheritdoc />
     public override readonly string ToString() => $"Color(R={R}, G={G}, B={B}, A={A})";

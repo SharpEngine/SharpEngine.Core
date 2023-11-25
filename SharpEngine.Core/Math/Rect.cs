@@ -67,11 +67,11 @@ public struct Rect(float x, float y, float width, float height)
         X <= position.X && position.X <= X + Width && Y <= position.Y && position.Y <= Y + Height;
 
     /// <inheritdoc />
-    public override readonly bool Equals(object? other)
+    public override readonly bool Equals(object? obj)
     {
-        if (other is Rect rect)
+        if (obj is Rect rect)
             return this == rect;
-        return other != null && other.Equals(this);
+        return obj != null && obj.Equals(this);
     }
 
     /// <inheritdoc />

@@ -86,9 +86,9 @@ public class TextComponent(
             return;
 
         var font = window.FontManager.GetFont(Font);
-        var fontSize = FontSize ?? font.BaseSize;
+        var finalFontSize = FontSize ?? font.BaseSize;
         var position = _transformComponent.GetTransformedPosition(Offset);
-        var textSize = Raylib.MeasureTextEx(font, Text, fontSize, 2);
+        var textSize = Raylib.MeasureTextEx(font, Text, finalFontSize, 2);
 
         SERender.DrawText(
             font,
@@ -96,7 +96,7 @@ public class TextComponent(
             position,
             textSize / 2,
             _transformComponent.Rotation,
-            fontSize,
+            finalFontSize,
             2,
             Color,
             InstructionSource.Entity,

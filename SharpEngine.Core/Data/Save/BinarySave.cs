@@ -31,7 +31,10 @@ public class BinarySave : ISave
                 _data.Add(key, value);
             }
         }
-        catch (EndOfStreamException) { }
+        catch (EndOfStreamException)
+        {
+            // Do nothing
+        }
     }
 
     /// <inheritdoc />

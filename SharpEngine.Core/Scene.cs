@@ -12,12 +12,12 @@ public class Scene
     /// <summary>
     /// Define if Scene is paused
     /// </summary>
-    public bool Paused = false;
+    public bool Paused { get; set; } = false;
 
     /// <summary>
     /// Window which have this scene
     /// </summary>
-    public Window? Window;
+    public Window? Window { get; set; }
 
     /// <summary>
     /// All Widgets of Scene
@@ -193,19 +193,7 @@ public class Scene
         foreach (var system in _sceneSystems)
             system.Update(delta);
 
-        foreach (var removeEntity in _removeEntities)
-            RemoveEntity(removeEntity);
-        foreach (var removeWidget in _removeWidgets)
-            RemoveWidget(removeWidget);
-        foreach (var addEntity in _addEntities)
-            AddEntity(addEntity).Load();
-        foreach (var addWidget in _addWidgets)
-            AddWidget(addWidget).Load();
-
-        _removeEntities.Clear();
-        _removeWidgets.Clear();
-        _addEntities.Clear();
-        _addWidgets.Clear();
+        ProcessAddingAndRemoving();
 
         for (var i = Entities.Count - 1; i > -1; i--)
             if (
@@ -222,6 +210,23 @@ public class Scene
                 || Paused && Widgets[i].PauseState is PauseState.WhenPaused
             )
                 Widgets[i].Update(delta);
+    }
+
+    private void ProcessAddingAndRemoving()
+    {
+        foreach (var removeEntity in _removeEntities)
+            RemoveEntity(removeEntity);
+        foreach (var removeWidget in _removeWidgets)
+            RemoveWidget(removeWidget);
+        foreach (var addEntity in _addEntities)
+            AddEntity(addEntity).Load();
+        foreach (var addWidget in _addWidgets)
+            AddWidget(addWidget).Load();
+
+        _removeEntities.Clear();
+        _removeWidgets.Clear();
+        _addEntities.Clear();
+        _addWidgets.Clear();
     }
 
     /// <summary>

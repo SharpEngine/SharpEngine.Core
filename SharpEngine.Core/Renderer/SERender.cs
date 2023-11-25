@@ -30,7 +30,7 @@ public static class SERender
     /// <summary>
     /// Current Instructions to be rendered
     /// </summary>
-    internal static List<Instruction> Instructions = [];
+    private static List<Instruction> Instructions = [];
 
     internal static void DrawInstructions(List<Instruction> instructions)
     {
@@ -68,7 +68,7 @@ public static class SERender
                     uiInstructions.Add(instruction);
                     break;
                 default:
-                    throw new Exception("Unknown instruction source");
+                    throw new ArgumentException("Unknown instruction source");
             }
         }
 

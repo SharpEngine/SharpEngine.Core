@@ -25,9 +25,18 @@ public class SeImGui : IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        ImGui.DestroyContext(_context);
-        Raylib.UnloadTexture(_fontTexture);
+        Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    /// <inheritdoc />
+    public virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            ImGui.DestroyContext(_context);
+            Raylib.UnloadTexture(_fontTexture);
+        }
     }
 
     /// <summary>

@@ -99,9 +99,9 @@ public class Button(
     {
         base.Draw();
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
 
-        if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || font == null)
+        if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
             return;
 
         var position = RealPosition;
@@ -136,15 +136,15 @@ public class Button(
             ZLayer + 0.00002f
         );
 
-        var fontSize = FontSize ?? font.Value.BaseSize;
-        var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
+        var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
+        var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
         SERender.DrawText(
-            font.Value,
+            finalFont.Value,
             Text,
             position,
             textSize / 2,
             0,
-            fontSize,
+            finalFontSize,
             2,
             FontColor,
             InstructionSource.UI,

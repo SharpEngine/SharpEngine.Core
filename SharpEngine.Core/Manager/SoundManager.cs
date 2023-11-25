@@ -32,7 +32,7 @@ public class SoundManager
     /// Play Sound
     /// </summary>
     /// <param name="name">Sound Name</param>
-    /// <exception cref="Exception">Throws if sound not found</exception>
+    /// <exception cref="ArgumentException">Throws if sound not found</exception>
     public void PlaySound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
@@ -41,14 +41,14 @@ public class SoundManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
-        throw new Exception($"Sound not found : {name}");
+        throw new ArgumentException($"Sound not found : {name}");
     }
 
     /// <summary>
     /// Stop Sound
     /// </summary>
     /// <param name="name">Sound Name</param>
-    /// <exception cref="Exception">Throws if sound not found</exception>
+    /// <exception cref="ArgumentException">Throws if sound not found</exception>
     public void StopSound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
@@ -57,14 +57,14 @@ public class SoundManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
-        throw new Exception($"Sound not found : {name}");
+        throw new ArgumentException($"Sound not found : {name}");
     }
 
     /// <summary>
     /// Resume Sound
     /// </summary>
     /// <param name="name">Sound Name</param>
-    /// <exception cref="Exception">Throws if sound not found</exception>
+    /// <exception cref="ArgumentException">Throws if sound not found</exception>
     public void ResumeSound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
@@ -73,14 +73,14 @@ public class SoundManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
-        throw new Exception($"Sound not found : {name}");
+        throw new ArgumentException($"Sound not found : {name}");
     }
 
     /// <summary>
     /// Pause Sound
     /// </summary>
     /// <param name="name">Sound Name</param>
-    /// <exception cref="Exception">Throws if sound not found</exception>
+    /// <exception cref="ArgumentException">Throws if sound not found</exception>
     public void PauseSound(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
@@ -89,7 +89,7 @@ public class SoundManager
             return;
         }
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
-        throw new Exception($"Sound not found : {name}");
+        throw new ArgumentException($"Sound not found : {name}");
     }
 
     /// <summary>
@@ -97,12 +97,12 @@ public class SoundManager
     /// </summary>
     /// <param name="name">Sound Name</param>
     /// <returns>If Sound is playing</returns>
-    /// <exception cref="Exception">Throws if Sound not found</exception>
+    /// <exception cref="ArgumentException">Throws if Sound not found</exception>
     public bool IsSoundPlaying(string name)
     {
         if (_sounds.TryGetValue(name, out var sound))
             return Raylib.IsSoundPlaying(sound);
         DebugManager.Log(LogLevel.LogError, $"SE_SOUNDMANAGER: Sound not found : {name}");
-        throw new Exception($"Sound not found : {name}");
+        throw new ArgumentException($"Sound not found : {name}");
     }
 }

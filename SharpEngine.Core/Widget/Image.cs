@@ -45,13 +45,13 @@ public class Image(
         if (!Displayed || Texture.Length <= 0 || window == null)
             return;
 
-        var texture = window.TextureManager.GetTexture(Texture);
+        var finalTexture = window.TextureManager.GetTexture(Texture);
         var position = RealPosition;
         SERender.DrawTexture(
-            texture,
-            new Rect(0, 0, texture.Width, texture.Height),
-            new Rect(position.X, position.Y, texture.Width * Scale.X, texture.Height * Scale.Y),
-            new Vec2(texture.Width / 2f * Scale.X, texture.Height / 2f * Scale.Y),
+            finalTexture,
+            new Rect(0, 0, finalTexture.Width, finalTexture.Height),
+            new Rect(position.X, position.Y, finalTexture.Width * Scale.X, finalTexture.Height * Scale.Y),
+            new Vec2(finalTexture.Width / 2f * Scale.X, finalTexture.Height / 2f * Scale.Y),
             Rotation,
             Color.White,
             InstructionSource.UI,

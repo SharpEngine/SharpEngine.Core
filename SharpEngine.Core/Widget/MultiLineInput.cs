@@ -94,10 +94,10 @@ public class MultiLineInput(
             );
         }
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
-        if (font != null)
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
+        if (finalFont != null)
         {
-            foreach (var pressedChar in InputManager.PressedChars)
+            foreach (var pressedChar in InputManager.GetPressedChars())
             {
                 if (
                     char.IsSymbol(pressedChar)
@@ -145,14 +145,14 @@ public class MultiLineInput(
             ZLayer + 0.00001f
         );
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
 
-        if (Text.Length <= 0 || Font.Length <= 0 || font == null)
+        if (Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
             return;
 
-        var fontSize = FontSize ?? font.Value.BaseSize;
+        var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
 
-        var textSize = Raylib.MeasureTextEx(font.Value, Text.Split("\n")[^1], fontSize, 2);
+        var textSize = Raylib.MeasureTextEx(finalFont.Value, Text.Split("\n")[^1], finalFontSize, 2);
 
         var finalPosition = new Vec2(position.X - Size.X / 2 + 4, position.Y - Size.Y / 2 + 4);
 
@@ -167,27 +167,7 @@ public class MultiLineInput(
             (int)Size.Y - 8,
             InstructionSource.UI,
             ZLayer + 0.00002f,
-            () =>
-            {
-                for (var i = 0; i < lines.Length; i++)
-                {
-                    var lineSize = Raylib.MeasureTextEx(font.Value, lines[i], fontSize, 2);
-                    var pos = new Vec2(
-                        finalPosition.X - (offsetX > 0 ? offsetX : 0),
-                        finalPosition.Y + i * lineSize.Y - (offsetY > 0 ? offsetY : 0)
-                    );
-                    SERender.DrawText(
-                        font.Value,
-                        lines[i],
-                        pos,
-                        fontSize,
-                        2,
-                        Color.Black,
-                        InstructionSource.UI,
-                        0
-                    );
-                }
-            }
+            () => DrawLines(finalFont, finalFontSize, finalPosition, lines, offsetX, offsetY);
         );
 
         if (Focused)
@@ -202,5 +182,27 @@ public class MultiLineInput(
                 InstructionSource.UI,
                 ZLayer + 0.00003f
             );
+    }
+
+    private static void DrawLines(Font? finalFont, int finalFontSize, Vec2 finalPosition, string[] lines, float offsetX, float offsetY)
+    {
+        for (var i = 0; i < lines.Length; i++)
+        {
+            var lineSize = Raylib.MeasureTextEx(finalFont.Value, lines[i], finalFontSize, 2);
+            var pos = new Vec2(
+                finalPosition.X - (offsetX > 0 ? offsetX : 0),
+                finalPosition.Y + i * lineSize.Y - (offsetY > 0 ? offsetY : 0)
+            );
+            SERender.DrawText(
+                finalFont.Value,
+                lines[i],
+                pos,
+                finalFontSize,
+                2,
+                Color.Black,
+                InstructionSource.UI,
+                0
+            );
+        }
     }
 }

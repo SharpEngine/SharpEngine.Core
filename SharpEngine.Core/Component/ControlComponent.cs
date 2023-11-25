@@ -120,9 +120,44 @@ public class ControlComponent : Component
         if (_transform == null)
             return;
 
-        var dirX = 0f;
-        var dirY = 0f;
+        GetMovement(out var dirX, out var dirY);
+        if (dirX == 0 && dirY == 0)
+            return;
 
+        IsMoving = true;
+        Direction = new Vec2(dirX, dirY).Normalized();
+        var newPos = new Vec2(
+            _transform.Position.X + Direction.X * Speed * delta,
+            _transform.Position.Y + Direction.Y * Speed * delta
+        );
+        var newPosX = new Vec2(
+            _transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
+            _transform.Position.Y
+        );
+        var newPosY = new Vec2(
+            _transform.Position.X,
+            _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
+        );
+        if (_basicPhysics == null || _basicPhysics.CanGo(newPos))
+            _transform.Position = newPos;
+        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX))
+        {
+            _transform.Position = newPosX;
+            Direction = new Vec2(Direction.X < 0 ? -1 : 1, 0);
+        }
+        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY))
+        {
+            _transform.Position = newPosY;
+            Direction = new Vec2(0, Direction.Y < 0 ? -1 : 1);
+        }
+        else
+            IsMoving = false;
+    }
+
+    private void GetMovement(out float dirX, out float dirY)
+    {
+        dirX = 0f;
+        dirY = 0f;
         switch (ControlType)
         {
             case ControlType.MouseFollow:
@@ -179,39 +214,7 @@ public class ControlComponent : Component
                 }
                 break;
             default:
-                throw new Exception("Unknown Control Type");
+                throw new ArgumentException("Unknown Control Type");
         }
-
-        if (dirX == 0 && dirY == 0)
-            return;
-
-        IsMoving = true;
-        Direction = new Vec2(dirX, dirY).Normalized();
-        var newPos = new Vec2(
-            _transform.Position.X + Direction.X * Speed * delta,
-            _transform.Position.Y + Direction.Y * Speed * delta
-        );
-        var newPosX = new Vec2(
-            _transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
-            _transform.Position.Y
-        );
-        var newPosY = new Vec2(
-            _transform.Position.X,
-            _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
-        );
-        if (_basicPhysics == null || _basicPhysics.CanGo(newPos))
-            _transform.Position = newPos;
-        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX))
-        {
-            _transform.Position = newPosX;
-            Direction = new Vec2(Direction.X < 0 ? -1 : 1, 0);
-        }
-        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY))
-        {
-            _transform.Position = newPosY;
-            Direction = new Vec2(0, Direction.Y < 0 ? -1 : 1);
-        }
-        else
-            IsMoving = false;
     }
 }

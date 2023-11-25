@@ -81,9 +81,9 @@ public class TextureButton(
 
         if (Size == Vec2.Zero)
         {
-            var texture = Scene?.Window?.TextureManager.GetTexture(Texture);
-            if (texture != null)
-                Size = new Vec2(texture.Value.Width, texture.Value.Height);
+            var finalTexture = Scene?.Window?.TextureManager.GetTexture(Texture);
+            if (finalTexture != null)
+                Size = new Vec2(finalTexture.Value.Width, finalTexture.Value.Height);
         }
 
         if (!Active)
@@ -106,19 +106,19 @@ public class TextureButton(
     {
         base.Draw();
 
-        var font = Scene?.Window?.FontManager.GetFont(Font);
-        var texture = Scene?.Window?.TextureManager.GetTexture(Texture);
+        var finalFont = Scene?.Window?.FontManager.GetFont(Font);
+        var finalTexture = Scene?.Window?.TextureManager.GetTexture(Texture);
 
-        if (Size == Vec2.Zero && texture != null)
-            Size = new Vec2(texture.Value.Width, texture.Value.Height);
+        if (Size == Vec2.Zero && finalTexture != null)
+            Size = new Vec2(finalTexture.Value.Width, finalTexture.Value.Height);
 
         if (
             !Displayed
             || Scene == null
             || Text.Length <= 0
             || Font.Length <= 0
-            || font == null
-            || texture == null
+            || finalFont == null
+            || finalTexture == null
         )
             return;
 
@@ -145,8 +145,8 @@ public class TextureButton(
             ZLayer + 0.00001f
         );
         SERender.DrawTexture(
-            texture.Value,
-            new Rect(0, 0, texture.Value.Width, texture.Value.Height),
+            finalTexture.Value,
+            new Rect(0, 0, finalTexture.Value.Width, finalTexture.Value.Height),
             new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4),
             Size / 2,
             0,
@@ -155,15 +155,15 @@ public class TextureButton(
             ZLayer + 0.00002f
         );
 
-        var fontSize = FontSize ?? font.Value.BaseSize;
-        var textSize = Raylib.MeasureTextEx(font.Value, Text, fontSize, 2);
+        var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
+        var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
         SERender.DrawText(
-            font.Value,
+            finalFont.Value,
             Text,
             position,
             textSize / 2,
             0,
-            fontSize,
+            finalFontSize,
             2,
             FontColor,
             InstructionSource.UI,

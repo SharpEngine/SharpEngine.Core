@@ -38,7 +38,7 @@ public static class DataTableManager
     /// <param name="predicate">Predicate</param>
     /// <typeparam name="T">Type of Object</typeparam>
     /// <returns>Object</returns>
-    /// <exception cref="Exception">If DataTable not found</exception>
+    /// <exception cref="ArgumentException">If DataTable not found</exception>
     public static T? Get<T>(string dataTable, Predicate<dynamic?> predicate)
     {
         if (DataTables.TryGetValue(dataTable, out var dTable))
@@ -47,6 +47,6 @@ public static class DataTableManager
             LogLevel.LogError,
             $"SE_DATATABLEMANAGER: DataTable not found : {dataTable}"
         );
-        throw new Exception($"DataTable not found : {dataTable}");
+        throw new ArgumentException($"DataTable not found : {dataTable}");
     }
 }
