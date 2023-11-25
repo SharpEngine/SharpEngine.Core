@@ -7,7 +7,7 @@
 [#] Bug Fixes<br>
 [.] Others
 
-### V 1.7.0 - XX/11/2023
+### V 1.7.0 - 25/11/2023
 [+] ParticleParameters<br/>
 [+] ParticleEmitterParameters<br/>
 [\~] Particle : Constructor use ParticleParameters<br/>
