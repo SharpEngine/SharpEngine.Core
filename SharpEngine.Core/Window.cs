@@ -168,8 +168,9 @@ public class Window
     private bool _closeWindow;
     private int _internalIndexCurrentScene = -1;
     private bool _debug;
-    private static bool _consoleLog = true;
-    private static bool _fileLog = false;
+
+    private static bool ConsoleLog { get; set; } = true;
+    private static bool FileLog { get; set; } = false;
 
     /// <summary>
     /// Create and Init Window
@@ -214,14 +215,14 @@ public class Window
         bool fileLog = false
     )
     {
-        Window._consoleLog = consoleLog;
-        Window._fileLog = fileLog;
+        ConsoleLog = consoleLog;
+        FileLog = fileLog;
         _title = title;
         _screenSize = screenSize;
         BackgroundColor = backgroundColor ?? Color.Black;
         Debug = debug;
 
-        if (_fileLog && File.Exists("log.txt"))
+        if (FileLog && File.Exists("log.txt"))
             File.Delete("log.txt");
 
         unsafe
@@ -418,9 +419,9 @@ public class Window
 
         message = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {message}";
 
-        if (_consoleLog)
+        if (ConsoleLog)
             Console.WriteLine(message);
-        if (_fileLog)
+        if (FileLog)
             File.AppendAllText("log.txt", message + "\n");
     }
 }

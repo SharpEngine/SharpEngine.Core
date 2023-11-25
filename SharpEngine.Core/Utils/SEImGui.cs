@@ -123,7 +123,7 @@ public class SeImGui : IDisposable
     /// Update imgui internals(input, frameData)
     /// </summary>
     /// <param name="dt"></param>
-    public void Update(float dt)
+    public static void Update(float dt)
     {
         var io = ImGui.GetIO();
 
@@ -207,7 +207,7 @@ public class SeImGui : IDisposable
     /// <summary>
     /// Gets the geometry as set up by ImGui and sends it to the graphics device
     /// </summary>
-    public void Draw()
+    public static void Draw()
     {
         ImGui.Render();
         RenderCommandLists(ImGui.GetDrawData());
@@ -226,7 +226,7 @@ public class SeImGui : IDisposable
         return color;
     }
 
-    private void DrawTriangleVertex(ImDrawVertPtr idxVert)
+    private static void DrawTriangleVertex(ImDrawVertPtr idxVert)
     {
         var c = GetColor(idxVert.col);
         Rlgl.Color4ub(c.R, c.G, c.B, c.A);
@@ -235,7 +235,7 @@ public class SeImGui : IDisposable
     }
 
     // Draw the imgui triangle data
-    private void DrawTriangles(
+    private static void DrawTriangles(
         uint count,
         int idxOffset,
         int vtxOffset,
@@ -267,7 +267,7 @@ public class SeImGui : IDisposable
         Rlgl.End();
     }
 
-    private void RenderCommandLists(ImDrawDataPtr data)
+    private static void RenderCommandLists(ImDrawDataPtr data)
     {
         // Scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
         var fbWidth = (int)(data.DisplaySize.X * data.FramebufferScale.X);
@@ -369,7 +369,7 @@ public class SeImGui : IDisposable
     /// </summary>
     /// <param name="image">Raylib RenderTexture2D</param>
     /// <param name="center">Center RenderTexture2D</param>
-    public void ImageRenderTexture(RenderTexture2D image, bool center = true)
+    public static void ImageRenderTexture(RenderTexture2D image, bool center = true)
     {
         var area = ImGui.GetContentRegionAvail();
 

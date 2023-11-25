@@ -118,7 +118,7 @@ public class LineInput(
             return;
 
         SERender.DrawRectangle(
-            new Rect(position.X, position.Y, Size.X, Size.Y),
+            new Rect(RealPosition.X, RealPosition.Y, Size.X, Size.Y),
             Size / 2,
             0,
             Color.Black,
@@ -126,7 +126,7 @@ public class LineInput(
             ZLayer
         );
         SERender.DrawRectangle(
-            new Rect(position.X + 2, position.Y + 2, Size.X - 4, Size.Y - 4),
+            new Rect(RealPosition.X + 2, RealPosition.Y + 2, Size.X - 4, Size.Y - 4),
             Size / 2,
             0,
             Color.White,
