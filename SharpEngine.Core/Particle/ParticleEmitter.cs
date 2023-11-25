@@ -8,62 +8,8 @@ namespace SharpEngine.Core.Particle;
 /// <summary>
 /// Class which represents Particle Emitter
 /// </summary>
-/// <param name="beginColors">Particle Emitter BeginColors</param>
-/// <param name="endColors">Particle Emitter EndColors</param>
-/// <param name="spawnSize">Particle Emitter SpawnSize</param>
-/// <param name="offset">Particle Emitter Offset</param>
-/// <param name="minVelocity">Particle Emitter MinVelocity</param>
-/// <param name="maxVelocity">Particle Emitter MaxVelocity</param>
-/// <param name="minAcceleration">Particle Emitter MinAcceleration</param>
-/// <param name="maxAcceleration">Particle Emitter MaxAcceleration</param>
-/// <param name="minRotationSpeed">Particle Emitter MinRotationSpeed</param>
-/// <param name="maxRotationSpeed">Particle Emitter MaxRotationSpeed</param>
-/// <param name="minRotation">Particle Emitter MinRotation</param>
-/// <param name="maxRotation">Particle Emitter MaxRotation</param>
-/// <param name="minLifetime">Particle Emitter MinLifetime</param>
-/// <param name="maxLifetime">Particle Emitter MaxLifetime</param>
-/// <param name="minDirection">Particle Emitter MinDirection</param>
-/// <param name="maxDirection">Particle Emitter MaxDirection</param>
-/// <param name="minTimerBeforeSpawn">Particle Emitter MinTimerBeforeSpawn</param>
-/// <param name="maxTimerBeforeSpawn">Particle Emitter MaxTimerBeforeSpawn</param>
-/// <param name="minSize">Particle Emitter MinSize</param>
-/// <param name="maxSize">Particle Emitter MaxSize</param>
-/// <param name="minNbParticlesPerSpawn">Particle Emitter MinNbParticlesPerSpawn</param>
-/// <param name="maxNbParticlesPerSpawn">Particle Emitter MaxNbParticlesPerSpawn</param>
-/// <param name="maxParticles">Particle Emitter MaxParticles</param>
-/// <param name="active">Particle Emitter Active</param>
-/// <param name="sizeFunction">Particle Emitter SizeFunction</param>
-/// <param name="sizeFunctionValue">Particle Emitter SizeFunctionValue</param>
-/// <param name="zLayer">Particle Emitter ZLayer</param>
-public class ParticleEmitter(
-    Color[] beginColors,
-    Color[]? endColors = null,
-    Vec2? spawnSize = null,
-    Vec2? offset = null,
-    float minVelocity = 20,
-    float maxVelocity = 20,
-    float minAcceleration = 0,
-    float maxAcceleration = 0,
-    float minRotationSpeed = 0,
-    float maxRotationSpeed = 0,
-    float minRotation = 0,
-    float maxRotation = 0,
-    float minLifetime = 2,
-    float maxLifetime = 2,
-    float minDirection = 0,
-    float maxDirection = 0,
-    float minTimerBeforeSpawn = 0.3f,
-    float maxTimerBeforeSpawn = 0.3f,
-    float minSize = 5,
-    float maxSize = 5,
-    int minNbParticlesPerSpawn = 4,
-    int maxNbParticlesPerSpawn = 4,
-    int maxParticles = -1,
-    bool active = false,
-    ParticleParametersFunction sizeFunction = ParticleParametersFunction.Normal,
-    float sizeFunctionValue = 0,
-    int zLayer = 0
-    )
+/// <param name="parameters">Particle Emitter Parameters</param>
+public class ParticleEmitter(ParticleEmitterParameters parameters)
 {
     /// <summary>
     /// new() of Particle Emitter
@@ -73,137 +19,137 @@ public class ParticleEmitter(
     /// <summary>
     /// BeginColors of Particle Emitter
     /// </summary>
-    public Color[] BeginColors { get; set; } = beginColors;
+    public Color[] BeginColors { get; set; } = parameters.BeginColors;
 
     /// <summary>
     /// EndColors of Particle Emitter
     /// </summary>
-    public Color[]? EndColors { get; set; } = endColors;
+    public Color[]? EndColors { get; set; } = parameters.EndColors;
 
     /// <summary>
     /// Offset of Particle Emitter
     /// </summary>
-    public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
+    public Vec2 Offset { get; set; } = parameters.Offset;
 
     /// <summary>
     /// MinVelocity of Particle Emitter
     /// </summary>
-    public float MinVelocity { get; set; } = minVelocity;
+    public float MinVelocity { get; set; } = parameters.MinVelocity;
 
     /// <summary>
     /// MaxVelocity of Particle Emitter
     /// </summary>
-    public float MaxVelocity { get; set; } = maxVelocity;
+    public float MaxVelocity { get; set; } = parameters.MaxVelocity;
 
     /// <summary>
     /// MinAcceleration of Particle Emitter
     /// </summary>
-    public float MinAcceleration { get; set; } = minAcceleration;
+    public float MinAcceleration { get; set; } = parameters.MinAcceleration;
 
     /// <summary>
     /// MaxAcceleration of Particle Emitter
     /// </summary>
-    public float MaxAcceleration { get; set; } = maxAcceleration;
+    public float MaxAcceleration { get; set; } = parameters.MaxAcceleration;
 
     /// <summary>
     /// MinRotationSpeed of Particle Emitter
     /// </summary>
-    public float MinRotationSpeed { get; set; } = minRotationSpeed;
+    public float MinRotationSpeed { get; set; } = parameters.MinRotationSpeed;
 
     /// <summary>
     /// MaxRotationSpeed of Particle Emitter
     /// </summary>
-    public float MaxRotationSpeed { get; set; } = maxRotationSpeed;
+    public float MaxRotationSpeed { get; set; } = parameters.MaxRotationSpeed;
 
     /// <summary>
     /// MinRotation of Particle Emitter
     /// </summary>
-    public float MinRotation { get; set; } = minRotation;
+    public float MinRotation { get; set; } = parameters.MinRotation;
 
     /// <summary>
     /// MaxRotation of Particle Emitter
     /// </summary>
-    public float MaxRotation { get; set; } = maxRotation;
+    public float MaxRotation { get; set; } = parameters.MaxRotation;
 
     /// <summary>
     /// MinLifetime of Particle Emitter
     /// </summary>
-    public float MinLifetime { get; set; } = minLifetime;
+    public float MinLifetime { get; set; } = parameters.MinLifetime;
 
     /// <summary>
     /// MaxLifetime of Particle Emitter
     /// </summary>
-    public float MaxLifetime { get; set; } = maxLifetime;
+    public float MaxLifetime { get; set; } = parameters.MaxLifetime;
 
     /// <summary>
     /// MinDirection of Particle Emitter
     /// </summary>
-    public float MinDirection { get; set; } = minDirection;
+    public float MinDirection { get; set; } = parameters.MinDirection;
 
     /// <summary>
     /// MaxDirection of Particle Emitter
     /// </summary>
-    public float MaxDirection { get; set; } = maxDirection;
+    public float MaxDirection { get; set; } = parameters.MaxDirection;
 
     /// <summary>
     /// MinTimerBeforeSpawn of Particle Emitter
     /// </summary>
-    public float MinTimerBeforeSpawn { get; set; } = minTimerBeforeSpawn;
+    public float MinTimerBeforeSpawn { get; set; } = parameters.MinTimerBeforeSpawn;
 
     /// <summary>
     /// MaxTimerBeforeSpawn of Particle Emitter
     /// </summary>
-    public float MaxTimerBeforeSpawn { get; set; } = maxTimerBeforeSpawn;
+    public float MaxTimerBeforeSpawn { get; set; } = parameters.MaxTimerBeforeSpawn;
 
     /// <summary>
     /// MinNbParticlesPerSpawn of Particle Emitter
     /// </summary>
-    public int MinNbParticlesPerSpawn { get; set; } = minNbParticlesPerSpawn;
+    public int MinNbParticlesPerSpawn { get; set; } = parameters.MinNbParticlesPerSpawn;
 
     /// <summary>
     /// MaxNbParticlesPerSpawn of Particle Emitter
     /// </summary>
-    public int MaxNbParticlesPerSpawn { get; set; } = maxNbParticlesPerSpawn;
+    public int MaxNbParticlesPerSpawn { get; set; } = parameters.MaxNbParticlesPerSpawn;
 
     /// <summary>
     /// MinSize of Particle Emitter
     /// </summary>
-    public float MinSize { get; set; } = minSize;
+    public float MinSize { get; set; } = parameters.MinSize;
 
     /// <summary>
     /// MaxSize of Particle Emitter
     /// </summary>
-    public float MaxSize { get; set; } = maxSize;
+    public float MaxSize { get; set; } = parameters.MaxSize;
 
     /// <summary>
     /// SizeFunction of Particle Emitter
     /// </summary>
-    public ParticleParametersFunction SizeFunction { get; set; } = sizeFunction;
+    public ParticleParametersFunction SizeFunction { get; set; } = parameters.SizeFunction;
 
     /// <summary>
     /// SizeFunctionValue of Particle Emitter
     /// </summary>
-    public float SizeFunctionValue { get; set; } = sizeFunctionValue;
+    public float SizeFunctionValue { get; set; } = parameters.SizeFunctionValue;
 
     /// <summary>
     /// SpawnSize of Particle Emitter
     /// </summary>
-    public Vec2 SpawnSize { get; set; } = spawnSize ?? Vec2.Zero;
+    public Vec2 SpawnSize { get; set; } = parameters.SpawnSize;
 
     /// <summary>
     /// MaxParticles of Particle Emitter
     /// </summary>
-    public int MaxParticles { get; set; } = maxParticles;
+    public int MaxParticles { get; set; } = parameters.MaxParticles;
 
     /// <summary>
     /// Active of Particle Emitter
     /// </summary>
-    public bool Active { get; set; } = active;
+    public bool Active { get; set; } = parameters.Active;
 
     /// <summary>
     /// ZLayer of Particle Emitter
     /// </summary>
-    public int ZLayer { get; set; } = zLayer;
+    public int ZLayer { get; set; } = parameters.ZLayer;
 
     private float _timerBeforeSpawn;
 
@@ -242,19 +188,21 @@ public class ParticleEmitter(
         if (EndColors != null)
             endColor = EndColors[Rand.GetRand(0, EndColors.Length - 1)];
 
-        var particle = Particle.FromParameters(
-            position,
-            velocity,
-            acceleration,
-            lifetime,
-            size,
-            rotation,
-            rotationSpeed,
-            beginColor,
-            endColor,
-            SizeFunction,
-            SizeFunctionValue,
-            ZLayer
+        var particle = new Particle(
+            new ParticleParameters {
+                Position = position,
+                Velocity = velocity,
+                Acceleration = acceleration,
+                Lifetime = lifetime,
+                Size = size,
+                Rotation = rotation,
+                RotationSpeed = rotationSpeed,
+                BeginColor = beginColor,
+                EndColor = endColor,
+                SizeFunction = SizeFunction,
+                SizeFunctionValue = SizeFunctionValue,
+                ZLayer = ZLayer
+            }
         );
         Particles.Add(particle);
     }

@@ -9,7 +9,9 @@
 
 ### V 1.7.0 - XX/11/2023
 [+] ParticleParameters<br/>
+[+] ParticleEmitterParameters<br/>
 [\~] Particle : Constructor use ParticleParameters<br/>
+[\~] ParticleEmitter : Constructor use ParticleEmitterParameters<br/>
 [-] SpriteSheetComponent : flipX and flipY in Constructor<br/>
 [.] Refactor<br/>
 [.] ImGui.NET : 1.90.0.1
