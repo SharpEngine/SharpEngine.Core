@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.7.2 - 27/11/2023
+[#] DebugManager : Other packages versions cannot be added
+
 ### V 1.7.1 - 27/11/2023
 [#] ControlComponent : Keys inversed between Up and Down
 

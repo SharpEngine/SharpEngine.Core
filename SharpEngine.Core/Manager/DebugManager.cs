@@ -27,13 +27,12 @@ public static class DebugManager
     /// <summary>
     /// Packages Versions
     /// </summary>
-    public static readonly ImmutableDictionary<string, string> Versions =
-        ImmutableDictionary.CreateRange(new KeyValuePair<string, string>[]
-        {
-            KeyValuePair.Create("Raylib-cs", "5.0.0"),
-            KeyValuePair.Create("ImGui.NET", "1.90.0.1"),
-            KeyValuePair.Create("SharpEngine.Core", "1.7.1")
-        });
+    public static Dictionary<string, string> Versions { get; } = new()
+    {
+        { "Raylib-cs", "5.0.0" },
+        { "ImGui.NET", "1.90.0.1" },
+        { "SharpEngine.Core", "1.7.2" }
+    };
 
     /// <summary>
     /// Create ImGui Window for SharpEngine
