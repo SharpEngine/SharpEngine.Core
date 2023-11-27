@@ -32,7 +32,7 @@ public static class DebugManager
         {
             KeyValuePair.Create("Raylib-cs", "5.0.0"),
             KeyValuePair.Create("ImGui.NET", "1.90.0.1"),
-            KeyValuePair.Create("SharpEngine.Core", "1.7.0")
+            KeyValuePair.Create("SharpEngine.Core", "1.7.1")
         });
 
     /// <summary>

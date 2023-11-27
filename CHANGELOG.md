@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.7.1 - 27/11/2023
+[#] ControlComponent : Keys inversed between Up and Down
+
 ### V 1.7.0 - 25/11/2023
 [+] ParticleParameters<br/>
 [+] ParticleEmitterParameters<br/>
