@@ -185,9 +185,9 @@ public class ControlComponent : Component
             if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
                 dirX++;
             if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                dirY++;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
                 dirY--;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
+                dirY++;
             return new Vec2(dirX, dirY);
         }
     }
@@ -215,9 +215,9 @@ public class ControlComponent : Component
         {
             var dirY = 0;
             if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                dirY++;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
                 dirY--;
+            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
+                dirY++;
             return new Vec2(0, dirY);
         }
     }
