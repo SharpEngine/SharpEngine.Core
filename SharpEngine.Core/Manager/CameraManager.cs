@@ -37,8 +37,6 @@ public class CameraManager
     /// </summary>
     public float FractionSpeed { get; set; } = 0.8f;
 
-    internal Camera2D Camera2D;
-
     /// <summary>
     /// Rotation of Camera
     /// </summary>
@@ -56,6 +54,17 @@ public class CameraManager
         get => Camera2D.Zoom;
         set => Camera2D.Zoom = value;
     }
+
+    /// <summary>
+    /// Position of Camera
+    /// </summary>
+    public Vec2 Position
+    {
+        get => Camera2D.Target;
+        set => Camera2D.Target = value;
+    }
+
+    internal Camera2D Camera2D;
 
     /// <summary>
     /// Create Camera Manager
