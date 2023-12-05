@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.7.3 - 05/12/2023
+[+] CameraManager : Position
+
 ### V 1.7.2 - 27/11/2023
 [#] DebugManager : Other packages versions cannot be added
 
