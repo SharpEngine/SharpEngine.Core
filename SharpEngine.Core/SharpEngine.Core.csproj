@@ -20,7 +20,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ImGui.NET" Version="1.90.0.1" />
+    <PackageReference Include="ImGui.NET" Version="1.89.9.4" />
     <PackageReference Include="Raylib-cs" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>

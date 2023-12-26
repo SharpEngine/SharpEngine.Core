@@ -10,6 +10,7 @@ using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.EventArgs;
+using SharpEngine.Core.Utils.SeImGui;
 using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core;
@@ -407,9 +408,9 @@ public class Window
     private static void DefaultRenderImGui(Window window)
     {
         if(window._imguiDisplayWindow)
-            DebugManager.CreateSeImGuiWindow(window);
+            SeImGuiWindows.CreateSeImGuiWindow(window);
         if(window._imguiDisplayConsole)
-            DebugManager.CreateSeImGuiConsole(window);
+            SeImGuiWindows.CreateSeImGuiConsole(window);
 
         if(InputManager.IsKeyPressed(Input.Key.F7))
             window._imguiDisplayWindow = !window._imguiDisplayWindow;
