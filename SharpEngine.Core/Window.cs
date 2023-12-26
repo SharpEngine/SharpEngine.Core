@@ -168,6 +168,8 @@ public class Window
     private bool _closeWindow;
     private int _internalIndexCurrentScene = -1;
     private bool _debug;
+    private bool _imguiDisplayWindow = false;
+    private bool _imguiDisplayConsole = false;
 
     private static bool ConsoleLog { get; set; } = true;
     private static bool FileLog { get; set; } = false;
@@ -215,6 +217,7 @@ public class Window
         bool fileLog = false
     )
     {
+        RenderImGui = DefaultRenderImGui;
         ConsoleLog = consoleLog;
         FileLog = fileLog;
         _title = title;
@@ -399,6 +402,19 @@ public class Window
         StopCallback?.Invoke(this, args);
         if (args.Result)
             _closeWindow = true;
+    }
+
+    private static void DefaultRenderImGui(Window window)
+    {
+        if(window._imguiDisplayWindow)
+            DebugManager.CreateSeImGuiWindow(window);
+        if(window._imguiDisplayConsole)
+            DebugManager.CreateSeImGuiConsole(window);
+
+        if(InputManager.IsKeyPressed(Input.Key.F7))
+            window._imguiDisplayWindow = !window._imguiDisplayWindow;
+        if (InputManager.IsKeyPressed(Input.Key.F8))
+            window._imguiDisplayConsole = !window._imguiDisplayConsole;
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
