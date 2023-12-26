@@ -30,8 +30,8 @@ public static class DebugManager
     public static Dictionary<string, string> Versions { get; } = new()
     {
         { "Raylib-cs", "5.0.0" },
-        { "SharpEngine.Core", "1.7.3" }
         { "ImGui.NET", "1.89.9.4" },
+        { "SharpEngine.Core", "1.8.0" }
     };
 
     /// <summary>

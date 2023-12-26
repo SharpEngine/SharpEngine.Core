@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.8.0 - 26/12/2023
+[+] Console<br/>
+[\~] Modification of ImGui systems (F7 for Debug Window - F8 for Console)<br/>
+[.] ImGui.NET : 1.89.9.4
+
 ### V 1.7.3 - 05/12/2023
 [+] CameraManager : Position
 
