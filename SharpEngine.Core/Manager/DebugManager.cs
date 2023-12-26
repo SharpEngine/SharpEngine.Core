@@ -35,6 +35,15 @@ public static class DebugManager
     };
 
     /// <summary>
+    /// Create ImGui Console for SharpEngine
+    /// </summary>
+    public static void CreateSeImGuiConsole(Window window)
+    {
+        ImGui.Begin("SharpEngine Console");
+        ImGui.End();
+    }
+
+    /// <summary>
     /// Create ImGui Window for SharpEngine
     /// </summary>
     public static void CreateSeImGuiWindow(Window window)

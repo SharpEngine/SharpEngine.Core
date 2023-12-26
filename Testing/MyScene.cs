@@ -22,6 +22,15 @@ public class MyScene : Scene
                 zLayerOffset: 1
             )
         );
+        e.AddComponent(new ControlComponent());
         AddEntity(e);
+    }
+
+    public override void OpenScene()
+    {
+        base.OpenScene();
+
+        Window!.CameraManager.FollowEntity = Entities[0];
+        Window!.CameraManager.Mode = CameraMode.FollowSmooth;
     }
 }

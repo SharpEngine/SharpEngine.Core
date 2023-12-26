@@ -18,10 +18,7 @@ internal static class Program
             true,
             true,
             true
-        )
-        {
-            RenderImGui = DebugManager.CreateSeImGuiWindow
-        };
+        );
 
         window.TextureManager.AddTexture("portal", "resources/portal.png");
 
