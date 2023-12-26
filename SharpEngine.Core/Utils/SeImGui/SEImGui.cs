@@ -5,14 +5,14 @@ using Raylib_cs;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 
-namespace SharpEngine.Core.Utils;
+namespace SharpEngine.Core.Utils.SeImGui;
 
 /// <summary>
 /// Class which control ImGui
 /// </summary>
 public class SeImGui : IDisposable
 {
-    private readonly IntPtr _context;
+    private readonly nint _context;
     private Texture2D _fontTexture;
     private readonly Vector2 _scaleFactor = Vector2.One;
 
@@ -59,7 +59,7 @@ public class SeImGui : IDisposable
         io.Fonts.GetTexDataAsRGBA32(out byte* pixels, out var width, out var height);
 
         // Upload texture to graphics system
-        var data = new IntPtr(pixels);
+        var data = new nint(pixels);
         var image = new Image
         {
             Data = (void*)data,
@@ -71,7 +71,7 @@ public class SeImGui : IDisposable
         _fontTexture = Raylib.LoadTextureFromImage(image);
 
         // Store texture id in imgui font
-        io.Fonts.SetTexID(new IntPtr(_fontTexture.Id));
+        io.Fonts.SetTexID(new nint(_fontTexture.Id));
 
         // Clears font data on the CPU side
         io.Fonts.ClearTexData();
@@ -88,35 +88,28 @@ public class SeImGui : IDisposable
         // Setup back-end capabilities flags
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
-    }
 
-    private static ImGuiKey MapKey(KeyboardKey key)
-    {
-        return key switch
-        {
-            KeyboardKey.KEY_TAB => ImGuiKey.Tab,
-            KeyboardKey.KEY_LEFT => ImGuiKey.LeftArrow,
-            KeyboardKey.KEY_RIGHT => ImGuiKey.RightArrow,
-            KeyboardKey.KEY_UP => ImGuiKey.UpArrow,
-            KeyboardKey.KEY_DOWN => ImGuiKey.DownArrow,
-            KeyboardKey.KEY_PAGE_UP => ImGuiKey.PageUp,
-            KeyboardKey.KEY_PAGE_DOWN => ImGuiKey.PageDown,
-            KeyboardKey.KEY_HOME => ImGuiKey.Home,
-            KeyboardKey.KEY_END => ImGuiKey.End,
-            KeyboardKey.KEY_INSERT => ImGuiKey.Insert,
-            KeyboardKey.KEY_DELETE => ImGuiKey.Delete,
-            KeyboardKey.KEY_BACKSPACE => ImGuiKey.Backspace,
-            KeyboardKey.KEY_SPACE => ImGuiKey.Space,
-            KeyboardKey.KEY_ENTER => ImGuiKey.Enter,
-            KeyboardKey.KEY_ESCAPE => ImGuiKey.Escape,
-            KeyboardKey.KEY_A => ImGuiKey.A,
-            KeyboardKey.KEY_C => ImGuiKey.C,
-            KeyboardKey.KEY_V => ImGuiKey.V,
-            KeyboardKey.KEY_X => ImGuiKey.X,
-            KeyboardKey.KEY_Y => ImGuiKey.Y,
-            KeyboardKey.KEY_Z => ImGuiKey.Z,
-            _ => (ImGuiKey)key,
-        };
+        io.KeyMap[(int)ImGuiKey.Tab] = (int)KeyboardKey.KEY_TAB;
+        io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)KeyboardKey.KEY_LEFT;
+        io.KeyMap[(int)ImGuiKey.RightArrow] = (int)KeyboardKey.KEY_RIGHT;
+        io.KeyMap[(int)ImGuiKey.UpArrow] = (int)KeyboardKey.KEY_UP;
+        io.KeyMap[(int)ImGuiKey.DownArrow] = (int)KeyboardKey.KEY_DOWN;
+        io.KeyMap[(int)ImGuiKey.PageUp] = (int)KeyboardKey.KEY_PAGE_UP;
+        io.KeyMap[(int)ImGuiKey.PageDown] = (int)KeyboardKey.KEY_PAGE_DOWN;
+        io.KeyMap[(int)ImGuiKey.Home] = (int)KeyboardKey.KEY_HOME;
+        io.KeyMap[(int)ImGuiKey.End] = (int)KeyboardKey.KEY_END;
+        io.KeyMap[(int)ImGuiKey.Insert] = (int)KeyboardKey.KEY_INSERT;
+        io.KeyMap[(int)ImGuiKey.Delete] = (int)KeyboardKey.KEY_DELETE;
+        io.KeyMap[(int)ImGuiKey.Backspace] = (int)KeyboardKey.KEY_BACKSPACE;
+        io.KeyMap[(int)ImGuiKey.Space] = (int)KeyboardKey.KEY_SPACE;
+        io.KeyMap[(int)ImGuiKey.Enter] = (int)KeyboardKey.KEY_ENTER;
+        io.KeyMap[(int)ImGuiKey.Escape] = (int)KeyboardKey.KEY_ESCAPE;
+        io.KeyMap[(int)ImGuiKey.A] = (int)KeyboardKey.KEY_A;
+        io.KeyMap[(int)ImGuiKey.C] = (int)KeyboardKey.KEY_C;
+        io.KeyMap[(int)ImGuiKey.V] = (int)KeyboardKey.KEY_V;
+        io.KeyMap[(int)ImGuiKey.X] = (int)KeyboardKey.KEY_X;
+        io.KeyMap[(int)ImGuiKey.Y] = (int)KeyboardKey.KEY_Y;
+        io.KeyMap[(int)ImGuiKey.Z] = (int)KeyboardKey.KEY_Z;
     }
 
     /// <summary>
@@ -151,14 +144,22 @@ public class SeImGui : IDisposable
         var io = ImGui.GetIO();
 
         // Modifiers are not reliable across systems
-        io.KeyCtrl = Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_CONTROL) || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT_CONTROL);
-        io.KeyShift = Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT) || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT_SHIFT);
-        io.KeyAlt = Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_ALT) || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT_ALT);
-        io.KeySuper = Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SUPER) || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT_SUPER);
+        io.KeyCtrl =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_CONTROL]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_CONTROL];
+        io.KeyShift =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_SHIFT]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SHIFT];
+        io.KeyAlt =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_ALT]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_ALT];
+        io.KeySuper =
+            io.KeysDown[(int)KeyboardKey.KEY_LEFT_SUPER]
+            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SUPER];
 
         // Key states
         for (var i = (int)KeyboardKey.KEY_SPACE; i < (int)KeyboardKey.KEY_KB_MENU + 1; i++)
-            io.AddKeyEvent(MapKey((KeyboardKey)i), Raylib.IsKeyDown((KeyboardKey)i));
+            io.KeysDown[i] = Raylib.IsKeyDown((KeyboardKey)i);
 
         // Key input
         foreach (var charGot in InputManager.InternalPressedChars)
@@ -219,9 +220,9 @@ public class SeImGui : IDisposable
         Raylib_cs.Color color =
             new(
                 (byte)(hexValue & 0xFF),
-                (byte)((hexValue >> 8) & 0xFF),
-                (byte)((hexValue >> 16) & 0xFF),
-                (byte)((hexValue >> 24) & 0xFF)
+                (byte)(hexValue >> 8 & 0xFF),
+                (byte)(hexValue >> 16 & 0xFF),
+                (byte)(hexValue >> 24 & 0xFF)
             );
         return color;
     }
@@ -241,7 +242,7 @@ public class SeImGui : IDisposable
         int vtxOffset,
         ImVector<ushort> idxBuffer,
         ImPtrVector<ImDrawVertPtr> idxVert,
-        IntPtr textureId
+        nint textureId
     )
     {
         if (Rlgl.CheckRenderBatchLimit((int)count * 3))
@@ -304,7 +305,7 @@ public class SeImGui : IDisposable
                 var rectH = (int)((pcmd.ClipRect.W - rectY) * data.FramebufferScale.Y);
                 Rlgl.Scissor(rectX, Raylib.GetScreenHeight() - (rectY + rectH), rectW, rectH);
 
-                if (pcmd.UserCallback != IntPtr.Zero)
+                if (pcmd.UserCallback != nint.Zero)
                     idxOffset += (int)pcmd.ElemCount;
                 else
                 {
@@ -361,7 +362,7 @@ public class SeImGui : IDisposable
             uv1.Y = uv0.Y + source.Height / image.Height;
         }
 
-        ImGui.Image(new IntPtr(image.Id), new Vector2(width, height), uv0, uv1);
+        ImGui.Image(new nint(image.Id), new Vector2(width, height), uv0, uv1);
     }
 
     /// <summary>
