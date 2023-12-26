@@ -12,7 +12,7 @@ namespace SharpEngine.Core.Utils.SeImGui
     /// <summary>
     /// Class which have imgui windows
     /// </summary>
-    public class SeImGuiWindows
+    public static class SeImGuiWindows
     {
         private static SeImGuiConsole Console { get; } = new();
 

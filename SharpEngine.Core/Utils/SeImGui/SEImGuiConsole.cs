@@ -26,7 +26,7 @@ namespace SharpEngine.Core.Utils.SeImGui
         /// <summary>
         /// Input of Console
         /// </summary>
-        public string ConsoleInput = "";
+        private string ConsoleInput = "";
 
         /// <summary>
         /// Add Text to Console
@@ -61,36 +61,39 @@ namespace SharpEngine.Core.Utils.SeImGui
 
             if (ImGui.InputText("Input", ref ConsoleInput, 100, ImGuiInputTextFlags.EnterReturnsTrue))
             {
-                if (ConsoleInput.Length > 0) 
-                {
-                    AddText("> " + ConsoleInput);
-
-                    var command = ConsoleInput.Split(" ");
-                    var commandName = command[0];
-                    var commandArgs = Array.Empty<string>();
-                    if (command.Length > 1)
-                        commandArgs = command[1..];
-
-                    var found = false;
-                    foreach (var commandObject in Commands)
-                    {
-                        if(commandObject.Command == commandName)
-                        {
-                            commandObject.Process(commandArgs, this, window);
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found)
-                        AddText("Unknown command.");                        
-                }
+                if (ConsoleInput.Length > 0)
+                    ProcessCommand(window);
 
                 ConsoleInput = "";
                 ImGui.SetKeyboardFocusHere(-1);
             }
 
             ImGui.End();
+        }
+
+        private void ProcessCommand(Window window)
+        {
+            AddText("> " + ConsoleInput);
+
+            var command = ConsoleInput.Split(" ");
+            var commandName = command[0];
+            var commandArgs = Array.Empty<string>();
+            if (command.Length > 1)
+                commandArgs = command[1..];
+
+            var found = false;
+            foreach (var commandObject in Commands)
+            {
+                if (commandObject.Command == commandName)
+                {
+                    commandObject.Process(commandArgs, this, window);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                AddText("Unknown command.");
         }
     }
 }
