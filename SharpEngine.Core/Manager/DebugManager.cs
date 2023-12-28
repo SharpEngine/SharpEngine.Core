@@ -6,6 +6,7 @@ using ImGuiNET;
 using Raylib_cs;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
+using SharpEngine.Core.Utils.SeImGui;
 
 namespace SharpEngine.Core.Manager;
 
@@ -33,6 +34,23 @@ public static class DebugManager
         { "ImGui.NET", "1.89.9.4" },
         { "SharpEngine.Core", "1.8.0" }
     };
+
+    /// <summary>
+    /// Default Render ImGui for SharpEngine
+    /// </summary>
+    /// <param name="window">Window</param>
+    public static void SeRenderImGui(Window window)
+    {
+        if (window._imguiDisplayWindow)
+            SeImGuiWindows.CreateSeImGuiWindow(window);
+        if (window._imguiDisplayConsole)
+            SeImGuiWindows.CreateSeImGuiConsole(window);
+
+        if (InputManager.IsKeyPressed(Input.Key.F7))
+            window._imguiDisplayWindow = !window._imguiDisplayWindow;
+        if (InputManager.IsKeyPressed(Input.Key.F8))
+            window._imguiDisplayConsole = !window._imguiDisplayConsole;
+    }
 
     /// <summary>
     /// Log Message
