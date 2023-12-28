@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.8.1 - 28/12/2023
+[\~] Rename DefaultRenderImGui to SeRenderImGui and move it to DebugManager
+
 ### V 1.8.0 - 26/12/2023
 [+] Console<br/>
 [\~] Modification of ImGui systems (F7 for Debug Window - F8 for Console)<br/>
