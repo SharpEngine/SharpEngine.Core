@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.8.2 - 29/12/2023
+[#] Resize Window doesn't resize imgui and camera render
+
 ### V 1.8.1 - 28/12/2023
 [\~] Rename DefaultRenderImGui to SeRenderImGui and move it to DebugManager
 
