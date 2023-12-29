@@ -42,8 +42,8 @@ public class Window
         set
         {
             _screenSize = value;
-            CameraManager.SetScreenSize(value);
             Raylib.SetWindowSize((int)value.X, (int)value.Y);
+            UpdateScreenSize();
         }
     }
 
@@ -329,9 +329,15 @@ public class Window
 
         while (!Raylib.WindowShouldClose() && !_closeWindow)
         {
-            #region Update Pressed Keys and Chars
+            #region Update Input and ScreenSize
 
             InputManager.UpdateInput();
+
+            if(_screenSize.X != Raylib.GetScreenWidth() || _screenSize.Y != Raylib.GetScreenHeight())
+            {
+                _screenSize = new Vec2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+                UpdateScreenSize();
+            }
 
             #endregion
 
@@ -403,6 +409,12 @@ public class Window
         StopCallback?.Invoke(this, args);
         if (args.Result)
             _closeWindow = true;
+    }
+
+    private void UpdateScreenSize()
+    {
+        CameraManager.SetScreenSize(_screenSize);
+        SeImGui.Resize((int)_screenSize.X, (int)_screenSize.Y);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
