@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### v 1.8.3 - 21/01/2024
+[.] Raylib-cs : 6.0.0
+
 ### V 1.8.2 - 29/12/2023
 [#] Resize Window doesn't resize imgui and camera render
 
