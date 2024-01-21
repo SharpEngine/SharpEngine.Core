@@ -27,7 +27,7 @@ public class ShaderManager
     /// <param name="uniform">Uniform Name</param>
     /// <param name="value">Value</param>
     public void SetShaderValue(string name, string uniform, float value) =>
-        SetShaderValue(name, uniform, value, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+        SetShaderValue(name, uniform, value, ShaderUniformDataType.Float);
 
     /// <summary>
     /// Define vec2 value for shader
@@ -40,7 +40,7 @@ public class ShaderManager
             name,
             uniform,
             new Vector2(value.X, value.Y),
-            ShaderUniformDataType.SHADER_UNIFORM_VEC2
+            ShaderUniformDataType.Vec2
         );
 
     /// <summary>
@@ -50,7 +50,7 @@ public class ShaderManager
     /// <param name="uniform">Uniform Name</param>
     /// <param name="value">Value</param>
     public void SetShaderValue(string name, string uniform, Color value) =>
-        SetShaderValue(name, uniform, value.ToVec4(), ShaderUniformDataType.SHADER_UNIFORM_VEC4);
+        SetShaderValue(name, uniform, value.ToVec4(), ShaderUniformDataType.Vec4);
 
     /// <summary>
     /// Define int value for shader
@@ -59,7 +59,7 @@ public class ShaderManager
     /// <param name="uniform">Uniform Name</param>
     /// <param name="value">Value</param>
     public void SetShaderValue(string name, string uniform, int value) =>
-        SetShaderValue(name, uniform, value, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+        SetShaderValue(name, uniform, value, ShaderUniformDataType.Float);
 
     /// <summary>
     /// Define value for shader

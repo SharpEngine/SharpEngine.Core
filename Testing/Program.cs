@@ -11,7 +11,7 @@ internal static class Program
 {
     private static void Main()
     {
-        Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+        Raylib.SetConfigFlags(ConfigFlags.ResizableWindow);
 
         var window = new Window(
             1280,

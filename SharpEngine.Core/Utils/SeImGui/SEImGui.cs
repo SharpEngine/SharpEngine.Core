@@ -66,7 +66,7 @@ public class SeImGui : IDisposable
             Width = width,
             Height = height,
             Mipmaps = 1,
-            Format = PixelFormat.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+            Format = PixelFormat.UncompressedR8G8B8A8,
         };
         _fontTexture = Raylib.LoadTextureFromImage(image);
 
@@ -89,27 +89,27 @@ public class SeImGui : IDisposable
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
 
-        io.KeyMap[(int)ImGuiKey.Tab] = (int)KeyboardKey.KEY_TAB;
-        io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)KeyboardKey.KEY_LEFT;
-        io.KeyMap[(int)ImGuiKey.RightArrow] = (int)KeyboardKey.KEY_RIGHT;
-        io.KeyMap[(int)ImGuiKey.UpArrow] = (int)KeyboardKey.KEY_UP;
-        io.KeyMap[(int)ImGuiKey.DownArrow] = (int)KeyboardKey.KEY_DOWN;
-        io.KeyMap[(int)ImGuiKey.PageUp] = (int)KeyboardKey.KEY_PAGE_UP;
-        io.KeyMap[(int)ImGuiKey.PageDown] = (int)KeyboardKey.KEY_PAGE_DOWN;
-        io.KeyMap[(int)ImGuiKey.Home] = (int)KeyboardKey.KEY_HOME;
-        io.KeyMap[(int)ImGuiKey.End] = (int)KeyboardKey.KEY_END;
-        io.KeyMap[(int)ImGuiKey.Insert] = (int)KeyboardKey.KEY_INSERT;
-        io.KeyMap[(int)ImGuiKey.Delete] = (int)KeyboardKey.KEY_DELETE;
-        io.KeyMap[(int)ImGuiKey.Backspace] = (int)KeyboardKey.KEY_BACKSPACE;
-        io.KeyMap[(int)ImGuiKey.Space] = (int)KeyboardKey.KEY_SPACE;
-        io.KeyMap[(int)ImGuiKey.Enter] = (int)KeyboardKey.KEY_ENTER;
-        io.KeyMap[(int)ImGuiKey.Escape] = (int)KeyboardKey.KEY_ESCAPE;
-        io.KeyMap[(int)ImGuiKey.A] = (int)KeyboardKey.KEY_A;
-        io.KeyMap[(int)ImGuiKey.C] = (int)KeyboardKey.KEY_C;
-        io.KeyMap[(int)ImGuiKey.V] = (int)KeyboardKey.KEY_V;
-        io.KeyMap[(int)ImGuiKey.X] = (int)KeyboardKey.KEY_X;
-        io.KeyMap[(int)ImGuiKey.Y] = (int)KeyboardKey.KEY_Y;
-        io.KeyMap[(int)ImGuiKey.Z] = (int)KeyboardKey.KEY_Z;
+        io.KeyMap[(int)ImGuiKey.Tab] = (int)KeyboardKey.Tab;
+        io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)KeyboardKey.Left;
+        io.KeyMap[(int)ImGuiKey.RightArrow] = (int)KeyboardKey.Right;
+        io.KeyMap[(int)ImGuiKey.UpArrow] = (int)KeyboardKey.Up;
+        io.KeyMap[(int)ImGuiKey.DownArrow] = (int)KeyboardKey.Down;
+        io.KeyMap[(int)ImGuiKey.PageUp] = (int)KeyboardKey.PageUp;
+        io.KeyMap[(int)ImGuiKey.PageDown] = (int)KeyboardKey.PageDown;
+        io.KeyMap[(int)ImGuiKey.Home] = (int)KeyboardKey.Home;
+        io.KeyMap[(int)ImGuiKey.End] = (int)KeyboardKey.End;
+        io.KeyMap[(int)ImGuiKey.Insert] = (int)KeyboardKey.Insert;
+        io.KeyMap[(int)ImGuiKey.Delete] = (int)KeyboardKey.Delete;
+        io.KeyMap[(int)ImGuiKey.Backspace] = (int)KeyboardKey.Backspace;
+        io.KeyMap[(int)ImGuiKey.Space] = (int)KeyboardKey.Space;
+        io.KeyMap[(int)ImGuiKey.Enter] = (int)KeyboardKey.Enter;
+        io.KeyMap[(int)ImGuiKey.Escape] = (int)KeyboardKey.Escape;
+        io.KeyMap[(int)ImGuiKey.A] = (int)KeyboardKey.A;
+        io.KeyMap[(int)ImGuiKey.C] = (int)KeyboardKey.C;
+        io.KeyMap[(int)ImGuiKey.V] = (int)KeyboardKey.V;
+        io.KeyMap[(int)ImGuiKey.X] = (int)KeyboardKey.X;
+        io.KeyMap[(int)ImGuiKey.Y] = (int)KeyboardKey.Y;
+        io.KeyMap[(int)ImGuiKey.Z] = (int)KeyboardKey.Z;
     }
 
     /// <summary>
@@ -145,20 +145,20 @@ public class SeImGui : IDisposable
 
         // Modifiers are not reliable across systems
         io.KeyCtrl =
-            io.KeysDown[(int)KeyboardKey.KEY_LEFT_CONTROL]
-            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_CONTROL];
+            io.KeysDown[(int)KeyboardKey.LeftControl]
+            || io.KeysDown[(int)KeyboardKey.RightControl];
         io.KeyShift =
-            io.KeysDown[(int)KeyboardKey.KEY_LEFT_SHIFT]
-            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SHIFT];
+            io.KeysDown[(int)KeyboardKey.LeftShift]
+            || io.KeysDown[(int)KeyboardKey.RightShift];
         io.KeyAlt =
-            io.KeysDown[(int)KeyboardKey.KEY_LEFT_ALT]
-            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_ALT];
+            io.KeysDown[(int)KeyboardKey.LeftAlt]
+            || io.KeysDown[(int)KeyboardKey.RightAlt];
         io.KeySuper =
-            io.KeysDown[(int)KeyboardKey.KEY_LEFT_SUPER]
-            || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SUPER];
+            io.KeysDown[(int)KeyboardKey.LeftSuper]
+            || io.KeysDown[(int)KeyboardKey.RightSuper];
 
         // Key states
-        for (var i = (int)KeyboardKey.KEY_SPACE; i < (int)KeyboardKey.KEY_KB_MENU + 1; i++)
+        for (var i = (int)KeyboardKey.Space; i < (int)KeyboardKey.KeyboardMenu + 1; i++)
             io.KeysDown[i] = Raylib.IsKeyDown((KeyboardKey)i);
 
         // Key input
@@ -248,7 +248,7 @@ public class SeImGui : IDisposable
         if (Rlgl.CheckRenderBatchLimit((int)count * 3))
             Rlgl.DrawRenderBatchActive();
 
-        Rlgl.Begin(DrawMode.TRIANGLES); // RL_TRIANGLES
+        Rlgl.Begin(DrawMode.Triangles); // RL_TRIANGLES
         Rlgl.SetTexture((uint)textureId);
 
         for (var i = 0; i <= count - 3; i += 3)
