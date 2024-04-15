@@ -19,10 +19,11 @@ public static class DataTableManager
     public static List<string> DataTableNames => new(DataTables.Keys);
 
     /// <summary>
-    /// Checks if the specified data table exists.
+    /// Checks if a data table with the specified name exists.
     /// </summary>
     /// <param name="name">Name of the data table</param>
-    public static void HasDataTable(string name) => DataTables.ContainsKey(name);
+    /// <returns>True if the data table exists, otherwise false</returns>
+    public static bool HasDataTable(string name) => DataTables.ContainsKey(name);
 
     /// <summary>
     /// Removes the specified data table.
@@ -30,7 +31,7 @@ public static class DataTableManager
     /// <param name="name">Name of the data table</param>
     public static void RemoveDataTable(string name)
     {
-        if(!DataTables.ContainsKey(name))
+        if (!DataTables.ContainsKey(name))
         {
             DebugManager.Log(
                 LogLevel.LogError,

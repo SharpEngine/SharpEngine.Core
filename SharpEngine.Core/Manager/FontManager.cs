@@ -19,10 +19,11 @@ public class FontManager
     public List<Font> Fonts => new(_fonts.Values);
 
     /// <summary>
-    /// Checks if the font with the specified name exists.
+    /// Checks if the font with the specified name exists in the manager.
     /// </summary>
     /// <param name="name">The name of the font.</param>
-    public void HasFont(string name) => _fonts.ContainsKey(name);
+    /// <returns><c>true</c> if the font exists; otherwise, <c>false</c>.</returns>
+    public bool HasFont(string name) => _fonts.ContainsKey(name);
 
     /// <summary>
     /// Removes the font with the specified name from the manager.
@@ -77,6 +78,9 @@ public class FontManager
         throw new ArgumentException($"Font not found : {name}");
     }
 
+    /// <summary>
+    /// Unloads all fonts from the manager.
+    /// </summary>
     internal void Unload()
     {
         foreach (var font in _fonts.Values)

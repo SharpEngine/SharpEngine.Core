@@ -19,10 +19,11 @@ public class TextureManager
     public List<Texture2D> Textures => new(_texture2Ds.Values);
 
     /// <summary>
-    /// Checks if the texture exists in the manager.
+    /// Checks if the texture with the specified name exists in the manager.
     /// </summary>
     /// <param name="name">The name of the texture.</param>
-    public void HasTexture(string name) => _texture2Ds.ContainsKey(name);
+    /// <returns>True if the texture exists, otherwise false.</returns>
+    public bool HasTexture(string name) => _texture2Ds.ContainsKey(name);
 
     ///<summary>
     /// Removes a texture from the manager.
