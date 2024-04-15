@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.8.4 - 22/01/2024
+[#] Widgets : Fix activation without displaying
+
 ### v 1.8.3 - 21/01/2024
 [.] Raylib-cs : 6.0.0
 
