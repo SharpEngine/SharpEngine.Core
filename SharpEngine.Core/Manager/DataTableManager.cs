@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using SharpEngine.Core.Data.DataTable;
 using SharpEngine.Core.Utils;
 
@@ -18,10 +19,34 @@ public static class DataTableManager
     public static List<string> DataTableNames => new(DataTables.Keys);
 
     /// <summary>
-    /// Add Data Table
+    /// Checks if the specified data table exists.
     /// </summary>
-    /// <param name="name">Name of DataTable</param>
-    /// <param name="dataTable">Data Table</param>
+    /// <param name="name">Name of the data table</param>
+    public static void HasDataTable(string name) => DataTables.ContainsKey(name);
+
+    /// <summary>
+    /// Removes the specified data table.
+    /// </summary>
+    /// <param name="name">Name of the data table</param>
+    public static void RemoveDataTable(string name)
+    {
+        if(!DataTables.ContainsKey(name))
+        {
+            DebugManager.Log(
+                LogLevel.LogError,
+                $"SE_DATATABLEMANAGER: DataTable not found : {name}"
+            );
+            throw new ArgumentException($"DataTable not found : {name}");
+        }
+
+        DataTables.Remove(name);
+    }
+
+    /// <summary>
+    /// Add a data table to the manager.
+    /// </summary>
+    /// <param name="name">Name of the data table</param>
+    /// <param name="dataTable">Data table to add</param>
     public static void AddDataTable(string name, IDataTable dataTable)
     {
         if (!DataTables.TryAdd(name, dataTable))
@@ -32,13 +57,13 @@ public static class DataTableManager
     }
 
     /// <summary>
-    /// Get Object from DataTable
+    /// Get an object from the specified data table.
     /// </summary>
-    /// <param name="dataTable">Name of Data Table</param>
-    /// <param name="predicate">Predicate</param>
-    /// <typeparam name="T">Type of Object</typeparam>
-    /// <returns>Object</returns>
-    /// <exception cref="ArgumentException">If DataTable not found</exception>
+    /// <typeparam name="T">Type of the object</typeparam>
+    /// <param name="dataTable">Name of the data table</param>
+    /// <param name="predicate">Predicate to filter the object</param>
+    /// <returns>The object from the data table</returns>
+    /// <exception cref="ArgumentException">Thrown if the data table is not found</exception>
     public static T? Get<T>(string dataTable, Predicate<dynamic?> predicate)
     {
         if (DataTables.TryGetValue(dataTable, out var dTable))

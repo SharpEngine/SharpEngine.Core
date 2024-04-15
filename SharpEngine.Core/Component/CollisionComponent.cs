@@ -8,13 +8,13 @@ using Color = SharpEngine.Core.Utils.Color;
 namespace SharpEngine.Core.Component;
 
 /// <summary>
-/// Component which add basic collisions
+/// Component which adds basic collision functionality.
 /// </summary>
-/// <param name="size">Collision Size</param>
-/// <param name="offset">Collision Offset (Vec2(0))</param>
-/// <param name="solid">If Collision is Solid (true)</param>
-/// <param name="collisionCallback">Action called when collision (null)</param>
-/// <param name="drawDebug">Draw collision for debug (false)</param>
+/// <param name="size">The size of the collision.</param>
+/// <param name="offset">The offset of the collision (default: Vec2(0)).</param>
+/// <param name="solid">Determines if the collision is solid (default: true).</param>
+/// <param name="collisionCallback">The action to be called when a collision occurs (default: null).</param>
+/// <param name="drawDebug">Determines if the collision should be drawn for debugging (default: false).</param>
 public class CollisionComponent(
     Vec2 size,
     Vec2? offset = null,
@@ -24,38 +24,37 @@ public class CollisionComponent(
 ) : Component
 {
     /// <summary>
-    /// Size
+    /// Gets or sets the size of the collision.
     /// </summary>
     public Vec2 Size { get; set; } = size;
 
     /// <summary>
-    /// Offset
+    /// Gets or sets the offset of the collision.
     /// </summary>
     public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
-    /// If Collision is Solid
+    /// Gets or sets a value indicating whether the collision is solid.
     /// </summary>
     public bool Solid { get; set; } = solid;
 
     /// <summary>
-    /// Collision Callback
+    /// Gets or sets the collision callback action.
     /// </summary>
-    public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; } =
-        collisionCallback;
+    public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; } = collisionCallback;
 
     /// <summary>
-    /// If must draw collision
+    /// Gets or sets a value indicating whether the collision should be drawn for debugging.
     /// </summary>
     public bool DrawDebug { get; set; } = drawDebug;
 
     private TransformComponent? _transformComponent;
 
     /// <summary>
-    /// Get Collision Rectangle
+    /// Gets the collision rectangle.
     /// </summary>
-    /// <param name="position">Position (or current position)</param>
-    /// <returns>Collision Rect</returns>
+    /// <param name="position">The position (or current position).</param>
+    /// <returns>The collision rectangle.</returns>
     public Rect GetCollisionRect(Vec2? position = null)
     {
         position ??= _transformComponent?.Position;
@@ -67,10 +66,10 @@ public class CollisionComponent(
     }
 
     /// <summary>
-    /// Check if entity can go to position
+    /// Checks if the entity can go to the specified position.
     /// </summary>
-    /// <param name="position">Position</param>
-    /// <returns>True if can go to position</returns>
+    /// <param name="position">The position.</param>
+    /// <returns>True if the entity can go to the position; otherwise, false.</returns>
     public bool CanGo(Vec2 position)
     {
         var canGo = true;

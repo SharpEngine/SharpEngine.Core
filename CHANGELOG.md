@@ -7,6 +7,13 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.8.5 - 23/01/2024
+[+] DataTableManager : HasDataTable, RemoveDataTable<br/>
+[+] FontManager : HasFont, RemoveFont<br/>
+[+] ShaderManager : HasShader, RemoveShader<br/>
+[+] TextureManager : HasTexture, RemoveTexture<br/>
+[.] Improve comments
+
 ### V 1.8.4 - 22/01/2024
 [#] Widgets : Fix activation without displaying
 

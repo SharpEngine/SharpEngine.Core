@@ -9,32 +9,57 @@ using Color = SharpEngine.Core.Utils.Color;
 namespace SharpEngine.Core.Manager;
 
 /// <summary>
-/// Class which manage Shaders
+/// Class which manages Shaders
 /// </summary>
 public class ShaderManager
 {
-    private readonly Dictionary<string, Shader> _shaders = [];
+    private readonly Dictionary<string, Shader> _shaders = new();
 
     /// <summary>
-    /// Get All Shaders
+    /// Gets all Shaders
     /// </summary>
     public List<Shader> Shaders => new(_shaders.Values);
 
     /// <summary>
-    /// Define float value for shader
+    /// Checks if a Shader exists
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <param name="uniform">Uniform Name</param>
-    /// <param name="value">Value</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <returns>True if the Shader exists, otherwise false</returns>
+    public bool HasShader(string name) => _shaders.ContainsKey(name);
+
+    /// <summary>
+    /// Removes a Shader from the manager
+    /// </summary>
+    /// <param name="name">The name of the Shader to remove</param>
+    /// <exception cref="ArgumentException">Thrown if the Shader is not found</exception>
+    public void RemoveShader(string name)
+    {
+        if (_shaders.TryGetValue(name, out var shader))
+        {
+            Raylib.UnloadShader(shader);
+            _shaders.Remove(name);
+            return;
+        }
+
+        DebugManager.Log(LogLevel.LogError, $"SE_SHADERMANAGER: Shader not found : {name}");
+        throw new ArgumentException($"Shader not found : {name}");
+    }
+
+    /// <summary>
+    /// Defines a float value for a Shader
+    /// </summary>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="uniform">The name of the uniform</param>
+    /// <param name="value">The float value</param>
     public void SetShaderValue(string name, string uniform, float value) =>
         SetShaderValue(name, uniform, value, ShaderUniformDataType.Float);
 
     /// <summary>
-    /// Define vec2 value for shader
+    /// Defines a vec2 value for a Shader
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <param name="uniform">Uniform Name</param>
-    /// <param name="value">Value</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="uniform">The name of the uniform</param>
+    /// <param name="value">The vec2 value</param>
     public void SetShaderValue(string name, string uniform, Vec2 value) =>
         SetShaderValue(
             name,
@@ -44,32 +69,32 @@ public class ShaderManager
         );
 
     /// <summary>
-    /// Define color value for shader
+    /// Defines a color value for a Shader
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <param name="uniform">Uniform Name</param>
-    /// <param name="value">Value</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="uniform">The name of the uniform</param>
+    /// <param name="value">The color value</param>
     public void SetShaderValue(string name, string uniform, Color value) =>
         SetShaderValue(name, uniform, value.ToVec4(), ShaderUniformDataType.Vec4);
 
     /// <summary>
-    /// Define int value for shader
+    /// Defines an int value for a Shader
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <param name="uniform">Uniform Name</param>
-    /// <param name="value">Value</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="uniform">The name of the uniform</param>
+    /// <param name="value">The int value</param>
     public void SetShaderValue(string name, string uniform, int value) =>
         SetShaderValue(name, uniform, value, ShaderUniformDataType.Float);
 
     /// <summary>
-    /// Define value for shader
+    /// Defines a value for a Shader
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <param name="uniform">Uniform Name</param>
-    /// <param name="value">Value</param>
-    /// <param name="uniformType">Uniform Type</param>
-    /// <typeparam name="T">Value Type</typeparam>
-    /// <exception cref="ArgumentException">Throw if shader not found</exception>
+    /// <typeparam name="T">The type of the value</typeparam>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="uniform">The name of the uniform</param>
+    /// <param name="value">The value</param>
+    /// <param name="uniformType">The type of the uniform</param>
+    /// <exception cref="ArgumentException">Thrown if the Shader is not found</exception>
     public void SetShaderValue<T>(
         string name,
         string uniform,
@@ -90,55 +115,55 @@ public class ShaderManager
     }
 
     /// <summary>
-    /// Add shader to manager
+    /// Adds a Shader to the manager
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <param name="shader">Shader</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="shader">The Shader to add</param>
     public void AddShader(string name, Shader shader)
     {
         if (!_shaders.TryAdd(name, shader))
             DebugManager.Log(
                 LogLevel.LogWarning,
-                $"SE_SHADERMANAGER: Shader already exist : {name}"
+                $"SE_SHADERMANAGER: Shader already exists : {name}"
             );
     }
 
     /// <summary>
-    /// Add shader to manager
+    /// Adds a Shader to the manager
     /// </summary>
-    /// <param name="name">Texture Name</param>
-    /// <param name="vertexFile">Vertex Shader File</param>
-    /// <param name="fragmentFile">Fragment Shader File</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="vertexFile">The path to the vertex shader file</param>
+    /// <param name="fragmentFile">The path to the fragment shader file</param>
     public void AddShader(string name, string vertexFile, string fragmentFile)
     {
         if (!_shaders.TryAdd(name, Raylib.LoadShader(vertexFile, fragmentFile)))
             DebugManager.Log(
                 LogLevel.LogWarning,
-                $"SE_SHADERMANAGER: Shader already exist : {name}"
+                $"SE_SHADERMANAGER: Shader already exists : {name}"
             );
     }
 
     /// <summary>
-    /// Add shader to manager
+    /// Adds a Shader to the manager
     /// </summary>
-    /// <param name="name">Texture Name</param>
-    /// <param name="vertexCode">Vertex Shader Code</param>
-    /// <param name="fragmentCode">Fragment Shader Code</param>
+    /// <param name="name">The name of the Shader</param>
+    /// <param name="vertexCode">The code of the vertex shader</param>
+    /// <param name="fragmentCode">The code of the fragment shader</param>
     public void AddShaderFromCode(string name, string vertexCode, string fragmentCode)
     {
         if (!_shaders.TryAdd(name, Raylib.LoadShaderFromMemory(vertexCode, fragmentCode)))
             DebugManager.Log(
                 LogLevel.LogWarning,
-                $"SE_SHADERMANAGER: Shader already exist : {name}"
+                $"SE_SHADERMANAGER: Shader already exists : {name}"
             );
     }
 
     /// <summary>
-    /// Get Shader from Manager
+    /// Gets a Shader from the manager
     /// </summary>
-    /// <param name="name">Shader Name</param>
-    /// <returns>Shader</returns>
-    /// <exception cref="ArgumentException">Throws if shader not found</exception>
+    /// <param name="name">The name of the Shader</param>
+    /// <returns>The Shader</returns>
+    /// <exception cref="ArgumentException">Thrown if the Shader is not found</exception>
     public Shader GetShader(string name)
     {
         if (_shaders.TryGetValue(name, out var shader))
