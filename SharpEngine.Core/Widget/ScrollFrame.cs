@@ -54,6 +54,9 @@ public class ScrollFrame(
     public override void Update(float delta)
     {
         base.Update(delta);
+        
+        if(!Displayed)
+            return;
 
         var move = InputManager.GetMouseWheelMove();
         if (move != 0)

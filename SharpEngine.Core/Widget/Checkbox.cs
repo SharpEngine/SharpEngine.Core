@@ -38,7 +38,7 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
     {
         base.Update(delta);
 
-        if (!Active)
+        if (!Displayed || !Active)
             return;
 
         if (

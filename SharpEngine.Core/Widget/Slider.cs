@@ -34,6 +34,9 @@ public class Slider(
     {
         base.Update(delta);
 
+        if (!Displayed)
+            return;
+
         if (InputManager.IsMouseButtonDown(MouseButton.Left))
         {
             var finalPosition = RealPosition - Size / 2;
