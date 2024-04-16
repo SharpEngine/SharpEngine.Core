@@ -67,7 +67,7 @@ public class LineInput(
     /// <inheritdoc />
     public override void Update(float delta)
     {
-        if (!Displayed || !Active)
+        if (!RealDisplayed || !Active)
         {
             Focused = false;
             return;

@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.8.7 - 16/04/2024
+[#] Widgets : Fix update when not displayed
+
 ### V 1.8.6 - 15/04/2024
 [#] Fix all 1.8.5
 

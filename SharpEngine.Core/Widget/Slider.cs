@@ -34,7 +34,7 @@ public class Slider(
     {
         base.Update(delta);
 
-        if (!Displayed)
+        if (!RealDisplayed)
             return;
 
         if (InputManager.IsMouseButtonDown(MouseButton.Left))

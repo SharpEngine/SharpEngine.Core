@@ -96,7 +96,7 @@ public class Button(
     {
         base.Update(delta);
 
-        if (!Displayed || !Active)
+        if (!RealDisplayed || !Active)
             return;
 
         if (InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size)))

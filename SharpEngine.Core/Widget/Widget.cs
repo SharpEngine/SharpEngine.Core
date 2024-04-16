@@ -21,7 +21,7 @@ public abstract class Widget
     public int ZLayer { get; set; } = 0;
 
     /// <summary>
-    /// If Widget is Display
+    /// If Widget is Displayed
     /// </summary>
     public bool Displayed { get; set; } = true;
 
@@ -41,14 +41,19 @@ public abstract class Widget
     public PauseState PauseState { get; set; } = PauseState.Normal;
 
     /// <summary>
-    /// Name of Widgets
+    /// Name of Widget
     /// </summary>
     public string Name { get; set; } = "";
 
     /// <summary>
-    /// Get Real Position (Position + Parent RealPostion if widget has Parent)
+    /// Get Real Position (Position + Parent RealPosition if widget has Parent)
     /// </summary>
     public Vec2 RealPosition => Parent != null ? Position + Parent.RealPosition : Position;
+
+    /// <summary>
+    /// If Widget is really displayed (considering parent's display state)
+    /// </summary>
+    public bool RealDisplayed => Displayed && (Parent == null || Parent.RealDisplayed);
 
     /// <summary>
     /// Get All Direct Children of Widget
@@ -72,10 +77,10 @@ public abstract class Widget
     private Scene? _scene;
 
     /// <summary>
-    /// Widget
+    /// Initializes a new instance of the <see cref="Widget"/> class.
     /// </summary>
-    /// <param name="position">Position Widget</param>
-    /// <param name="zLayer">ZLayer</param>
+    /// <param name="position">The position of the widget.</param>
+    /// <param name="zLayer">The Z layer of the widget.</param>
     protected Widget(Vec2 position, int zLayer = 0)
     {
         Position = position;
@@ -113,7 +118,7 @@ public abstract class Widget
     /// <summary>
     /// Add Child and return it
     /// </summary>
-    /// <param name="widget">Widget which be added</param>
+    /// <param name="widget">Widget which will be added</param>
     /// <typeparam name="T">Type of Widget</typeparam>
     /// <returns>Child</returns>
     public T AddChild<T>(T widget)
@@ -129,7 +134,7 @@ public abstract class Widget
     /// <summary>
     /// Remove Child
     /// </summary>
-    /// <param name="widget">Child will be removed</param>
+    /// <param name="widget">Child that will be removed</param>
     public void RemoveChild(Widget widget)
     {
         widget.Scene = null;

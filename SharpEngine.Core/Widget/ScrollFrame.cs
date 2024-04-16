@@ -55,7 +55,7 @@ public class ScrollFrame(
     {
         base.Update(delta);
         
-        if(!Displayed)
+        if(!RealDisplayed)
             return;
 
         var move = InputManager.GetMouseWheelMove();
