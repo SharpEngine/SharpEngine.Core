@@ -14,14 +14,14 @@ public class MyScene : Scene
     public MyScene()
     {
         var button = new Button(
-                       new Vec2(100, 100),
-                                  "Hello World",
-                                             "RAYLIB_DEFAULT",
-                                                        new Vec2(200, 50),
-                                                                   Color.White,
-                                                                              Color.Blue,
-                                                                                         20
-                                                                                                );
+            new Vec2(100, 100),
+            "Hello World",
+            "RAYLIB_DEFAULT",
+            new Vec2(200, 50),
+            Color.White,
+            Color.Blue,
+            20
+         );
 
         button.Clicked += (_, _) => Console.WriteLine("Button Clicked");
 
