@@ -17,7 +17,7 @@ public class SeImGui : IDisposable
     private readonly nint _context;
     private Texture2D _fontTexture;
     private readonly Vector2 _scaleFactor = Vector2.One;
-    private readonly Dictionary<KeyboardKey, ImGuiKey> _keyMap = [];
+    private static readonly Dictionary<KeyboardKey, ImGuiKey> _keyMap = [];
 
     internal SeImGui()
     {
@@ -93,7 +93,8 @@ public class SeImGui : IDisposable
         io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
 
         _keyMap.Add(KeyboardKey.Apostrophe, ImGuiKey.Apostrophe);
-        _keyMap.Add(KeyboardKey.Comma, ImGuiKey.Comma); _keyMap.Add(KeyboardKey.Minus, ImGuiKey.Minus);
+        _keyMap.Add(KeyboardKey.Comma, ImGuiKey.Comma); 
+        _keyMap.Add(KeyboardKey.Minus, ImGuiKey.Minus);
         _keyMap.Add(KeyboardKey.Period, ImGuiKey.Period);
         _keyMap.Add(KeyboardKey.Slash, ImGuiKey.Slash);
         _keyMap.Add(KeyboardKey.Zero, ImGuiKey._0);

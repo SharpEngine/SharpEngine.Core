@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.9.0 - 08/11/2024
+[+] Meilleure gestion du redimensionnement
+[.] Raylib-cs : 6.1.1
+[.] ImGui.NET : 1.91.0.1
+
 ### V 1.8.7 - 16/04/2024
 [#] Widgets : Fix update when not displayed
 
