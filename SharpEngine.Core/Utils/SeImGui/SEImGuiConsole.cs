@@ -43,7 +43,7 @@ namespace SharpEngine.Core.Utils.SeImGui
 
             // Log Window
             var reserve = ImGui.GetStyle().ItemSpacing.Y + ImGui.GetFrameHeightWithSpacing();
-            if (ImGui.BeginChild("Console", new System.Numerics.Vector2(0, -reserve), false, 0))
+            if (ImGui.BeginChild("Console", new System.Numerics.Vector2(0, -reserve), ImGuiChildFlags.None, ImGuiWindowFlags.None))
             {
                 ImGui.PushTextWrapPos();
 
