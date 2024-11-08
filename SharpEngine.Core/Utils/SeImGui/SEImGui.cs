@@ -223,7 +223,6 @@ public class SeImGui : IDisposable
     {
         var io = ImGui.GetIO();
         io.DisplaySize = new Vector2(width, height) / _scaleFactor;
-        DebugManager.Log(LogLevel.LogInfo, $"IMGUI: Display size {io.DisplaySize}");
     }
 
     private static void UpdateKeyboard()
@@ -267,9 +266,9 @@ public class SeImGui : IDisposable
         if (focused)
         {
             if (io.WantSetMousePos)
-                Raylib.SetMousePosition((int)mousePosition.X, (int)mousePosition.Y);
+                InputManager.SetMousePosition(mousePosition);
             else
-                io.MousePos = Raylib.GetMousePosition();
+                io.MousePos = InputManager.GetMousePosition();
         }
 
         // Mouse cursor state
@@ -381,7 +380,7 @@ public class SeImGui : IDisposable
                 var rectY = (int)((pcmd.ClipRect.Y - pos.Y) * data.FramebufferScale.Y);
                 var rectW = (int)((pcmd.ClipRect.Z - rectX) * data.FramebufferScale.Y);
                 var rectH = (int)((pcmd.ClipRect.W - rectY) * data.FramebufferScale.Y);
-                Rlgl.Scissor(rectX, Raylib.GetScreenHeight() - (rectY + rectH), rectW, rectH);
+                Rlgl.Scissor(rectX, (int)InputManager.InternalWindow.RenderSize.Y - (rectY + rectH), rectW, rectH);
 
                 if (pcmd.UserCallback != nint.Zero)
                     idxOffset += (int)pcmd.ElemCount;

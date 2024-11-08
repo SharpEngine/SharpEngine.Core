@@ -39,6 +39,10 @@ namespace SharpEngine.Core.Utils.SeImGui
             ImGui.Text($"FPS (from SE) : {1000.0 / DebugManager.FrameRate:.000}ms/frame ({DebugManager.FrameRate} FPS)");
             ImGui.Text($"GC Memory : {DebugManager.GcMemory / 1000000.0:.000} mo");
             ImGui.Separator();
+            ImGui.Text($"Screen Size : {window.ScreenSize}");
+            ImGui.Text($"Render Size : {window.RenderSize}");
+            ImGui.Text($"Render Scale : {window.RenderScale}");
+            ImGui.Separator();
             ImGui.Text($"Textures Number : {window.TextureManager.Textures.Count}");
             ImGui.Text($"Shaders Number : {window.ShaderManager.Shaders.Count}");
             ImGui.Text($"Fonts Number : {window.FontManager.Fonts.Count}");

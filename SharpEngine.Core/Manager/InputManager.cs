@@ -14,6 +14,7 @@ public static class InputManager
 {
     internal static List<int> InternalPressedChars { get; } = [];
     internal static List<int> InternalPressedKeys { get; set; } = [];
+    internal static Window InternalWindow { get; set; }
 
     /// <summary>
     /// List of Pressed Chars in Frame
@@ -58,7 +59,7 @@ public static class InputManager
     /// </summary>
     /// <param name="rect">Rectangle</param>
     /// <returns>If Mouse is in Rect</returns>
-    public static bool IsMouseInRectangle(Rect rect) => rect.Contains(Raylib.GetMousePosition());
+    public static bool IsMouseInRectangle(Rect rect) => rect.Contains(GetMousePosition());
 
     /// <summary>
     /// Check if mouse button is down
@@ -96,13 +97,37 @@ public static class InputManager
     /// Get Mouse position
     /// </summary>
     /// <returns>Position</returns>
-    public static Vec2 GetMousePosition() => Raylib.GetMousePosition();
+    public static Vec2 GetMousePosition()
+    {
+        var realPosition = Raylib.GetMousePosition();
+        return new Vec2(
+            (realPosition.X - (InternalWindow.ScreenSize.X - (InternalWindow.RenderSize.X * InternalWindow.RenderScale)) * 0.5f) / InternalWindow.RenderScale,
+            (realPosition.Y - (InternalWindow.ScreenSize.Y - (InternalWindow.RenderSize.Y * InternalWindow.RenderScale)) * 0.5f) / InternalWindow.RenderScale
+        );
+    }
+
+    /// <summary>
+    /// Get Real Mouse position
+    /// </summary>
+    /// <returns>Position</returns>
+    public static Vec2 GetRealMousePosition() => Raylib.GetMousePosition();
 
     /// <summary>
     /// Set Mouse Position
     /// </summary>
     /// <param name="position">Position</param>
-    public static void SetMousePosition(Vec2 position) =>
+    public static void SetMousePosition(Vec2 position)
+    {
+        var x = position.X * InternalWindow.RenderScale + (InternalWindow.ScreenSize.X - (InternalWindow.RenderSize.X * InternalWindow.RenderScale)) * 0.5f;
+        var y = position.Y * InternalWindow.RenderScale + (InternalWindow.ScreenSize.Y - (InternalWindow.RenderSize.Y * InternalWindow.RenderScale)) * 0.5f;
+        Raylib.SetMousePosition((int)x, (int)y);
+    }
+
+    /// <summary>
+    /// Set Real Mouse Position
+    /// </summary>
+    /// <param name="position">Position</param>
+    public static void SetRealMousePosition(Vec2 position) =>
         Raylib.SetMousePosition((int)position.X, (int)position.Y);
 
     /// <summary>

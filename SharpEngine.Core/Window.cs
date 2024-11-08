@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Raylib_cs;
@@ -11,6 +13,7 @@ using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.EventArgs;
 using SharpEngine.Core.Utils.SeImGui;
+using static System.Formats.Asn1.AsnWriter;
 using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core;
@@ -43,7 +46,20 @@ public class Window
         {
             _screenSize = value;
             Raylib.SetWindowSize((int)value.X, (int)value.Y);
-            UpdateScreenSize();
+            RenderScale = MathF.Min(_screenSize.X / _renderSize.X, _screenSize.Y / _renderSize.Y);
+        }
+    }
+
+    /// <summary>
+    /// Size of Render
+    /// </summary>
+    public Vec2 RenderSize
+    {
+        get => _renderSize;
+        set
+        {
+            _renderSize = value;
+            UpdateRenderSize();
         }
     }
 
@@ -130,6 +146,11 @@ public class Window
     public SeImGui SeImGui { get; }
 
     /// <summary>
+    /// Scale of Render
+    /// </summary>
+    public float RenderScale { get; private set; }
+
+    /// <summary>
     /// Index of Current Scene
     /// </summary>
     public int IndexCurrentScene
@@ -165,10 +186,12 @@ public class Window
     public List<Scene> Scenes { get; } = [];
 
     private Vec2 _screenSize;
+    private Vec2 _renderSize;
     private string _title;
     private bool _closeWindow;
     private int _internalIndexCurrentScene = -1;
     private bool _debug;
+    private RenderTexture2D _targetTexture;
     internal bool _imguiDisplayWindow = false;
     internal bool _imguiDisplayConsole = false;
 
@@ -218,11 +241,13 @@ public class Window
         bool fileLog = false
     )
     {
+        InputManager.InternalWindow = this;
         RenderImGui = DebugManager.SeRenderImGui;
         ConsoleLog = consoleLog;
         FileLog = fileLog;
         _title = title;
         _screenSize = screenSize;
+        _renderSize = screenSize;
         BackgroundColor = backgroundColor ?? Color.Black;
         Debug = debug;
 
@@ -251,6 +276,9 @@ public class Window
 
         if (fps != null)
             Raylib.SetTargetFPS(fps.Value);
+
+        _targetTexture = Raylib.LoadRenderTexture((int)screenSize.X, (int)screenSize.Y);
+        RenderScale = MathF.Min(_screenSize.X / _renderSize.X, _screenSize.Y / _renderSize.Y);
     }
 
     /// <summary>
@@ -333,10 +361,10 @@ public class Window
 
             InputManager.UpdateInput();
 
-            if(_screenSize.X != Raylib.GetScreenWidth() || _screenSize.Y != Raylib.GetScreenHeight())
+            if (_screenSize.X != Raylib.GetScreenWidth() || _screenSize.Y != Raylib.GetScreenHeight())
             {
                 _screenSize = new Vec2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-                UpdateScreenSize();
+                RenderScale = MathF.Min(_screenSize.X / _renderSize.X, _screenSize.Y / _renderSize.Y);
             }
 
             #endregion
@@ -357,18 +385,36 @@ public class Window
 
             if (Debug)
                 RenderImGui?.Invoke(this);
-
             CurrentScene.Draw();
 
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(BackgroundColor);
+            {
+                Raylib.BeginTextureMode(_targetTexture);
+                Raylib.ClearBackground(BackgroundColor);
 
-            SERender.Draw(this);
+                SERender.Draw(this);
 
-            if (Debug)
-                SeImGui.Draw();
+                if (Debug)
+                    SeImGui.Draw();
 
-            Raylib.EndDrawing();
+                Raylib.EndTextureMode();
+            }
+
+            {
+                Raylib.BeginDrawing();
+                Raylib.ClearBackground(Color.Black);
+
+                var dest = new Rectangle(
+                    (_screenSize.X - (_renderSize.X * RenderScale)) * 0.5f,
+                    (_screenSize.Y - (_renderSize.Y * RenderScale)) * 0.5f,
+                    _renderSize.X * RenderScale,
+                    _renderSize.Y * RenderScale
+                );
+
+                Raylib.DrawTexturePro(_targetTexture.Texture, new Rectangle(0, 0, _targetTexture.Texture.Width, -_targetTexture.Texture.Height),
+                    dest, new Vector2(0, 0), 0, Color.White);
+
+                Raylib.EndDrawing();
+            }
 
             #endregion
         }
@@ -381,6 +427,7 @@ public class Window
         DebugManager.Log(LogLevel.LogInfo, "SE: Scenes unloaded !");
 
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Textures...");
+        Raylib.UnloadRenderTexture(_targetTexture);
         TextureManager.Unload();
         DebugManager.Log(LogLevel.LogInfo, "SE: Textures unloaded !");
         DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Fonts...");
@@ -411,10 +458,11 @@ public class Window
             _closeWindow = true;
     }
 
-    private void UpdateScreenSize()
+    private void UpdateRenderSize()
     {
-        CameraManager.SetScreenSize(_screenSize);
-        SeImGui.Resize((int)_screenSize.X, (int)_screenSize.Y);
+        CameraManager.SetScreenSize(_renderSize);
+        SeImGui.Resize((int)_renderSize.X, (int)_renderSize.Y);
+        RenderScale = MathF.Min(_screenSize.X / _renderSize.X, _screenSize.Y / _renderSize.Y);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
