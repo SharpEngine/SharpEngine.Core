@@ -7,6 +7,7 @@ using Raylib_cs;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.SeImGui;
+using SharpEngine.Core.Utils.SeImGui.ConsoleCommand;
 
 namespace SharpEngine.Core.Manager;
 
@@ -51,6 +52,13 @@ public static class DebugManager
         if (InputManager.IsKeyPressed(Input.Key.F8))
             window._imguiDisplayConsole = !window._imguiDisplayConsole;
     }
+
+    /// <summary>
+    /// Add Console Command
+    /// </summary>
+    /// <param name="command">Console Command</param>
+    public static void AddConsoleCommand(ISeImGuiConsoleCommand command) =>
+        SeImGuiWindows.Console.Commands.Add(command);
 
     /// <summary>
     /// Log Message

@@ -14,7 +14,7 @@ namespace SharpEngine.Core.Utils.SeImGui
     /// </summary>
     public static class SeImGuiWindows
     {
-        private static SeImGuiConsole Console { get; } = new();
+        internal static SeImGuiConsole Console { get; } = new();
 
         /// <summary>
         /// Display ImGui Console for SharpEngine

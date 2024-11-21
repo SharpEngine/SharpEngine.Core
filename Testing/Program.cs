@@ -28,6 +28,8 @@ internal static class Program
 
         window.AddScene(new MyScene());
 
+        DebugManager.AddConsoleCommand(new TestConsoleCommand());
+
         window.Run();
     }
 }
