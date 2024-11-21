@@ -7,8 +7,12 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.9.1 - 21/11/2024
+[+] DebugManager : AddConsoleCommand<br/>
+[#] Fix versions in DebugManager
+
 ### V 1.9.0 - 08/11/2024
-[+] Meilleure gestion du redimensionnement
+[+] Manage resizing window
 [.] Raylib-cs : 6.1.1
 [.] ImGui.NET : 1.91.0.1
 
