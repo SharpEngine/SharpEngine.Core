@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.9.2 - 24/11/2024
+[+] SpriteComponent : TintColor<br/>
+[+] Rect : Intersect
+
 ### V 1.9.1 - 21/11/2024
 [+] DebugManager : AddConsoleCommand<br/>
 [#] Fix versions in DebugManager
