@@ -66,6 +66,14 @@ public struct Rect(float x, float y, float width, float height)
     public readonly bool Contains(Vec2 position) =>
         X <= position.X && position.X <= X + Width && Y <= position.Y && position.Y <= Y + Height;
 
+    /// <summary>
+    /// Return if other Rect is in Rect
+    /// </summary>
+    /// <param name="other">Rect</param>
+    /// <returns>If intersect</returns>
+    public readonly bool Intersect(Rect other) =>
+        X <= other.X + other.Width && X + Width >= other.X && Y <= other.Y + other.Height && Y + Height >= other.Y;
+
     /// <inheritdoc />
     public override readonly bool Equals(object? obj)
     {
