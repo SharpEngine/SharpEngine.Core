@@ -2,6 +2,7 @@
 using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
+using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Component;
 
@@ -60,6 +61,11 @@ public class SpriteComponent(
     /// </summary>
     public string Shader { get; set; } = shader;
 
+    /// <summary>
+    /// Tint Color of Sprite
+    /// </summary>
+    public Utils.Color TintColor { get; set; } = Utils.Color.White;
+
     private TransformComponent? _transformComponent;
 
     /// <inheritdoc />
@@ -116,7 +122,7 @@ public class SpriteComponent(
                 finalTexture.Height / 2f * _transformComponent.Scale.Y
             ),
             _transformComponent.Rotation,
-            Utils.Color.White,
+            TintColor,
             InstructionSource.Entity,
             _transformComponent.ZLayer + ZLayerOffset
         );
