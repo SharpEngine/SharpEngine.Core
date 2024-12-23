@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.9.3 - 23/12/2024
+[+] SpriteSheetComponent : AnimationEnded<br>
+[\~] SpriteSheetComponent : currentAnim, internalTimer, currentImage are protected
+
 ### V 1.9.2 - 24/11/2024
 [+] SpriteComponent : TintColor<br/>
 [+] Rect : Intersect
@@ -16,8 +20,8 @@
 [#] Fix versions in DebugManager
 
 ### V 1.9.0 - 08/11/2024
-[+] Manage resizing window
-[.] Raylib-cs : 6.1.1
+[+] Manage resizing window<br/>
+[.] Raylib-cs : 6.1.1<br/>
 [.] ImGui.NET : 1.91.0.1
 
 ### V 1.8.7 - 16/04/2024
