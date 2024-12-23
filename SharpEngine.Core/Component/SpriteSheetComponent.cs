@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
@@ -83,6 +84,10 @@ public class SpriteSheetComponent(
     private string _currentAnim = currentAnim;
     private int _currentImage;
     private float _internalTimer;
+    /// <summary>
+    /// Event triggered when animation ends
+    /// </summary>
+    public EventHandler? AnimationEnded;
 
     private TransformComponent? _transform;
 
@@ -121,6 +126,7 @@ public class SpriteSheetComponent(
         {
             if (_currentImage >= anim.Value.Indices.Count - 1)
                 _currentImage = 0;
+                AnimationEnded?.Invoke(this, EventArgs.Empty);
             else
                 _currentImage++;
             _internalTimer = anim.Value.Timer;
