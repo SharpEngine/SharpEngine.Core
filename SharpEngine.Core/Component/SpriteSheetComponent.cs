@@ -72,22 +72,34 @@ public class SpriteSheetComponent(
     /// </summary>
     public string Anim
     {
-        get => _currentAnim;
+        get => currentAnim;
         set
         {
-            _currentAnim = value;
-            _currentImage = 0;
-            _internalTimer = GetAnimation(_currentAnim)?.Timer ?? 0;
+            currentAnim = value;
+            currentImage = 0;
+            internalTimer = GetAnimation(currentAnim)?.Timer ?? 0;
         }
     }
 
-    private string _currentAnim = currentAnim;
-    private int _currentImage;
-    private float _internalTimer;
     /// <summary>
     /// Event triggered when animation ends
     /// </summary>
     public EventHandler? AnimationEnded;
+
+    /// <summary>
+    /// Current internal animation
+    /// </summary>
+    protected string currentAnim = currentAnim;
+
+    /// <summary>
+    /// Current image index
+    /// </summary>
+    protected int currentImage;
+
+    /// <summary>
+    /// Current internal timer
+    /// </summary>
+    protected float internalTimer;
 
     private TransformComponent? _transform;
 
@@ -117,22 +129,24 @@ public class SpriteSheetComponent(
     /// <inheritdoc />
     public override void Update(float delta)
     {
-        var anim = GetAnimation(_currentAnim);
+        var anim = GetAnimation(currentAnim);
 
         if (anim == null)
             return;
 
-        if (_internalTimer <= 0)
+        if (internalTimer <= 0)
         {
-            if (_currentImage >= anim.Value.Indices.Count - 1)
-                _currentImage = 0;
+            if (currentImage >= anim.Value.Indices.Count - 1)
+            {
                 AnimationEnded?.Invoke(this, EventArgs.Empty);
+                currentImage = 0;
+            }
             else
-                _currentImage++;
-            _internalTimer = anim.Value.Timer;
+                currentImage++;
+            internalTimer = anim.Value.Timer;
         }
 
-        _internalTimer -= delta;
+        internalTimer -= delta;
     }
 
     /// <inheritdoc />
@@ -141,7 +155,7 @@ public class SpriteSheetComponent(
         base.Draw();
 
         var window = Entity?.Scene?.Window;
-        var anim = GetAnimation(_currentAnim);
+        var anim = GetAnimation(currentAnim);
 
         if (
             _transform == null
@@ -158,10 +172,10 @@ public class SpriteSheetComponent(
         SERender.DrawTexture(
             finalTexture,
             new Rect(
-                SpriteSize.X * (anim.Value.Indices[_currentImage] % (finalTexture.Width / SpriteSize.X)),
+                SpriteSize.X * (anim.Value.Indices[currentImage] % (finalTexture.Width / SpriteSize.X)),
                 SpriteSize.Y
                     * (int)(
-                        anim.Value.Indices[_currentImage] / (int)(finalTexture.Width / SpriteSize.X)
+                        anim.Value.Indices[currentImage] / (int)(finalTexture.Width / SpriteSize.X)
                     ),
                 FlipX ? -SpriteSize.X : SpriteSize.X,
                 FlipY ? -SpriteSize.Y : SpriteSize.Y
