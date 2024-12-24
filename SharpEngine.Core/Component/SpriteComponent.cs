@@ -93,7 +93,7 @@ public class SpriteComponent(
         else
         {
             SERender.ShaderMode(
-                window.ShaderManager.GetShader(Shader),
+                window.ShaderManager.GetShader(Shader).GetInternalShader(),
                 InstructionSource.Entity,
                 _transformComponent.ZLayer + ZLayerOffset,
                 () => DrawTexture(finalTexture, position)

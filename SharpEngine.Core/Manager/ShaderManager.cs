@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
 using Raylib_cs;
 using SharpEngine.Core.Math;
@@ -13,12 +14,12 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public class ShaderManager
 {
-    private readonly Dictionary<string, Shader> _shaders = new();
+    private readonly Dictionary<string, SEShader> _shaders = [];
 
     /// <summary>
     /// Gets all Shaders
     /// </summary>
-    public List<Shader> Shaders => new(_shaders.Values);
+    public List<SEShader> Shaders => new(_shaders.Values);
 
     /// <summary>
     /// Checks if a Shader exists
@@ -36,7 +37,7 @@ public class ShaderManager
     {
         if (_shaders.TryGetValue(name, out var shader))
         {
-            Raylib.UnloadShader(shader);
+            Raylib.UnloadShader(shader.GetInternalShader());
             _shaders.Remove(name);
             return;
         }
@@ -105,8 +106,8 @@ public class ShaderManager
     {
         if (_shaders.TryGetValue(name, out var shader))
             Raylib.SetShaderValue(
-                shader,
-                Raylib.GetShaderLocation(shader, uniform),
+                shader.GetInternalShader(),
+                Raylib.GetShaderLocation(shader.GetInternalShader(), uniform),
                 value,
                 uniformType
             );
@@ -119,7 +120,7 @@ public class ShaderManager
     /// </summary>
     /// <param name="name">The name of the Shader</param>
     /// <param name="shader">The Shader to add</param>
-    public void AddShader(string name, Shader shader)
+    public void AddShader(string name, SEShader shader)
     {
         if (!_shaders.TryAdd(name, shader))
             DebugManager.Log(
@@ -136,7 +137,7 @@ public class ShaderManager
     /// <param name="fragmentFile">The path to the fragment shader file</param>
     public void AddShader(string name, string vertexFile, string fragmentFile)
     {
-        if (!_shaders.TryAdd(name, Raylib.LoadShader(vertexFile, fragmentFile)))
+        if (!_shaders.TryAdd(name, new SEShader(File.ReadAllText(vertexFile), File.ReadAllText(fragmentFile))))
             DebugManager.Log(
                 LogLevel.LogWarning,
                 $"SE_SHADERMANAGER: Shader already exists : {name}"
@@ -151,7 +152,7 @@ public class ShaderManager
     /// <param name="fragmentCode">The code of the fragment shader</param>
     public void AddShaderFromCode(string name, string vertexCode, string fragmentCode)
     {
-        if (!_shaders.TryAdd(name, Raylib.LoadShaderFromMemory(vertexCode, fragmentCode)))
+        if (!_shaders.TryAdd(name, new SEShader(vertexCode, fragmentCode)))
             DebugManager.Log(
                 LogLevel.LogWarning,
                 $"SE_SHADERMANAGER: Shader already exists : {name}"
@@ -164,7 +165,7 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <returns>The Shader</returns>
     /// <exception cref="ArgumentException">Thrown if the Shader is not found</exception>
-    public Shader GetShader(string name)
+    public SEShader GetShader(string name)
     {
         if (_shaders.TryGetValue(name, out var shader))
             return shader;
@@ -175,7 +176,7 @@ public class ShaderManager
     internal void Unload()
     {
         foreach (var shader in _shaders.Values)
-            Raylib.UnloadShader(shader);
+            Raylib.UnloadShader(shader.GetInternalShader());
         _shaders.Clear();
     }
 }
