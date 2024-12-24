@@ -76,10 +76,16 @@ public class SpriteSheetComponent(
         set
         {
             currentAnim = value;
-            currentImage = 0;
+            CurrentImage = 0;
             internalTimer = GetAnimation(currentAnim)?.Timer ?? 0;
         }
     }
+
+    /// <summary>
+    /// Current image index
+    /// </summary>
+    public int CurrentImage { get; protected set; }
+
 
     /// <summary>
     /// Event triggered when animation ends
@@ -90,11 +96,6 @@ public class SpriteSheetComponent(
     /// Current internal animation
     /// </summary>
     protected string currentAnim = currentAnim;
-
-    /// <summary>
-    /// Current image index
-    /// </summary>
-    protected int currentImage;
 
     /// <summary>
     /// Current internal timer
@@ -119,6 +120,15 @@ public class SpriteSheetComponent(
         return null;
     }
 
+    /// <summary>
+    /// Replay current animation
+    /// </summary>
+    public void Replay()
+    {
+        CurrentImage = 0;
+        internalTimer = GetAnimation(currentAnim)?.Timer ?? 0;
+    }
+
     /// <inheritdoc />
     public override void Load()
     {
@@ -136,13 +146,19 @@ public class SpriteSheetComponent(
 
         if (internalTimer <= 0)
         {
-            if (currentImage >= anim.Value.Indices.Count - 1)
+            if(CurrentImage == -1)
+                return;
+
+            if (CurrentImage >= anim.Value.Indices.Count - 1)
             {
                 AnimationEnded?.Invoke(this, EventArgs.Empty);
-                currentImage = 0;
+                if (anim.Value.Loop)
+                    CurrentImage = 0;
+                else
+                    CurrentImage = -1;
             }
             else
-                currentImage++;
+                CurrentImage++;
             internalTimer = anim.Value.Timer;
         }
 
@@ -167,6 +183,7 @@ public class SpriteSheetComponent(
         )
             return;
 
+        var currentImage = CurrentImage == -1 ? anim.Value.Indices.Count - 1 : CurrentImage;
         var finalTexture = window.TextureManager.GetTexture(Texture);
         var position = _transform.GetTransformedPosition(Offset);
         SERender.DrawTexture(

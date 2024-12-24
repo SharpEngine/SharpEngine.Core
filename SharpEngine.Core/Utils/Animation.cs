@@ -8,7 +8,8 @@ namespace SharpEngine.Core.Utils;
 /// <param name="name">Animation</param>
 /// <param name="indices">Frame Indices</param>
 /// <param name="timer">Frame Timer</param>
-public readonly struct Animation(string name, List<uint> indices, float timer)
+/// <param name="loop">If Animation Loop</param>
+public struct Animation(string name, List<uint> indices, float timer, bool loop = true)
 {
     /// <summary>
     /// Name of Animation
@@ -18,10 +19,15 @@ public readonly struct Animation(string name, List<uint> indices, float timer)
     /// <summary>
     /// Indices of frames
     /// </summary>
-    public List<uint> Indices { get; } = indices;
+    public List<uint> Indices { get; set; } = indices;
 
     /// <summary>
     /// Timer between frames
     /// </summary>
-    public float Timer { get; } = timer;
+    public float Timer { get; set; } = timer;
+
+    /// <summary>
+    /// Loop Animation
+    /// </summary>
+    public bool Loop { get; set; } = loop;
 }

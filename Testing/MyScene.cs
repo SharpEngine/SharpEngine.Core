@@ -11,8 +11,20 @@ namespace Testing;
 
 public class MyScene : Scene
 {
+    private SpriteSheetComponent _sprite;
+    private TextComponent _text;
+
     public MyScene()
     {
+        var entity = new Entity();
+        entity.AddComponent(new TransformComponent(new Vec2(300)));
+        _sprite = entity.AddComponent(new SpriteSheetComponent("portal", new Vec2(100), [
+            new("animation", Enumerable.Range(0, 10).Select(x => Convert.ToUInt32(x)).ToList(), 0.2f, false)
+        ], "animation"));
+        _sprite.AnimationEnded += (_, _) => Console.WriteLine($"Animation Ended : {_sprite.Anim}");
+        _text = entity.AddComponent(new TextComponent("0", offset: new Vec2(0, 50), fontSize: 25));
+        AddEntity(entity);
+
         var button = new Button(
             new Vec2(100, 100),
             "Hello World",
@@ -36,5 +48,11 @@ public class MyScene : Scene
         {
             Widgets[^1].Displayed = false;
         }
+        if(InputManager.IsKeyPressed(Key.Z))
+        {
+            _sprite.Replay();
+        }
+
+        _text.Text = _sprite.CurrentImage.ToString();
     }
 }
