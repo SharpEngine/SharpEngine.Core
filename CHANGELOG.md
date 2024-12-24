@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.10.0 - 24/12/2024
+[+] SEShader<br>
+[\~] ShaderManager : Use SEShader instead of Shader<br>
+[\~] SpriteComponent : Use SEShader instead of Shader
+
 ### V 1.9.3 - 23/12/2024
 [+] SpriteSheetComponent : AnimationEnded<br>
 [\~] SpriteSheetComponent : currentAnim, internalTimer, currentImage are protected

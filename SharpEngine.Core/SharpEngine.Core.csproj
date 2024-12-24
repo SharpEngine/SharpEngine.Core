@@ -9,7 +9,7 @@
     <Copyright>Copyright (c) LavaPower 2021-2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/SharpEngine/SharpEngine.Core</PackageProjectUrl>
-    <PackageVersion>1.9.3</PackageVersion>
+    <PackageVersion>1.10.0</PackageVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <EnablePackageValisation>true</EnablePackageValisation>
