@@ -16,6 +16,14 @@ public class MyScene : Scene
 
     public MyScene()
     {
+        var movable = new Entity();
+        movable.AddComponent(new TransformComponent(new Vec2(100)));
+        movable.AddComponent(new SpriteSheetComponent("portal", new Vec2(100), [
+            new("animation", Enumerable.Range(0, 10).Select(x => Convert.ToUInt32(x)).ToList(), 0.2f, false)
+        ], "animation"));
+        movable.AddComponent(new ControlComponent());
+        AddEntity(movable);
+
         var entity = new Entity();
         entity.AddComponent(new TransformComponent(new Vec2(300)));
         _sprite = entity.AddComponent(new SpriteSheetComponent("portal", new Vec2(100), [
@@ -23,7 +31,7 @@ public class MyScene : Scene
         ], "animation"));
         _sprite.AnimationEnded += (_, _) => Console.WriteLine($"Animation Ended : {_sprite.Anim}");
         _text = entity.AddComponent(new TextComponent("0", offset: new Vec2(0, 50), fontSize: 25));
-        AddEntity(entity);
+        movable.AddChild(entity);
 
         var button = new Button(
             new Vec2(100, 100),

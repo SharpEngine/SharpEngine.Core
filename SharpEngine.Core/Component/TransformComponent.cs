@@ -19,22 +19,41 @@ public class TransformComponent(
     /// <summary>
     /// Position of Component
     /// </summary>
-    public Vec2 Position { get; set; } = position ?? Vec2.Zero;
+    public Vec2 Position => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position + LocalPosition ?? LocalPosition;
 
     /// <summary>
     /// Scale of Component
     /// </summary>
-    public Vec2 Scale { get; set; } = scale ?? Vec2.One;
+    public Vec2 Scale => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Scale * LocalScale ?? LocalScale;
 
     /// <summary>
     /// Rotation of Component
     /// </summary>
-    public float Rotation { get; set; } = rotation;
+    public float Rotation => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Rotation + LocalRotation ?? LocalRotation;
 
     /// <summary>
     /// ZLayer of Component
     /// </summary>
-    public int ZLayer { get; set; } = zLayer;
+    public int ZLayer => Entity?.Parent?.GetComponentAs<TransformComponent>()?.ZLayer + LocalZLayer ?? LocalZLayer;
+    /// <summary>
+    /// Position of Component
+    /// </summary>
+    public Vec2 LocalPosition { get; set; } = position ?? Vec2.Zero;
+
+    /// <summary>
+    /// Scale of Component
+    /// </summary>
+    public Vec2 LocalScale { get; set; } = scale ?? Vec2.One;
+
+    /// <summary>
+    /// Rotation of Component
+    /// </summary>
+    public float LocalRotation { get; set; } = rotation;
+
+    /// <summary>
+    /// ZLayer of Component
+    /// </summary>
+    public int LocalZLayer { get; set; } = zLayer;
 
     /// <summary>
     /// Get transformed Position

@@ -32,7 +32,7 @@ public class ParticleComponent : Component
             return;
 
         foreach (var emitter in ParticleEmitters)
-            emitter.Update(delta, _transform.GetTransformedPosition());
+            emitter.Update(delta, _transform.Position);
     }
 
     /// <inheritdoc />

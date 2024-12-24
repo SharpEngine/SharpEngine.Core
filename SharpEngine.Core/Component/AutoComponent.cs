@@ -39,13 +39,13 @@ public class AutoComponent(Vec2? direction = null, int rotation = 0) : Component
 
         if (Direction.Length() != 0)
         {
-            _transform.Position = new Vec2(
-                _transform.Position.X + Direction.X * delta,
-                _transform.Position.Y + Direction.Y * delta
+            _transform.LocalPosition = new Vec2(
+                _transform.LocalPosition.X + Direction.X * delta,
+                _transform.LocalPosition.Y + Direction.Y * delta
             );
         }
 
         if (Rotation != 0)
-            _transform.Rotation += Rotation;
+            _transform.LocalRotation += Rotation;
     }
 }

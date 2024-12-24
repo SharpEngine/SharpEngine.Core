@@ -127,27 +127,27 @@ public class ControlComponent : Component
         IsMoving = true;
         Direction = move.Normalized();
         var newPos = new Vec2(
-            _transform.Position.X + Direction.X * Speed * delta,
-            _transform.Position.Y + Direction.Y * Speed * delta
+            _transform.LocalPosition.X + Direction.X * Speed * delta,
+            _transform.LocalPosition.Y + Direction.Y * Speed * delta
         );
         var newPosX = new Vec2(
-            _transform.Position.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
-            _transform.Position.Y
+            _transform.LocalPosition.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
+            _transform.LocalPosition.Y
         );
         var newPosY = new Vec2(
-            _transform.Position.X,
-            _transform.Position.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
+            _transform.LocalPosition.X,
+            _transform.LocalPosition.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
         );
-        if (_basicPhysics == null || _basicPhysics.CanGo(newPos))
-            _transform.Position = newPos;
-        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX))
+        if (_basicPhysics == null || _basicPhysics.CanGo(newPos + Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero))
+            _transform.LocalPosition = newPos;
+        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX + Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero))
         {
-            _transform.Position = newPosX;
+            _transform.LocalPosition = newPosX;
             Direction = new Vec2(Direction.X < 0 ? -1 : 1, 0);
         }
-        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY))
+        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY + Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero))
         {
-            _transform.Position = newPosY;
+            _transform.LocalPosition = newPosY;
             Direction = new Vec2(0, Direction.Y < 0 ? -1 : 1);
         }
         else

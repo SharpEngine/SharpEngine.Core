@@ -35,6 +35,16 @@ public class Entity
     public List<Component.Component> Components { get; } = [];
 
     /// <summary>
+    /// Get All Children of Entity
+    /// </summary>
+    public List<Entity> Children { get; } = [];
+
+    /// <summary>
+    /// Parent of Entity
+    /// </summary>
+    public Entity? Parent { get; set; }
+
+    /// <summary>
     /// Get All Components of one Type
     /// </summary>
     /// <typeparam name="T">Type of Component</typeparam>
@@ -59,6 +69,21 @@ public class Entity
         where T : Scene => (T?)Scene;
 
     /// <summary>
+    /// Add Child Entity
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public T AddChild<T>(T entity)
+        where T : Entity
+    {
+        Children.Add(entity);
+        entity.Parent = this;
+        entity.Scene = Scene;
+        return entity;
+    }
+
+    /// <summary>
     /// Add Component and return it
     /// </summary>
     /// <param name="component">Component which be added</param>
@@ -70,6 +95,17 @@ public class Entity
         Components.Add(component);
         component.Entity = this;
         return component;
+    }
+
+    /// <summary>
+    /// Remove Child
+    /// </summary>
+    /// <param name="entity">Child</param>
+    public void RemoveChild(Entity entity)
+    {
+        entity.Parent = null;
+        entity.Scene = null;
+        Children.Remove(entity);
     }
 
     /// <summary>
@@ -89,6 +125,9 @@ public class Entity
     {
         foreach (var component in Components)
             component.Load();
+
+        foreach (var child in Children)
+            child.Load();
     }
 
     /// <summary>
@@ -98,6 +137,9 @@ public class Entity
     {
         foreach (var component in Components)
             component.Unload();
+
+        foreach (var child in Children)
+            child.Unload();
     }
 
     /// <summary>
@@ -108,6 +150,9 @@ public class Entity
     {
         foreach (var component in Components)
             component.Update(delta);
+
+        foreach (var child in Children)
+            child.Update(delta);
     }
 
     /// <summary>
@@ -117,5 +162,8 @@ public class Entity
     {
         foreach (var component in Components)
             component.Draw();
+
+        foreach (var child in Children)
+            child.Draw();
     }
 }
