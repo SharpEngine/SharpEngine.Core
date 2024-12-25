@@ -7,6 +7,13 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.0.0 - 25/12/2024
+[+] Entity : Children, AddChild, RemoveChild, Parent<br>
+[+] TransformComponent : LocalPosition, LocalRotation, LocalScale, LocalZLayer<br>
+[+] Animation : Loop<br>
+[\~] Animation : Indices, Timer are now modifiable<br>
+[\~] SpriteSheetComponent : CurrentImage is now publicly readable
+
 ### V 1.10.0 - 24/12/2024
 [+] SEShader<br>
 [\~] ShaderManager : Use SEShader instead of Shader<br>

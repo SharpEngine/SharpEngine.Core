@@ -16,13 +16,20 @@ public class MyScene : Scene
 
     public MyScene()
     {
+        var parent = new Entity();
+        parent.AddComponent(new TransformComponent(new Vec2(100, 200)));
+        parent.AddComponent(new SpriteSheetComponent("portal", new Vec2(100), [
+            new("animation", Enumerable.Range(0, 10).Select(x => Convert.ToUInt32(x)).ToList(), 0.2f, true)
+        ], "animation"));
+        AddEntity(parent);
+
         var movable = new Entity();
         movable.AddComponent(new TransformComponent(new Vec2(100)));
         movable.AddComponent(new SpriteSheetComponent("portal", new Vec2(100), [
             new("animation", Enumerable.Range(0, 10).Select(x => Convert.ToUInt32(x)).ToList(), 0.2f, false)
         ], "animation"));
         movable.AddComponent(new ControlComponent());
-        AddEntity(movable);
+        parent.AddChild(movable);
 
         var entity = new Entity();
         entity.AddComponent(new TransformComponent(new Vec2(300)));
