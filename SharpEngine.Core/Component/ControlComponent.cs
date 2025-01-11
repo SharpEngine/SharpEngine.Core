@@ -162,6 +162,7 @@ public class ControlComponent : Component
             ControlType.LeftRight => GetLeftRightMovement(),
             ControlType.UpDown => GetUpDownMovement(),
             ControlType.FourDirection => GetFourDirectionMovement(),
+            ControlType.ClassicJump => Vec2.Zero,
             _ => throw new ArgumentException("Unknown Control Type")
         };
     }
