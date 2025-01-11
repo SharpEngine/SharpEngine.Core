@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.0.1 - 11/01/2025
+[#] ControlComponent : Fix using ClassicJump Control Type
+
 ### V 2.0.0 - 25/12/2024
 [+] Entity : Children, AddChild, RemoveChild, Parent<br>
 [+] TransformComponent : LocalPosition, LocalRotation, LocalScale, LocalZLayer<br>
