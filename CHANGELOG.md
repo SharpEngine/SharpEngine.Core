@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.0.2 - 06/02/2025
+[.] Raylib-cs : 7.0.1<br/>
+[.] ImGui.NET : 1.91.6.1
+
 ### V 2.0.1 - 11/01/2025
 [#] ControlComponent : Fix using ClassicJump Control Type
 
