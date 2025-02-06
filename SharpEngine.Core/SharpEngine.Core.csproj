@@ -20,8 +20,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ImGui.NET" Version="1.91.0.1" />
-    <PackageReference Include="Raylib-cs" Version="6.1.1" />
+    <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
+    <PackageReference Include="Raylib-cs" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../CHANGELOG.md" Pack="true" PackagePath="\" />

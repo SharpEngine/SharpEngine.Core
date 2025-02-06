@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using ImGuiNET;
 using Raylib_cs;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
@@ -355,6 +356,8 @@ public class Window
 
         CurrentScene.OpenScene();
 
+        var firstFrame = true;
+
         while (!Raylib.WindowShouldClose() && !_closeWindow)
         {
             #region Update Input and ScreenSize
@@ -372,6 +375,14 @@ public class Window
             #region Update
 
             var delta = Raylib.GetFrameTime();
+
+            // This is a hack to fix ImGui assertions on the first frame
+            if (firstFrame)
+            {
+                delta = 0.000001f;
+                ImGui.Render();
+                firstFrame = false;
+            }
 
             SeImGui.Update(delta);
 
