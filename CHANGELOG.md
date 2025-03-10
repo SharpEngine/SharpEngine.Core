@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.0.3 - 10/03/2025
+[+] Window : Constructor parameters redirectLogs
+
 ### V 2.0.2 - 06/02/2025
 [.] Raylib-cs : 7.0.1<br/>
 [.] ImGui.NET : 1.91.6.1
