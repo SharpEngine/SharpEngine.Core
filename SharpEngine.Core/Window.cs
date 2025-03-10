@@ -210,6 +210,7 @@ public class Window
     /// <param name="debug">Debug Mode (false)</param>
     /// <param name="consoleLog">Log in Console</param>
     /// <param name="fileLog">Log in File (log.txt)</param>
+    /// <param name="redirectLogs">Redirect Logs</param>
     public Window(
         int width,
         int height,
@@ -218,9 +219,10 @@ public class Window
         int? fps = 60,
         bool debug = false,
         bool consoleLog = true,
-        bool fileLog = false
+        bool fileLog = false,
+        bool redirectLogs = true
     )
-        : this(new Vec2(width, height), title, backgroundColor, fps, debug, consoleLog, fileLog) { }
+        : this(new Vec2(width, height), title, backgroundColor, fps, debug, consoleLog, fileLog, redirectLogs) { }
 
     /// <summary>
     /// Create and Init Window
@@ -232,6 +234,7 @@ public class Window
     /// <param name="debug">Debug Mode (false)</param>
     /// <param name="consoleLog">Log in Console</param>
     /// <param name="fileLog">Log in File (log.txt)</param>
+    /// <param name="redirectLogs">Redirect Logs</param>
     public Window(
         Vec2 screenSize,
         string title,
@@ -239,7 +242,8 @@ public class Window
         int? fps = 60,
         bool debug = false,
         bool consoleLog = true,
-        bool fileLog = false
+        bool fileLog = false,
+        bool redirectLogs = true
     )
     {
         InputManager.InternalWindow = this;
@@ -255,9 +259,12 @@ public class Window
         if (FileLog && File.Exists("log.txt"))
             File.Delete("log.txt");
 
-        unsafe
+        if (redirectLogs)
         {
-            Raylib.SetTraceLogCallback(&LogCustom);
+            unsafe
+            {
+                Raylib.SetTraceLogCallback(&LogCustom);
+            }
         }
 
         Raylib.InitWindow((int)screenSize.X, (int)screenSize.Y, title);
