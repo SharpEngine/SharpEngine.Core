@@ -7,6 +7,7 @@ using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils.EventArgs;
 using MouseButton = SharpEngine.Core.Input.MouseButton;
 using Color = SharpEngine.Core.Utils.Color;
+using Microsoft.Win32.SafeHandles;
 
 namespace SharpEngine.Core.Widget;
 
@@ -18,6 +19,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="font">Multi Line Edit Font ("")</param>
 /// <param name="size">Multi Line Edit Size (Vec2(500, 200))</param>
 /// <param name="fontSize">Multi Line Edit Font Size (null)</param>
+/// <param name="secret">If Multi Line Edit is Secret (false)</param>
 /// <param name="zLayer">Z Layer</param>
 public class MultiLineInput(
     Vec2 position,
@@ -25,8 +27,9 @@ public class MultiLineInput(
     string font = "",
     Vec2? size = null,
     int? fontSize = null,
+    bool secret = false,
     int zLayer = 0
-) : LineInput(position, text, font, size, fontSize, zLayer)
+) : LineInput(position, text, font, size, fontSize, secret, zLayer)
 {
     /// <inheritdoc />
     public override void Update(float delta)
@@ -112,18 +115,19 @@ public class MultiLineInput(
             );
     }
 
-    private static void DrawLines(Font finalFont, int finalFontSize, Vec2 finalPosition, string[] lines, float offsetX, float offsetY)
+    private void DrawLines(Font finalFont, int finalFontSize, Vec2 finalPosition, string[] lines, float offsetX, float offsetY)
     {
         for (var i = 0; i < lines.Length; i++)
         {
-            var lineSize = Raylib.MeasureTextEx(finalFont, lines[i], finalFontSize, 2);
+            var text = Secret ? new string('*', lines[i].Length) : lines[i];
+            var lineSize = Raylib.MeasureTextEx(finalFont, text, finalFontSize, 2);
             var pos = new Vec2(
                 finalPosition.X - (offsetX > 0 ? offsetX : 0),
                 finalPosition.Y + i * lineSize.Y - (offsetY > 0 ? offsetY : 0)
             );
             SERender.DrawText(
                 finalFont,
-                lines[i],
+                text,
                 pos,
                 finalFontSize,
                 2,

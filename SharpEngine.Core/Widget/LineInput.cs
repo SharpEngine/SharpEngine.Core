@@ -18,6 +18,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="font">Line Edit Font ("")</param>
 /// <param name="size">Line Edit Size (Vec2(300, 50))</param>
 /// <param name="fontSize">Line Edit Font Size (null)</param>
+/// <param name="secret">If Line Edit is Secret (false)</param>
 /// <param name="zLayer">Z Layer</param>
 public class LineInput(
     Vec2 position,
@@ -25,6 +26,7 @@ public class LineInput(
     string font = "",
     Vec2? size = null,
     int? fontSize = null,
+    bool secret = false,
     int zLayer = 0
 ) : Widget(position, zLayer)
 {
@@ -52,6 +54,11 @@ public class LineInput(
     /// Font Size of Line Input (or null)
     /// </summary>
     public int? FontSize { get; set; } = fontSize;
+
+    /// <summary>
+    /// If Line Input is Secret
+    /// </summary>
+    public bool Secret { get; set; } = secret;
 
     /// <summary>
     /// Event trigger when value is changed
@@ -145,11 +152,12 @@ public class LineInput(
         if (Font.Length <= 0 || finalFont == null)
             return;
 
+        var text = Secret ? new string('*', Text.Length) : Text;
         var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
-        var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
+        var textSize = Raylib.MeasureTextEx(finalFont.Value, text, finalFontSize, 2);
         var offset = textSize.X - (Size.X - 20);
 
-        if (Text.Length > 0)
+        if (text.Length > 0)
         {
             var finalPosition = new Vec2(RealPosition.X - Size.X / 2 + 4, RealPosition.Y - textSize.Y / 2);
 
@@ -164,7 +172,7 @@ public class LineInput(
                 {
                     SERender.DrawText(
                         finalFont.Value,
-                        Text,
+                        text,
                         new Vec2(finalPosition.X - (offset > 0 ? offset : 0), finalPosition.Y),
                         finalFontSize,
                         2,
