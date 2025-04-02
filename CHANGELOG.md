@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.0.4 - 02/04/2025
+[+] LineInput / MultiLineInput : Secret
+
 ### V 2.0.3 - 10/03/2025
 [+] Window : Constructor parameters redirectLogs
 
