@@ -6,7 +6,7 @@ Core Package for SharpEngine - C# 2D Game Engine
 
 ## Installation, Download, Usage
 
-*Coming Soon*
+See Wiki
 
 ## Dependencies
 
