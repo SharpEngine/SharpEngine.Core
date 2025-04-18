@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.1.0 - 18/04/2025
+[\~] TextureButton : Remove black background
+
 ### V 2.0.4 - 02/04/2025
 [+] LineInput / MultiLineInput : Secret
 

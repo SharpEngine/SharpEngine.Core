@@ -33,7 +33,7 @@ public static class DebugManager
     {
         { "Raylib-cs", "7.0.1" },
         { "ImGui.NET", "1.91.6.1" },
-        { "SharpEngine.Core", "2.0.4" }
+        { "SharpEngine.Core", "2.1.0" }
     };
 
     /// <summary>
