@@ -83,15 +83,6 @@ public class TextureButton(
                 ZLayer
             );
 
-        SERender.DrawRectangle(
-            (int)(RealPosition.X - Size.X / 2),
-            (int)(RealPosition.Y - Size.Y / 2),
-            (int)Size.X,
-            (int)Size.Y,
-            Color.Black,
-            InstructionSource.UI,
-            ZLayer + 0.00001f
-        );
         SERender.DrawTexture(
             finalTexture.Value,
             new Rect(0, 0, finalTexture.Value.Width, finalTexture.Value.Height),
