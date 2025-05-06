@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.1.1 - 06/05/2025
+[\~] TextureButton : Allow use empty text
+
 ### V 2.1.0 - 18/04/2025
 [\~] TextureButton : Remove black background
 
