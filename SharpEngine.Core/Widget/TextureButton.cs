@@ -21,9 +21,9 @@ namespace SharpEngine.Core.Widget;
 /// <param name="zLayer">Z Layer</param>
 public class TextureButton(
     Vec2 position,
-    string text = "",
-    string font = "",
     string texture = "",
+    string text = "",
+    string font = "RAYLIB_DEFAULT",
     Vec2? size = null,
     Color? fontColor = null,
     int? fontSize = null,
@@ -65,7 +65,6 @@ public class TextureButton(
 
         if (
             Scene == null
-            || Text.Length <= 0
             || Font.Length <= 0
             || finalFont == null
             || finalTexture == null
@@ -96,18 +95,19 @@ public class TextureButton(
 
         var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
         var textSize = Raylib.MeasureTextEx(finalFont.Value, Text, finalFontSize, 2);
-        SERender.DrawText(
-            finalFont.Value,
-            Text,
-            RealPosition,
-            textSize / 2,
-            0,
-            finalFontSize,
-            2,
-            FontColor,
-            InstructionSource.UI,
-            ZLayer + 0.00003f
-        );
+        if(Text.Length > 0)
+            SERender.DrawText(
+                finalFont.Value,
+                Text,
+                RealPosition,
+                textSize / 2,
+                0,
+                finalFontSize,
+                2,
+                FontColor,
+                InstructionSource.UI,
+                ZLayer + 0.00003f
+            );
 
         if (_state == ButtonState.Down || !Active)
             SERender.DrawRectangle(

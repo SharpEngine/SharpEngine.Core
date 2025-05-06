@@ -17,6 +17,8 @@ public class MyScene : Scene
     public MyScene()
     {
         AddWidget(new LineInput(new Vec2(500), font: "RAYLIB_DEFAULT", fontSize: 25));
+
+        AddWidget(new TextureButton(new Vec2(200), texture: "portal"));
     }
 
     public override void Update(float deltaTime)
