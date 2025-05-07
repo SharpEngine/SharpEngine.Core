@@ -7,6 +7,15 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.2.0 - 07/05/2025
+[\~] IDataTable / JsonDataTable : Rework complete with Add, Remove and Get<br/>
+[\~] SERender : Allow float on many render functions<br/>
+[\~] SERender : Better manage of types<br/>
+[#] LineInput : Caret is hide when text is empty<br/>
+[#] MultiLineInput : Caret is hide when text is empty<br/>
+[#] MultiLineInput : Caret is render outside input frame<br/>
+[#] MultiLineInput : Fix Y Offset with empty last line (after return line)
+
 ### V 2.1.1 - 06/05/2025
 [\~] TextureButton : Allow use empty text
 
