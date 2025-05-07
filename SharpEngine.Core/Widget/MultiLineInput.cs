@@ -93,10 +93,10 @@ public class MultiLineInput(
         var offsetY = realTextSize.Y * lines.Length - (Size.Y - 8);
 
         SERender.ScissorMode(
-            (int)finalPosition.X,
-            (int)finalPosition.Y,
-            (int)Size.X - 8,
-            (int)Size.Y - 8,
+            finalPosition.X,
+            finalPosition.Y,
+            Size.X - 8,
+            Size.Y - 8,
             InstructionSource.UI,
             ZLayer + 0.00002f,
             () =>
