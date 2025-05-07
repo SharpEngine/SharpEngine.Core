@@ -78,12 +78,13 @@ public class MultiLineInput(
 
         var finalFont = Scene?.Window?.FontManager.GetFont(Font);
 
-        if (Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
+        if (Font.Length <= 0 || finalFont == null)
             return;
 
         var finalFontSize = FontSize ?? finalFont.Value.BaseSize;
 
         var textSize = Raylib.MeasureTextEx(finalFont.Value, Text.Split("\n")[^1], finalFontSize, 2);
+        var realTextSize = Raylib.MeasureTextEx(finalFont.Value, "A", finalFontSize, 2);
 
         var finalPosition = new Vec2(RealPosition.X - Size.X / 2 + 4, RealPosition.Y - Size.Y / 2 + 4);
 
@@ -98,21 +99,25 @@ public class MultiLineInput(
             (int)Size.Y - 8,
             InstructionSource.UI,
             ZLayer + 0.00002f,
-            () => DrawLines(finalFont!.Value, finalFontSize, finalPosition, lines, offsetX, offsetY)
+            () =>
+            {
+                DrawLines(finalFont!.Value, finalFontSize, finalPosition, lines, offsetX, offsetY);
+
+                if (Focused)
+                {
+                    SERender.DrawRectangle(
+                        finalPosition.X + 6 + textSize.X - (offsetX > 0 ? offsetX : 0),
+                        finalPosition.Y + realTextSize.Y * (lines.Length == 0 ? 1 : lines.Length - 1) - (offsetY > 0 ? offsetY : 0),
+                        5,
+                        realTextSize.Y,
+                        Color.Black,
+                        InstructionSource.UI,
+                        ZLayer + 0.00003f
+                    );
+                }
+            }
         );
 
-        if (Focused)
-            SERender.DrawRectangle(
-                (int)(finalPosition.X + 6 + textSize.X - (offsetX > 0 ? offsetX : 0)),
-                (int)(
-                    finalPosition.Y + textSize.Y * (lines.Length - 1) - (offsetY > 0 ? offsetY : 0)
-                ),
-                5,
-                (int)textSize.Y,
-                Color.Black,
-                InstructionSource.UI,
-                ZLayer + 0.00003f
-            );
     }
 
     private void DrawLines(Font finalFont, int finalFontSize, Vec2 finalPosition, string[] lines, float offsetX, float offsetY)
