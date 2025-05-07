@@ -11,12 +11,12 @@ namespace SharpEngine.Core.Manager;
 /// </summary>
 public static class DataTableManager
 {
-    private static readonly Dictionary<string, IDataTable> DataTables = [];
+    private static readonly Dictionary<string, object> DataTables = [];
 
     /// <summary>
     /// List of known data tables
     /// </summary>
-    public static List<string> DataTableNames => new(DataTables.Keys);
+    public static List<string> DataTableNames => [.. DataTables.Keys];
 
     /// <summary>
     /// Checks if a data table with the specified name exists.
@@ -48,7 +48,7 @@ public static class DataTableManager
     /// </summary>
     /// <param name="name">Name of the data table</param>
     /// <param name="dataTable">Data table to add</param>
-    public static void AddDataTable(string name, IDataTable dataTable)
+    public static void AddDataTable<T>(string name, IDataTable<T> dataTable) where T : class
     {
         if (!DataTables.TryAdd(name, dataTable))
             DebugManager.Log(
@@ -58,17 +58,16 @@ public static class DataTableManager
     }
 
     /// <summary>
-    /// Get an object from the specified data table.
+    /// Get specified data table.
     /// </summary>
     /// <typeparam name="T">Type of the object</typeparam>
     /// <param name="dataTable">Name of the data table</param>
-    /// <param name="predicate">Predicate to filter the object</param>
-    /// <returns>The object from the data table</returns>
+    /// <returns>The data table</returns>
     /// <exception cref="ArgumentException">Thrown if the data table is not found</exception>
-    public static T? Get<T>(string dataTable, Predicate<dynamic?> predicate)
+    public static IDataTable<T> Get<T>(string dataTable) where T : class
     {
         if (DataTables.TryGetValue(dataTable, out var dTable))
-            return dTable.Get(predicate);
+            return (IDataTable<T>)dTable;
         DebugManager.Log(
             LogLevel.LogError,
             $"SE_DATATABLEMANAGER: DataTable not found : {dataTable}"
