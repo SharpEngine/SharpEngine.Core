@@ -8,6 +8,7 @@
 [.] Others
 
 ### V 2.2.0 - 07/05/2025
+[\~] DataTableManager : Get will now get DataTable directly, not an object<br/>
 [\~] IDataTable / JsonDataTable : Rework complete with Add, Remove and Get<br/>
 [\~] SERender : Allow float on many render functions<br/>
 [\~] SERender : Better manage of types<br/>
