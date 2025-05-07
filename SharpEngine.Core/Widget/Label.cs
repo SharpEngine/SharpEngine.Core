@@ -102,9 +102,9 @@ public class Label(
 
             if (Style.HasFlag(LabelStyles.Strike))
                 SERender.DrawRectangle(
-                    (int)finalPosition.X,
-                    (int)(finalPosition.Y + lineSize.Y / 2),
-                    (int)lineSize.X,
+                    finalPosition.X,
+                    (finalPosition.Y + lineSize.Y / 2),
+                    lineSize.X,
                     2,
                     Color.Black,
                     InstructionSource.UI,
@@ -112,9 +112,9 @@ public class Label(
                 );
             if (Style.HasFlag(LabelStyles.Underline))
                 SERender.DrawRectangle(
-                    (int)finalPosition.X,
-                    (int)(finalPosition.Y + lineSize.Y),
-                    (int)lineSize.X,
+                    finalPosition.X,
+                    (finalPosition.Y + lineSize.Y),
+                    lineSize.X,
                     2,
                     Color.Black,
                     InstructionSource.UI,

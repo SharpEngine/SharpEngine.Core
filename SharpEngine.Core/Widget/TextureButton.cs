@@ -73,10 +73,10 @@ public class TextureButton(
 
         if (_state == ButtonState.Hover && Active)
             SERender.DrawRectangle(
-                (int)(RealPosition.X - (Size.X + 4) / 2),
-                (int)(RealPosition.Y - (Size.Y + 4) / 2),
-                (int)(Size.X + 4),
-                (int)(Size.Y + 4),
+                (RealPosition.X - (Size.X + 4) / 2),
+                (RealPosition.Y - (Size.Y + 4) / 2),
+                (Size.X + 4),
+                (Size.Y + 4),
                 Color.White,
                 InstructionSource.UI,
                 ZLayer
@@ -111,10 +111,10 @@ public class TextureButton(
 
         if (_state == ButtonState.Down || !Active)
             SERender.DrawRectangle(
-                (int)(RealPosition.X - Size.X / 2),
-                (int)(RealPosition.Y - Size.Y / 2),
-                (int)Size.X,
-                (int)Size.Y,
+                (RealPosition.X - Size.X / 2),
+                (RealPosition.Y - Size.Y / 2),
+                Size.X,
+                Size.Y,
                 new Color(0, 0, 0, 128),
                 InstructionSource.UI,
                 ZLayer + 0.00004f

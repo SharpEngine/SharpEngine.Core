@@ -90,10 +90,10 @@ public class ScrollFrame(
         );
 
         SERender.ScissorMode(
-            (int)(RealPosition.X - Size.X / 2),
-            (int)(RealPosition.Y - Size.Y / 2),
-            (int)Size.X,
-            (int)Size.Y,
+            (RealPosition.X - Size.X / 2),
+            (RealPosition.Y - Size.Y / 2),
+            Size.X,
+            Size.Y,
             InstructionSource.UI,
             ZLayer + 0.00002f,
             () =>
