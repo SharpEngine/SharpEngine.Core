@@ -162,10 +162,10 @@ public class LineInput(
             var finalPosition = new Vec2(RealPosition.X - Size.X / 2 + 4, RealPosition.Y - textSize.Y / 2);
 
             SERender.ScissorMode(
-                (int)finalPosition.X,
-                (int)finalPosition.Y,
-                (int)Size.X - 8,
-                (int)textSize.Y,
+                finalPosition.X,
+                finalPosition.Y,
+                Size.X - 8,
+                textSize.Y,
                 InstructionSource.UI,
                 ZLayer + 0.00002f,
                 () =>
@@ -185,14 +185,17 @@ public class LineInput(
         }
 
         if (Focused)
+        {
+            var potentielSize = Raylib.MeasureTextEx(finalFont.Value, "A", finalFontSize, 2);
             SERender.DrawRectangle(
-                (int)(RealPosition.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
-                (int)(RealPosition.Y - textSize.Y / 2 + 4),
-                5,
-                (int)textSize.Y - 8,
-                Color.Black,
-                InstructionSource.UI,
-                ZLayer + 0.00003f
-            );
+                    (RealPosition.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
+                    (RealPosition.Y - potentielSize.Y / 2 + 2),
+                    5,
+                    potentielSize.Y - 4,
+                    Color.Black,
+                    InstructionSource.UI,
+                    ZLayer + 0.00003f
+                );
+        }
     }
 }
