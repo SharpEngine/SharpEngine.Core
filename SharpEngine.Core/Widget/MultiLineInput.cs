@@ -90,7 +90,7 @@ public class MultiLineInput(
 
         var lines = Text.Split("\n");
         var offsetX = textSize.X - (Size.X - 20);
-        var offsetY = textSize.Y * lines.Length - (Size.Y - 8);
+        var offsetY = realTextSize.Y * lines.Length - (Size.Y - 8);
 
         SERender.ScissorMode(
             (int)finalPosition.X,
