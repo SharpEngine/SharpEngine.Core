@@ -7,7 +7,8 @@ namespace SharpEngine.Core.Utils;
 /// </summary>
 /// <param name="startTime">Time of Timer</param>
 /// <param name="endFunction">Function which be called at the end</param>
-public class Timer(float startTime, Action endFunction)
+/// <param name="loop">True if timer will loop</param>
+public class Timer(float startTime, Action endFunction, bool loop = false)
 {
     /// <summary>
     /// Start Time of Timer
@@ -25,6 +26,11 @@ public class Timer(float startTime, Action endFunction)
     public Action EndFunction { get; set; } = endFunction;
 
     /// <summary>
+    /// True if timer will loop
+    /// </summary>
+    public bool Loop { get; set; } = loop;
+
+    /// <summary>
     /// Update Timer with Time
     /// </summary>
     /// <param name="delta">Passed Time</param>
@@ -35,7 +41,10 @@ public class Timer(float startTime, Action endFunction)
         if (CurrentTime <= 0)
         {
             EndFunction();
-            return true;
+            if (Loop)
+                CurrentTime = StartTime;
+            else
+                return true;
         }
 
         return false;
