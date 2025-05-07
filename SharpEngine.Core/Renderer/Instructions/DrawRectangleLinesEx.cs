@@ -1,5 +1,6 @@
 ﻿using Raylib_cs;
 using SharpEngine.Core.Math;
+using System;
 
 namespace SharpEngine.Core.Renderer.Instructions;
 
@@ -13,7 +14,7 @@ internal record class DrawRectangleLinesEx : Instruction
         base.Execute();
         Raylib.DrawRectangleLinesEx(
             (Rect)Parameters[0],
-            (int)Parameters[1],
+            Convert.ToInt32(Parameters[1]),
             (Utils.Color)Parameters[2]
         );
     }

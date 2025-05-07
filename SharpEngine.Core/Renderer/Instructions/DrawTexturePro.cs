@@ -1,5 +1,6 @@
 ﻿using Raylib_cs;
 using SharpEngine.Core.Math;
+using System;
 
 namespace SharpEngine.Core.Renderer.Instructions;
 
@@ -16,7 +17,7 @@ internal record class DrawTexturePro : Instruction
             (Rect)Parameters[1],
             (Rect)Parameters[2],
             (Vec2)Parameters[3],
-            (float)Parameters[4],
+            Convert.ToSingle(Parameters[4]),
             (Utils.Color)Parameters[5]
         );
     }

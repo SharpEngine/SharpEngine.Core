@@ -1,5 +1,6 @@
 ﻿using Raylib_cs;
 using SharpEngine.Core.Math;
+using System;
 
 namespace SharpEngine.Core.Renderer.Instructions;
 
@@ -13,12 +14,12 @@ internal record class DrawTextPro : Instruction
         base.Execute();
         Raylib.DrawTextPro(
             (Font)Parameters[0],
-            (string)Parameters[1],
+            Convert.ToString(Parameters[1]),
             (Vec2)Parameters[2],
             (Vec2)Parameters[3],
-            (float)Parameters[4],
-            (int)Parameters[5],
-            (int)Parameters[6],
+            Convert.ToSingle(Parameters[4]),
+            Convert.ToInt32(Parameters[5]),
+            Convert.ToInt32(Parameters[6]),
             (Utils.Color)Parameters[7]
         );
     }

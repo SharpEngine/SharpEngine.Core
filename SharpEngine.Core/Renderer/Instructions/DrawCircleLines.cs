@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System;
 
 namespace SharpEngine.Core.Renderer.Instructions;
 
@@ -11,9 +12,9 @@ internal record class DrawCircleLines : Instruction
     {
         base.Execute();
         Raylib.DrawCircleLines(
-            (int)Parameters[0],
-            (int)Parameters[1],
-            (float)Parameters[2],
+            Convert.ToInt32(Parameters[0]),
+            Convert.ToInt32(Parameters[1]),
+            Convert.ToSingle(Parameters[2]),
             (Utils.Color)Parameters[3]
         );
     }

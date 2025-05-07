@@ -123,10 +123,10 @@ public static class SERender
     /// <param name="zLayer">Z Layer</param>
     /// <param name="scissorAction">Function which render in scissor mode</param>
     public static void ScissorMode(
-        int posX,
-        int posY,
-        int width,
-        int height,
+        float posX,
+        float posY,
+        float width,
+        float height,
         InstructionSource source,
         float zLayer,
         Action scissorAction
@@ -185,10 +185,10 @@ public static class SERender
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
     public static void DrawRectangle(
-        int posX,
-        int posY,
-        int width,
-        int height,
+        float posX,
+        float posY,
+        float width,
+        float height,
         Utils.Color color,
         InstructionSource source,
         float zLayer
@@ -214,7 +214,7 @@ public static class SERender
     /// <param name="zLayer">Z Layer</param>
     public static void DrawRectangleLines(
         Rect rect,
-        int borderSize,
+        float borderSize,
         Utils.Color borderColor,
         InstructionSource source,
         float zLayer
@@ -240,8 +240,8 @@ public static class SERender
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
     public static void DrawCircleLines(
-        int posX,
-        int posY,
+        float posX,
+        float posY,
         float radius,
         Utils.Color borderColor,
         InstructionSource source,
@@ -309,8 +309,8 @@ public static class SERender
         Vec2 position,
         Vec2 origin,
         float rotation,
-        int fontSize,
-        int spacing,
+        float fontSize,
+        float spacing,
         Utils.Color color,
         InstructionSource source,
         float zLayer
@@ -351,8 +351,8 @@ public static class SERender
         Font font,
         string text,
         Vec2 position,
-        int fontSize,
-        int spacing,
+        float fontSize,
+        float spacing,
         Utils.Color color,
         InstructionSource source,
         float zLayer
