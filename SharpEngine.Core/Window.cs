@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -294,6 +295,41 @@ public class Window
     /// </summary>
     /// <param name="path">Path of saved screenshot</param>
     public static void TakeScreenshot(string path) => Raylib.TakeScreenshot(path);
+
+    /// <summary>
+    /// Open URL in default browser
+    /// </summary>
+    /// <param name="url">Url</param>
+    public static void OpenUrl(string url)
+    {
+        try
+        {
+            Process.Start(url);
+        }
+        catch
+        {
+            try
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugManager.Log(LogLevel.LogError, $"SE: Failed to open URL {url} - {ex.Message}");
+            }
+        }
+    }
 
     /// <summary>
     /// Set master volume
