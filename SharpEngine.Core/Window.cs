@@ -338,6 +338,17 @@ public class Window
     public static void SetMasterVolume(float volume) => Raylib.SetMasterVolume(volume);
 
     /// <summary>
+    /// Set Icon of Window
+    /// </summary>
+    /// <param name="path">Image Path</param>
+    public void SetIcon(string path)
+    {
+        var icon = Raylib.LoadImage(path);
+        Raylib.SetWindowIcon(icon);
+        Raylib.UnloadImage(icon);
+    }
+
+    /// <summary>
     /// Add Scene to Window and Set Current Scene to it
     /// </summary>
     /// <param name="scene">Scene which be added</param>
