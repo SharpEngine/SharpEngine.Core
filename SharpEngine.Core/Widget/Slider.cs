@@ -15,14 +15,16 @@ namespace SharpEngine.Core.Widget;
 /// <param name="size">Size (Vec2(150, 60))</param>
 /// <param name="color">Color (Color.Green)</param>
 /// <param name="value">Value (0)</param>
+/// <param name="horizontal">Horizontal (true)</param>
 /// <param name="zLayer">ZLayer (0)</param>
 public class Slider(
     Vec2 position,
     Vec2? size = null,
     Color? color = null,
     float value = 0,
+    bool horizontal = true,
     int zLayer = 0
-    ) : ProgressBar(position, size, color, value, zLayer)
+    ) : ProgressBar(position, size, color, value, horizontal, zLayer)
 {
     /// <summary>
     /// Event trigger when value is changed
@@ -43,8 +45,8 @@ public class Slider(
             if (!InputManager.IsMouseInRectangle(new Rect(finalPosition, Size)))
                 return;
 
-            var barSize = Size.X;
-            var point = InputManager.GetMousePosition().X - finalPosition.X;
+            var barSize = Horizontal ? Size.X : Size.Y;
+            var point = Horizontal ? InputManager.GetMousePosition().X - finalPosition.X : InputManager.GetMousePosition().Y - finalPosition.Y;
             var temp = Value;
             Value = (int)System.Math.Round(point * 100 / barSize, MidpointRounding.AwayFromZero);
             if (System.Math.Abs(temp - Value) > 0.001f)

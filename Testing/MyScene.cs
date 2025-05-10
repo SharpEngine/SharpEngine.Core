@@ -17,32 +17,9 @@ public class MyScene : Scene
 
     public MyScene()
     {
-        AddWidget(new LineInput(new Vec2(500), font: "RAYLIB_DEFAULT", fontSize: 25));
-        AddWidget(new MultiLineInput(new Vec2(500, 200), font: "RAYLIB_DEFAULT", fontSize: 25));
-
-        AddWidget(new TextureButton(new Vec2(200), texture: "portal"));
-    }
-
-    public override void Update(float deltaTime)
-    {
-        base.Update(deltaTime);
-
-        if (InputManager.IsKeyPressed(Key.A))
-        {
-            DebugManager.Log(LogLevel.LogInfo, ((LineInput)Widgets[0]).Text);
-        }
-
-        if(InputManager.IsKeyPressed(Key.Z))
-        {
-            ((LineInput)Widgets[0]).Secret = !((LineInput)Widgets[0]).Secret;
-        }
-    }
-
-    public override void Draw()
-    {
-        base.Draw();
-
-        SERender.DrawRectangle(500, 5, 98, 123, Color.Black, InstructionSource.UI, 8);
-        SERender.DrawRectangle(5.4f, 5.1f, 98, 123f, Color.Red, InstructionSource.UI, 8);
+        AddWidget(new ProgressBar(new Vec2(600, 100), new Vec2(500, 100), Color.Green, 48));
+        AddWidget(new ProgressBar(new Vec2(400), new Vec2(50, 200), Color.Green, 48, false));
+        AddWidget(new Slider(new Vec2(600, 800), new Vec2(500, 100), Color.Green, 48));
+        AddWidget(new Slider(new Vec2(800, 400), new Vec2(50, 200), Color.Green, 48, false));
     }
 }

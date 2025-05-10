@@ -31,18 +31,25 @@ public class ProgressBar : Widget
     public Color Color { get; set; }
 
     /// <summary>
+    /// If Bar is Horizontal
+    /// </summary>
+    public bool Horizontal { get; set; } = true;
+
+    /// <summary>
     /// Create ProgressBar
     /// </summary>
     /// <param name="position">Position</param>
     /// <param name="size">Size (Vec2(150, 60))</param>
     /// <param name="color">Color (Color.Green)</param>
     /// <param name="value">Value (0)</param>
+    /// <param name="horizontal">Horizontal (true)</param>
     /// <param name="zLayer">ZLayer (0)</param>
     public ProgressBar(
         Vec2 position,
         Vec2? size = null,
         Color? color = null,
         float value = 0,
+        bool horizontal = true,
         int zLayer = 0
     )
         : base(position, zLayer)
@@ -50,6 +57,7 @@ public class ProgressBar : Widget
         Size = size ?? new Vec2(150, 60);
         Color = color ?? Color.Green;
         Value = value;
+        Horizontal = horizontal;
     }
 
     /// <inheritdoc />
@@ -77,7 +85,7 @@ public class ProgressBar : Widget
             ZLayer + 0.00001f
         );
         SERender.DrawRectangle(
-            new Rect(RealPosition, (Size.X - 8) * Value / 100, Size.Y - 8),
+            Horizontal ? new Rect(RealPosition, (Size.X - 8) * Value / 100, Size.Y - 8) : new Rect(RealPosition, Size.X - 8, (Size.Y - 8) * Value / 100),
             (Size - 8) / 2,
             0,
             Color,
