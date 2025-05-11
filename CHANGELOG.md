@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.2.2 - 11/05/2025
+[\~] AutoComponent : Now check CollisionComponent when movements
+
 ### V 2.2.1 - 11/05/2025
 [+] Window : OpenUrl, SetIcon<br/>
 [+] ProgressBar, Slider : Horizontal<br/>

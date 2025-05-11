@@ -32,5 +32,12 @@ public class MyScene : Scene
         e2.AddComponent(new CollisionComponent(new Vec2(25), new Vec2(-25, 25), drawDebug: true));
         e2.AddComponent(new CollisionComponent(new Vec2(25), new Vec2(25, -25), drawDebug: true));
         AddEntity(e2);
+
+        var e3 = new Entity();
+        e3.AddComponent(new TransformComponent(new Vec2(800, 300), Vec2.One, 0));
+        e3.AddComponent(new RectComponent(Color.AliceBlue, new Vec2(50)));
+        e3.AddComponent(new AutoComponent(new Vec2(-20, 0)));
+        e3.AddComponent(new CollisionComponent(new Vec2(50), drawDebug: true));
+        AddEntity(e3);
     }
 }
