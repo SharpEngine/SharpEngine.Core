@@ -17,9 +17,20 @@ public class MyScene : Scene
 
     public MyScene()
     {
-        AddWidget(new ProgressBar(new Vec2(600, 100), new Vec2(500, 100), Color.Green, 48));
-        AddWidget(new ProgressBar(new Vec2(400), new Vec2(50, 200), Color.Green, 48, false));
-        AddWidget(new Slider(new Vec2(600, 800), new Vec2(500, 100), Color.Green, 48));
-        AddWidget(new Slider(new Vec2(800, 400), new Vec2(50, 200), Color.Green, 48, false));
+        var e = new Entity();
+        e.AddComponent(new TransformComponent(Vec2.Zero, Vec2.One, 0));
+        e.AddComponent(new RectComponent(Color.AliceBlue, new Vec2(50)));
+        e.AddComponent(new ControlComponent());
+        e.AddComponent(new CollisionComponent(new Vec2(50), drawDebug: true));
+        AddEntity(e);
+
+        var e2 = new Entity();
+        e2.AddComponent(new TransformComponent(new Vec2(300), Vec2.One, 0));
+        e2.AddComponent(new RectComponent(Color.Gray, new Vec2(100)));
+        e2.AddComponent(new CollisionComponent(new Vec2(25), new Vec2(-25), drawDebug: true));
+        e2.AddComponent(new CollisionComponent(new Vec2(25), new Vec2(25), drawDebug: true));
+        e2.AddComponent(new CollisionComponent(new Vec2(25), new Vec2(-25, 25), drawDebug: true));
+        e2.AddComponent(new CollisionComponent(new Vec2(25), new Vec2(25, -25), drawDebug: true));
+        AddEntity(e2);
     }
 }

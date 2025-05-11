@@ -138,14 +138,14 @@ public class ControlComponent : Component
             _transform.LocalPosition.X,
             _transform.LocalPosition.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
         );
-        if (_basicPhysics == null || _basicPhysics.CanGo(newPos + Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero))
+        if (_basicPhysics == null || _basicPhysics.CanGo(newPos + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
             _transform.LocalPosition = newPos;
-        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX + Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero))
+        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
         {
             _transform.LocalPosition = newPosX;
             Direction = new Vec2(Direction.X < 0 ? -1 : 1, 0);
         }
-        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY + Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero))
+        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
         {
             _transform.LocalPosition = newPosY;
             Direction = new Vec2(0, Direction.Y < 0 ? -1 : 1);
