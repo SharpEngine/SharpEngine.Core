@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Raylib_cs;
+using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using Color = SharpEngine.Core.Utils.Color;
@@ -78,7 +79,7 @@ public class CollisionComponent(
             if (entity == Entity)
                 continue;
 
-            if (entity.GetComponentAs<CollisionComponent>() is { } entityPhysics)
+            foreach (var entityPhysics in entity.GetComponentsAs<CollisionComponent>())
             {
                 var entityRect = entityPhysics.GetCollisionRect();
                 var selfRect = GetCollisionRect(position);
