@@ -7,6 +7,12 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.2.1 - 11/05/2025
+[+] Window : OpenUrl, SetIcon<br/>
+[+] ProgressBar, Slider : Horizontal<br/>
+[#] ControlComponent : Error on position pass to collision CanGo<br/>
+[#] CollisionComponent : Only one collision by entity is used
+
 ### V 2.2.0 - 07/05/2025
 [\~] DataTableManager : Get will now get DataTable directly, not an object<br/>
 [\~] IDataTable / JsonDataTable : Rework complete with Add, Remove and Get<br/>
