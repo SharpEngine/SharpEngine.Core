@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.2.3 - 17/05/2025
+[#] ControlComponent : Reset Direction when no movement
+
 ### V 2.2.2 - 11/05/2025
 [\~] AutoComponent : Now check CollisionComponent when movements
 
