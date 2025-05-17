@@ -122,7 +122,10 @@ public class ControlComponent : Component
 
         var move = GetMovement();
         if (move.IsZero())
+        {
+            Direction = Vec2.Zero;
             return;
+        }
 
         IsMoving = true;
         Direction = move.Normalized();
