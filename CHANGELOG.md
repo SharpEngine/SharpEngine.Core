@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.2.4 - 31/10/2025
+[.] Raylib-cs : 7.0.2
+
 ### V 2.2.3 - 17/05/2025
 [#] ControlComponent : Reset Direction when no movement
 
