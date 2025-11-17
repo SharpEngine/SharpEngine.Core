@@ -19,6 +19,18 @@ namespace SharpEngine.Core.Utils.SeImGui
         public List<string> ConsoleTexts { get; } = [];
 
         /// <summary>
+        /// History of Console
+        /// </summary>
+        public List<string> History { get; } = [];
+
+        /// <summary>
+        /// Gets or sets the current position within the history sequence.
+        /// </summary>
+        /// <remarks>A value of -1 typically indicates that there is no current history entry selected.
+        /// The valid range and meaning of this property may depend on the context in which it is used.</remarks>
+        public int HistoryIndex { get; set; } = -1;
+
+        /// <summary>
         /// Commands of Console
         /// </summary>
         public List<ISeImGuiConsoleCommand> Commands { get; } = [ new SayCommand(), new HelpCommand(), new DebugVarCommand() ];
@@ -59,13 +71,43 @@ namespace SharpEngine.Core.Utils.SeImGui
 
             ImGui.Separator();
 
-            if (ImGui.InputText("Input", ref ConsoleInput, 100, ImGuiInputTextFlags.EnterReturnsTrue))
+            unsafe
             {
-                if (ConsoleInput.Length > 0)
-                    ProcessCommand(window);
+                if (ImGui.InputText("Input", ref ConsoleInput, 100, ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.CallbackHistory, (evt) =>
+                {
+                    if (ImGui.IsItemActive() && History.Count > 0)
+                    {
+                        ImGuiInputTextCallbackDataPtr evtPtr = (ImGuiInputTextCallbackDataPtr)evt;
+                        if (ImGui.IsKeyPressed(ImGuiKey.UpArrow))
+                        {
+                            if (HistoryIndex < History.Count - 1)
+                                HistoryIndex++;
+                            evtPtr.DeleteChars(0, evtPtr.BufTextLen);
+                            evtPtr.InsertChars(0, History[HistoryIndex]);
+                        }
+                        else if (ImGui.IsKeyPressed(ImGuiKey.DownArrow))
+                        {
+                            if (HistoryIndex >= 0)
+                                HistoryIndex--;
+                            if (HistoryIndex == -1)
+                                evtPtr.DeleteChars(0, evtPtr.BufTextLen);
+                            else
+                            {
+                                evtPtr.DeleteChars(0, evtPtr.BufTextLen);
+                                evtPtr.InsertChars(0, History[HistoryIndex]);
+                            }
+                        }
+                    }
+                    return 0;
+                }))
+                {
 
-                ConsoleInput = "";
-                ImGui.SetKeyboardFocusHere(-1);
+                    if (ConsoleInput.Length > 0)
+                        ProcessCommand(window);
+
+                    ConsoleInput = "";
+                    ImGui.SetKeyboardFocusHere(-1);
+                }
             }
 
             ImGui.End();
@@ -74,6 +116,9 @@ namespace SharpEngine.Core.Utils.SeImGui
         private void ProcessCommand(Window window)
         {
             AddText("> " + ConsoleInput);
+
+            History.Insert(0, ConsoleInput);
+            HistoryIndex = -1;
 
             var command = ConsoleInput.Split(" ");
             var commandName = command[0];

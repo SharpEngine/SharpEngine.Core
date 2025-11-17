@@ -8,6 +8,7 @@
 [.] Others
 
 ### V 2.3.0 - 17/11/2025
+[+] SEImGuiConsole : History navigation with Up and Down arrows<br/>
 [+] DebugVarCommand : CustomVariables<br/>
 [.] Net : 10
 
