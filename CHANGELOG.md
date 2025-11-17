@@ -8,6 +8,7 @@
 [.] Others
 
 ### V 2.3.0 - 17/11/2025
+[+] DebugVarCommand : CustomVariables<br/>
 [.] Net : 10
 
 ### V 2.2.4 - 31/10/2025
