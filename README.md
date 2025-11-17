@@ -10,7 +10,7 @@ See Wiki
 
 ## Dependencies
 
-- Net8
+- Net 10
 - Raylib.cs
 - ImGui.NET
 
