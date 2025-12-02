@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.3.1 - 02/12/2025
+[\~] Components : Private related components are now protected<br/>
+[#] AutoComponent : Rotation not multiplied by deltaTime
+
 ### V 2.3.0 - 17/11/2025
 [+] SEImGuiConsole : History navigation with Up and Down arrows<br/>
 [+] DebugVarCommand : CustomVariables<br/>
