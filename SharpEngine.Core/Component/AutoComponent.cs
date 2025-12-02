@@ -19,8 +19,15 @@ public class AutoComponent(Vec2? direction = null, int rotation = 0) : Component
     /// </summary>
     public int Rotation { get; set; } = rotation;
 
-    private TransformComponent? _transform;
-    private CollisionComponent? _basicPhysics;
+    /// <summary>
+    /// Represents the transform component associated with the current object, if available.
+    /// </summary>
+    protected TransformComponent? _transform;
+
+    /// <summary>
+    /// Represents the underlying physics collision component used for basic collision detection.
+    /// </summary>
+    protected CollisionComponent? _basicPhysics;
 
     /// <inheritdoc />
     public override void Load()

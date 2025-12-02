@@ -13,7 +13,10 @@ public class ParticleComponent : Component
     /// </summary>
     public List<ParticleEmitter> ParticleEmitters { get; } = [];
 
-    private TransformComponent? _transform;
+    /// <summary>
+    /// Represents the associated transform component for the current object, if available.
+    /// </summary>
+    protected TransformComponent? _transform;
 
     /// <inheritdoc />
     public override void Load()

@@ -66,7 +66,11 @@ public class SpriteComponent(
     /// </summary>
     public Utils.Color TintColor { get; set; } = Utils.Color.White;
 
-    private TransformComponent? _transformComponent;
+    /// <summary>
+    /// Represents the associated transform component, which provides position, rotation, and scale information for the
+    /// object.
+    /// </summary>
+    protected TransformComponent? _transformComponent;
 
     /// <inheritdoc />
     public override void Load()

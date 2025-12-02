@@ -49,7 +49,10 @@ public class CollisionComponent(
     /// </summary>
     public bool DrawDebug { get; set; } = drawDebug;
 
-    private TransformComponent? _transformComponent;
+    /// <summary>
+    /// Represents the transform component associated with the current object, if available.
+    /// </summary>
+    protected TransformComponent? _transformComponent;
 
     /// <summary>
     /// Gets the collision rectangle.

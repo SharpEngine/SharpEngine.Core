@@ -44,7 +44,11 @@ public class RectComponent(
     /// </summary>
     public int ZLayerOffset { get; set; } = zLayerOffset;
 
-    private TransformComponent? _transform;
+    /// <summary>
+    /// Represents the associated transform component, which defines the position, rotation, and scale of the object in
+    /// the scene.
+    /// </summary>
+    protected TransformComponent? _transform;
 
     /// <inheritdoc />
     public override void Load()

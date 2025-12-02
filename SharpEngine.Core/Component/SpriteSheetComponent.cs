@@ -102,7 +102,10 @@ public class SpriteSheetComponent(
     /// </summary>
     protected float internalTimer;
 
-    private TransformComponent? _transform;
+    /// <summary>
+    /// Represents the associated transform component for the current object, if available.
+    /// </summary>
+    protected TransformComponent? _transform;
 
     /// <summary>
     /// Return Animation by name

@@ -59,7 +59,10 @@ public class TextComponent(
     /// </summary>
     public int ZLayerOffset { get; set; } = zLayerOffset;
 
-    private TransformComponent? _transformComponent;
+    /// <summary>
+    /// Represents the transform component associated with the current object, if available.
+    /// </summary>
+    protected TransformComponent? _transformComponent;
 
     /// <inheritdoc />
     public override void Load()

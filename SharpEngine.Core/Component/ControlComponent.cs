@@ -51,9 +51,17 @@ public class ControlComponent : Component
     /// </summary>
     public Vec2 Direction { get; protected set; }
 
+    /// <summary>
+    /// Represents the transform component associated with the current object, if available.
+    /// </summary>
+    protected TransformComponent? _transform;
+
+    /// <summary>
+    /// Represents the underlying physics collision component used for basic collision detection.
+    /// </summary>
+    protected CollisionComponent? _basicPhysics;
+
     private readonly Dictionary<ControlKey, Key> _keys;
-    private TransformComponent? _transform;
-    private CollisionComponent? _basicPhysics;
 
     /// <summary>
     /// Create Control Component
