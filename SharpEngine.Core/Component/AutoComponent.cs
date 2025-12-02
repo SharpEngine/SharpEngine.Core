@@ -60,6 +60,6 @@ public class AutoComponent(Vec2? direction = null, int rotation = 0) : Component
         }
 
         if (Rotation != 0)
-            _transform.LocalRotation += Rotation;
+            _transform.LocalRotation += Rotation * delta;
     }
 }
