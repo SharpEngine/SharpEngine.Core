@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.4.0 - 04/12/2025
+[+] Tween System : TweenManager, Tween, TweenStep<br/>
+[\~] Vec : Is now a class <br/>
+[\~] Rect : Is now a class
+
 ### V 2.3.1 - 02/12/2025
 [\~] Components : Private related components are now protected<br/>
 [#] AutoComponent : Rotation not multiplied by deltaTime
