@@ -4,19 +4,19 @@ using System.Numerics;
 namespace SharpEngine.Core.Math;
 
 /// <summary>
-/// Struct which represents Vector 2D
+/// Class which represents Vector 2D
 /// </summary>
-public struct Vec2
+public class Vec2
 {
     /// <summary>
     /// Vector 2D with 0 on X and Y
     /// </summary>
-    public static readonly Vec2 Zero = new(0);
+    public static Vec2 Zero => new(0);
 
     /// <summary>
     /// Vector 2D with 1 on X and Y
     /// </summary>
-    public static readonly Vec2 One = new(1);
+    public static Vec2 One => new(1);
 
     /// <summary>
     /// X Position
@@ -53,25 +53,25 @@ public struct Vec2
     /// If Vector 2D is Zero
     /// </summary>
     /// <returns>If is Zero</returns>
-    public readonly bool IsZero() => X == 0 && Y == 0;
+    public bool IsZero() => X == 0 && Y == 0;
 
     /// <summary>
     /// Length of Vector 2D
     /// </summary>
     /// <returns>Length</returns>
-    public readonly float Length() => MathF.Sqrt(X * X + Y * Y);
+    public float Length() => MathF.Sqrt(X * X + Y * Y);
 
     /// <summary>
     /// Squared Length of Vector 2D
     /// </summary>
     /// <returns>Squared Length</returns>
-    public readonly float LengthSquared() => X * X + Y * Y;
+    public float LengthSquared() => X * X + Y * Y;
 
     /// <summary>
     /// Normalized Vector 2D
     /// </summary>
     /// <returns>Normalized Vector</returns>
-    public readonly Vec2 Normalized()
+    public Vec2 Normalized()
     {
         var length = MathF.Sqrt(X * X + Y * Y);
         return length == 0 ? Zero : new Vec2(X / length, Y / length);
@@ -82,7 +82,7 @@ public struct Vec2
     /// </summary>
     /// <param name="vec2">Target</param>
     /// <returns>Distance</returns>
-    public readonly float DistanceTo(Vec2 vec2)
+    public float DistanceTo(Vec2 vec2)
     {
         var x = vec2.X - X;
         var y = vec2.Y - Y;
@@ -90,7 +90,7 @@ public struct Vec2
     }
 
     /// <inheritdoc />
-    public override readonly bool Equals(object? obj)
+    public override bool Equals(object? obj)
     {
         if (obj is Vec2 vec)
             return this == vec;
@@ -98,10 +98,10 @@ public struct Vec2
     }
 
     /// <inheritdoc />
-    public override readonly int GetHashCode() => HashCode.Combine(X, Y);
+    public override int GetHashCode() => HashCode.Combine(X, Y);
 
     /// <inheritdoc />
-    public override readonly string ToString() => $"Vec2(X={X}, Y={Y})";
+    public override string ToString() => $"Vec2(X={X}, Y={Y})";
 
     /// <summary>
     /// Operator inequality

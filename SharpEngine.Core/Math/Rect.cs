@@ -4,13 +4,13 @@ using Raylib_cs;
 namespace SharpEngine.Core.Math;
 
 /// <summary>
-/// Struct which represents Rectangle
+/// Class which represents Rectangle
 /// </summary>
 /// <param name="x">X Position</param>
 /// <param name="y">Y Position</param>
 /// <param name="width">Width Size</param>
 /// <param name="height">Height Size</param>
-public struct Rect(float x, float y, float width, float height)
+public class Rect(float x, float y, float width, float height)
 {
     /// <summary>
     /// X Position
@@ -63,7 +63,7 @@ public struct Rect(float x, float y, float width, float height)
     /// </summary>
     /// <param name="position">Position</param>
     /// <returns>if Position is in Rect</returns>
-    public readonly bool Contains(Vec2 position) =>
+    public bool Contains(Vec2 position) =>
         X <= position.X && position.X <= X + Width && Y <= position.Y && position.Y <= Y + Height;
 
     /// <summary>
@@ -71,11 +71,11 @@ public struct Rect(float x, float y, float width, float height)
     /// </summary>
     /// <param name="other">Rect</param>
     /// <returns>If intersect</returns>
-    public readonly bool Intersect(Rect other) =>
+    public bool Intersect(Rect other) =>
         X <= other.X + other.Width && X + Width >= other.X && Y <= other.Y + other.Height && Y + Height >= other.Y;
 
     /// <inheritdoc />
-    public override readonly bool Equals(object? obj)
+    public override bool Equals(object? obj)
     {
         if (obj is Rect rect)
             return this == rect;
@@ -83,10 +83,10 @@ public struct Rect(float x, float y, float width, float height)
     }
 
     /// <inheritdoc />
-    public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
+    public override int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
     /// <inheritdoc />
-    public override readonly string ToString() =>
+    public override string ToString() =>
         $"Rect(X={X}, Y={Y}, Width={Width}, Height={Height})";
 
     /// <summary>

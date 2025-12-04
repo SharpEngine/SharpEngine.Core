@@ -414,7 +414,7 @@ public class SeImGui : IDisposable
     /// <param name="source">Source Rectangle</param>
     public static void ImageRect(Texture2D image, int width, int height, Rect source)
     {
-        var uv0 = new Vec2();
+        var uv0 = new Vector2();
         var uv1 = new Vector2();
 
         if (source.Width < 0)

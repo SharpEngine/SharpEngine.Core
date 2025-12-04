@@ -19,12 +19,12 @@ public class TransformComponent(
     /// <summary>
     /// Position of Component
     /// </summary>
-    public Vec2 Position => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position + LocalPosition ?? LocalPosition;
+    public Vec2 Position => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position is Vec2 parentPosition ? parentPosition + LocalPosition : LocalPosition;
 
     /// <summary>
     /// Scale of Component
     /// </summary>
-    public Vec2 Scale => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Scale * LocalScale ?? LocalScale;
+    public Vec2 Scale => Entity?.Parent?.GetComponentAs<TransformComponent>()?.Scale is Vec2 parentScale ? parentScale * LocalScale : LocalScale;
 
     /// <summary>
     /// Rotation of Component
