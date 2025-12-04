@@ -143,6 +143,11 @@ public class Window
     public TimerManager TimerManager { get; }
 
     /// <summary>
+    /// Tween Manager of Window
+    /// </summary>
+    public TweenManager TweenManager { get; }
+
+    /// <summary>
     /// ImGui Management of Window
     /// </summary>
     public SeImGui SeImGui { get; }
@@ -281,6 +286,7 @@ public class Window
         SoundManager = new SoundManager();
         MusicManager = new MusicManager();
         TimerManager = new TimerManager();
+        TweenManager = new TweenManager();
         CameraManager.SetScreenSize(screenSize);
 
         if (fps != null)
@@ -443,6 +449,7 @@ public class Window
             CurrentScene.Update(delta);
             CameraManager.Update(delta);
             TimerManager.Update(delta);
+            TweenManager.Update(delta);
 
             #endregion
 

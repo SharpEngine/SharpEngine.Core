@@ -12,7 +12,7 @@ public class TimerManager
     private readonly Dictionary<string, Timer> _timers = [];
 
     /// <summary>
-    /// Get All Musics
+    /// Get All Timers
     /// </summary>
     public List<Timer> Timers => new(_timers.Values);
 
