@@ -45,7 +45,7 @@ namespace SharpEngine.Core.Utils.Tween
                 _ => throw new NotSupportedException("Unsupported type for tweening.")
             };
 
-            DebugManager.Log(LogLevel.LogInfo, $"Tween Launched: From = {From}, To = {To}, Duration = {Duration}, Step = {Step}");
+            DebugManager.Log(LogLevel.LogDebug, $"Tween Launched: From = {From}, To = {To}, Duration = {Duration}, Step = {Step}");
         }
 
         public void Update(float deltaTime)
