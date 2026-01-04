@@ -8,40 +8,40 @@ public enum LogLevel
     /// <summary>
     /// Display all logs
     /// </summary>
-    LogAll,
+    All,
 
     /// <summary>
     /// Trace logging, intended for internal use only
     /// </summary>
-    LogTrace,
+    Trace,
 
     /// <summary>
     /// Debug logging, used for internal debugging, it should be disabled on release builds
     /// </summary>
-    LogDebug,
+    Debug,
 
     /// <summary>
     /// Info logging, used for program execution info
     /// </summary>
-    LogInfo,
+    Info,
 
     /// <summary>
     /// Warning logging, used on recoverable failures
     /// </summary>
-    LogWarning,
+    Warning,
 
     /// <summary>
     /// Error logging, used on unrecoverable failures
     /// </summary>
-    LogError,
+    Error,
 
     /// <summary>
     /// Fatal logging, used to abort program: exit(EXIT_FAILURE)
     /// </summary>
-    LogFatal,
+    Fatal,
 
     /// <summary>
     /// Disable logging
     /// </summary>
-    LogNone,
+    None,
 }
