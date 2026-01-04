@@ -1,4 +1,6 @@
-﻿namespace SharpEngine.Core.Component;
+﻿using JetBrains.Annotations;
+
+namespace SharpEngine.Core.Component;
 
 /// <summary>
 /// Abstract Class for Components
@@ -18,6 +20,7 @@ public abstract class Component
     /// <summary>
     /// Unload Component
     /// </summary>
+    [UsedImplicitly]
     public virtual void Unload() { }
 
     /// <summary>

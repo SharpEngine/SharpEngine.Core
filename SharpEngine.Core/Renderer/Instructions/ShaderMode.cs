@@ -6,7 +6,7 @@ namespace SharpEngine.Core.Renderer.Instructions;
 /// <summary>
 /// Draws in shader mode.
 /// </summary>
-internal record class ShaderMode : Instruction
+internal record ShaderMode : Instruction
 {
     /// <inheritdoc/>
     internal override void Execute()

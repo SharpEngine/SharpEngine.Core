@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
@@ -8,7 +10,7 @@ using Color = SharpEngine.Core.Utils.Color;
 namespace SharpEngine.Core.Component;
 
 /// <summary>
-/// Component which draw animations with sprite sheet
+/// Component that draws animations with sprite sheet
 /// </summary>
 /// <param name="texture">Texture Name</param>
 /// <param name="spriteSize">Frame Size</param>
@@ -17,6 +19,7 @@ namespace SharpEngine.Core.Component;
 /// <param name="displayed">If Displayed</param>
 /// <param name="offset">Offset</param>
 /// <param name="zLayerOffset">Offset of zLayer</param>
+[UsedImplicitly]
 public class SpriteSheetComponent(
     string texture,
     Vec2 spriteSize,
@@ -30,124 +33,131 @@ public class SpriteSheetComponent(
     /// <summary>
     /// Name of Texture
     /// </summary>
+    [UsedImplicitly]
     public string Texture { get; set; } = texture;
 
     /// <summary>
     /// Size of one frame
     /// </summary>
+    [UsedImplicitly]
     public Vec2 SpriteSize { get; set; } = spriteSize;
 
     /// <summary>
     /// List of Animations
     /// </summary>
+    [UsedImplicitly]
     public List<Animation> Animations { get; set; } = animations;
 
     /// <summary>
-    /// If component is displayed
+    /// If a component is displayed
     /// </summary>
+    [UsedImplicitly]
     public bool Displayed { get; set; } = displayed;
 
     /// <summary>
     /// Offset
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// If Sprite is Flip Horizontally
     /// </summary>
-    public bool FlipX { get; set; } = false;
+    [UsedImplicitly]
+    public bool FlipX { get; set; }
 
     /// <summary>
     /// If Sprite is Flip Vertically
     /// </summary>
-    public bool FlipY { get; set; } = false;
+    [UsedImplicitly]
+    public bool FlipY { get; set; }
 
     /// <summary>
     /// Offset of ZLayer of Sprite Sheet
     /// </summary>
+    [UsedImplicitly]
     public int ZLayerOffset { get; set; } = zLayerOffset;
 
     /// <summary>
     /// Current animation
     /// </summary>
+    [UsedImplicitly]
     public string Anim
     {
-        get => currentAnim;
+        get => CurrentAnim;
         set
         {
-            currentAnim = value;
+            CurrentAnim = value;
             CurrentImage = 0;
-            internalTimer = GetAnimation(currentAnim)?.Timer ?? 0;
+            InternalTimer = GetAnimation(CurrentAnim)?.Timer ?? 0;
         }
     }
 
     /// <summary>
     /// Current image index
     /// </summary>
+    [UsedImplicitly]
     public int CurrentImage { get; protected set; }
 
 
     /// <summary>
     /// Event triggered when animation ends
     /// </summary>
+    [UsedImplicitly]
     public EventHandler? AnimationEnded;
 
     /// <summary>
     /// Current internal animation
     /// </summary>
-    protected string currentAnim = currentAnim;
+    [UsedImplicitly]
+    protected string CurrentAnim = currentAnim;
 
     /// <summary>
     /// Current internal timer
     /// </summary>
-    protected float internalTimer;
+    [UsedImplicitly]
+    protected float InternalTimer;
 
     /// <summary>
     /// Represents the associated transform component for the current object, if available.
     /// </summary>
-    protected TransformComponent? _transform;
+    [UsedImplicitly]
+    protected TransformComponent? Transform;
 
     /// <summary>
     /// Return Animation by name
     /// </summary>
     /// <param name="name">Animation Name</param>
     /// <returns>Animation or null</returns>
-    public Animation? GetAnimation(string name)
-    {
-        foreach (var animation in Animations)
-        {
-            if (animation.Name == name)
-                return animation;
-        }
-
-        return null;
-    }
+    [UsedImplicitly]
+    public Animation? GetAnimation(string name) => Animations.FirstOrDefault(animation => animation.Name == name);
 
     /// <summary>
     /// Replay current animation
     /// </summary>
+    [UsedImplicitly]
     public void Replay()
     {
         CurrentImage = 0;
-        internalTimer = GetAnimation(currentAnim)?.Timer ?? 0;
+        InternalTimer = GetAnimation(CurrentAnim)?.Timer ?? 0;
     }
 
     /// <inheritdoc />
     public override void Load()
     {
         base.Load();
-        _transform = Entity?.GetComponentAs<TransformComponent>();
+        Transform = Entity?.GetComponentAs<TransformComponent>();
     }
 
     /// <inheritdoc />
     public override void Update(float delta)
     {
-        var anim = GetAnimation(currentAnim);
+        var anim = GetAnimation(CurrentAnim);
 
         if (anim == null)
             return;
 
-        if (internalTimer <= 0)
+        if (InternalTimer <= 0)
         {
             if(CurrentImage == -1)
                 return;
@@ -162,10 +172,10 @@ public class SpriteSheetComponent(
             }
             else
                 CurrentImage++;
-            internalTimer = anim.Value.Timer;
+            InternalTimer = anim.Value.Timer;
         }
 
-        internalTimer -= delta;
+        InternalTimer -= delta;
     }
 
     /// <inheritdoc />
@@ -174,10 +184,10 @@ public class SpriteSheetComponent(
         base.Draw();
 
         var window = Entity?.Scene?.Window;
-        var anim = GetAnimation(currentAnim);
+        var anim = GetAnimation(CurrentAnim);
 
         if (
-            _transform == null
+            Transform == null
             || !Displayed
             || Texture.Length <= 0
             || SpriteSize == Vec2.Zero
@@ -188,7 +198,7 @@ public class SpriteSheetComponent(
 
         var currentImage = CurrentImage == -1 ? anim.Value.Indices.Count - 1 : CurrentImage;
         var finalTexture = window.TextureManager.GetTexture(Texture);
-        var position = _transform.GetTransformedPosition(Offset);
+        var position = Transform.GetTransformedPosition(Offset);
         SERender.DrawTexture(
             finalTexture,
             new Rect(
@@ -203,17 +213,17 @@ public class SpriteSheetComponent(
             new Rect(
                 position.X,
                 position.Y,
-                SpriteSize.X * _transform.Scale.X,
-                SpriteSize.Y * _transform.Scale.Y
+                SpriteSize.X * Transform.Scale.X,
+                SpriteSize.Y * Transform.Scale.Y
             ),
             new Vec2(
-                SpriteSize.X / 2f * _transform.Scale.X,
-                SpriteSize.Y / 2f * _transform.Scale.Y
+                SpriteSize.X / 2f * Transform.Scale.X,
+                SpriteSize.Y / 2f * Transform.Scale.Y
             ),
-            _transform.Rotation,
+            Transform.Rotation,
             Color.White,
             InstructionSource.Entity,
-            _transform.ZLayer + ZLayerOffset
+            Transform.ZLayer + ZLayerOffset
         );
     }
 }

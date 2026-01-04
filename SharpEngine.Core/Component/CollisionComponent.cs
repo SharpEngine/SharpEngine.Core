@@ -1,7 +1,6 @@
 using System;
-using System.Diagnostics;
+using JetBrains.Annotations;
 using Raylib_cs;
-using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using Color = SharpEngine.Core.Utils.Color;
@@ -27,41 +26,48 @@ public class CollisionComponent(
     /// <summary>
     /// Gets or sets the size of the collision.
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// Gets or sets the offset of the collision.
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// Gets or sets a value indicating whether the collision is solid.
     /// </summary>
+    [UsedImplicitly]
     public bool Solid { get; set; } = solid;
 
     /// <summary>
     /// Gets or sets the collision callback action.
     /// </summary>
+    [UsedImplicitly]
     public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; } = collisionCallback;
 
     /// <summary>
     /// Gets or sets a value indicating whether the collision should be drawn for debugging.
     /// </summary>
+    [UsedImplicitly]
     public bool DrawDebug { get; set; } = drawDebug;
 
     /// <summary>
     /// Represents the transform component associated with the current object, if available.
     /// </summary>
-    protected TransformComponent? _transformComponent;
+    [UsedImplicitly]
+    protected TransformComponent? TransformComponent;
 
     /// <summary>
     /// Gets the collision rectangle.
     /// </summary>
     /// <param name="position">The position (or current position).</param>
     /// <returns>The collision rectangle.</returns>
+    [UsedImplicitly]
     public Rect GetCollisionRect(Vec2? position = null)
     {
-        position ??= _transformComponent?.Position;
+        position ??= TransformComponent?.Position;
         return new Rect(
             position?.X + Offset.X - Size.X / 2 ?? 0,
             position?.Y + Offset.Y - Size.Y / 2 ?? 0,
@@ -82,18 +88,18 @@ public class CollisionComponent(
             if (entity == Entity)
                 continue;
 
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var entityPhysics in entity.GetComponentsAs<CollisionComponent>())
             {
                 var entityRect = entityPhysics.GetCollisionRect();
                 var selfRect = GetCollisionRect(position);
-                if (Raylib.CheckCollisionRecs(entityRect, selfRect))
-                {
-                    CollisionCallback?.Invoke(Entity, entity);
-                    entityPhysics.CollisionCallback?.Invoke(Entity, entity);
+                if (!Raylib.CheckCollisionRecs(entityRect, selfRect)) continue;
+                
+                CollisionCallback?.Invoke(Entity, entity);
+                entityPhysics.CollisionCallback?.Invoke(Entity, entity);
 
-                    if (canGo)
-                        canGo = !(Solid && entityPhysics.Solid);
-                }
+                if (canGo)
+                    canGo = !(Solid && entityPhysics.Solid);
             }
         }
 
@@ -104,22 +110,22 @@ public class CollisionComponent(
     public override void Load()
     {
         base.Load();
-        _transformComponent = Entity?.GetComponentAs<TransformComponent>();
+        TransformComponent = Entity?.GetComponentAs<TransformComponent>();
     }
 
     /// <inheritdoc />
     public override void Draw()
     {
         base.Draw();
-        if (_transformComponent == null)
+        if (TransformComponent == null)
             return;
 
         if (DrawDebug)
             SERender.DrawRectangleLines(
                 new Rect(
                     new Vec2(
-                        _transformComponent.Position.X - Size.X / 2 + Offset.X,
-                        _transformComponent.Position.Y - Size.Y / 2 + Offset.Y
+                        TransformComponent.Position.X - Size.X / 2 + Offset.X,
+                        TransformComponent.Position.Y - Size.Y / 2 + Offset.Y
                     ),
                     Size
                 ),

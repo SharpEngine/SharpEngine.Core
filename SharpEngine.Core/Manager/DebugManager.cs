@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using ImGuiNET;
 using Raylib_cs;
-using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.SeImGui;
 using SharpEngine.Core.Utils.SeImGui.ConsoleCommand;
@@ -17,7 +13,7 @@ namespace SharpEngine.Core.Manager;
 public static class DebugManager
 {
     /// <summary>
-    /// Number of frame per seconds
+    /// Number of frames per seconds
     /// </summary>
     public static int FrameRate => Raylib.GetFPS();
 
@@ -42,15 +38,15 @@ public static class DebugManager
     /// <param name="window">Window</param>
     public static void SeRenderImGui(Window window)
     {
-        if (window._imguiDisplayWindow)
+        if (window.ImguiDisplayWindow)
             SeImGuiWindows.CreateSeImGuiWindow(window);
-        if (window._imguiDisplayConsole)
+        if (window.ImguiDisplayConsole)
             SeImGuiWindows.CreateSeImGuiConsole(window);
 
         if (InputManager.IsKeyPressed(Input.Key.F7))
-            window._imguiDisplayWindow = !window._imguiDisplayWindow;
+            window.ImguiDisplayWindow = !window.ImguiDisplayWindow;
         if (InputManager.IsKeyPressed(Input.Key.F8))
-            window._imguiDisplayConsole = !window._imguiDisplayConsole;
+            window.ImguiDisplayConsole = !window.ImguiDisplayConsole;
     }
 
     /// <summary>

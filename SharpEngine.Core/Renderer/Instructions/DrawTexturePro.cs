@@ -5,9 +5,9 @@ using System;
 namespace SharpEngine.Core.Renderer.Instructions;
 
 /// <summary>
-/// Draws a texture with pro parameters.
+/// Draws a texture with pro-parameters.
 /// </summary>
-internal record class DrawTexturePro : Instruction
+internal record DrawTexturePro : Instruction
 {
     internal override void Execute()
     {

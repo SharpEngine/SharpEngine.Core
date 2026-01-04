@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using ImGuiNET;
+using JetBrains.Annotations;
 using Raylib_cs;
-using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 
@@ -12,12 +13,13 @@ namespace SharpEngine.Core.Utils.SeImGui;
 /// <summary>
 /// Class which control ImGui
 /// </summary>
+[UsedImplicitly]
 public class SeImGui : IDisposable
 {
     private readonly nint _context;
     private Texture2D _fontTexture;
     private readonly Vector2 _scaleFactor = Vector2.One;
-    private static readonly Dictionary<KeyboardKey, ImGuiKey> _keyMap = [];
+    private static readonly Dictionary<KeyboardKey, ImGuiKey> KeyMap = [];
 
     internal SeImGui()
     {
@@ -32,14 +34,13 @@ public class SeImGui : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="Dispose" />
     protected virtual void Dispose(bool disposing)
     {
-        if (disposing)
-        {
-            ImGui.DestroyContext(_context);
-            Raylib.UnloadTexture(_fontTexture);
-        }
+        if (!disposing) return;
+        
+        ImGui.DestroyContext(_context);
+        Raylib.UnloadTexture(_fontTexture);
     }
 
     /// <summary>
@@ -92,111 +93,111 @@ public class SeImGui : IDisposable
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
 
-        _keyMap.Add(KeyboardKey.Apostrophe, ImGuiKey.Apostrophe);
-        _keyMap.Add(KeyboardKey.Comma, ImGuiKey.Comma); 
-        _keyMap.Add(KeyboardKey.Minus, ImGuiKey.Minus);
-        _keyMap.Add(KeyboardKey.Period, ImGuiKey.Period);
-        _keyMap.Add(KeyboardKey.Slash, ImGuiKey.Slash);
-        _keyMap.Add(KeyboardKey.Zero, ImGuiKey._0);
-        _keyMap.Add(KeyboardKey.One, ImGuiKey._1);
-        _keyMap.Add(KeyboardKey.Two, ImGuiKey._2);
-        _keyMap.Add(KeyboardKey.Three, ImGuiKey._3);
-        _keyMap.Add(KeyboardKey.Four, ImGuiKey._4);
-        _keyMap.Add(KeyboardKey.Five, ImGuiKey._5);
-        _keyMap.Add(KeyboardKey.Six, ImGuiKey._6);
-        _keyMap.Add(KeyboardKey.Seven, ImGuiKey._7);
-        _keyMap.Add(KeyboardKey.Eight, ImGuiKey._8);
-        _keyMap.Add(KeyboardKey.Nine, ImGuiKey._9);
-        _keyMap.Add(KeyboardKey.Semicolon, ImGuiKey.Semicolon);
-        _keyMap.Add(KeyboardKey.Equal, ImGuiKey.Equal);
-        _keyMap.Add(KeyboardKey.A, ImGuiKey.A);
-        _keyMap.Add(KeyboardKey.B, ImGuiKey.B);
-        _keyMap.Add(KeyboardKey.C, ImGuiKey.C);
-        _keyMap.Add(KeyboardKey.D, ImGuiKey.D);
-        _keyMap.Add(KeyboardKey.E, ImGuiKey.E);
-        _keyMap.Add(KeyboardKey.F, ImGuiKey.F);
-        _keyMap.Add(KeyboardKey.G, ImGuiKey.G);
-        _keyMap.Add(KeyboardKey.H, ImGuiKey.H);
-        _keyMap.Add(KeyboardKey.I, ImGuiKey.I);
-        _keyMap.Add(KeyboardKey.J, ImGuiKey.J);
-        _keyMap.Add(KeyboardKey.K, ImGuiKey.K);
-        _keyMap.Add(KeyboardKey.L, ImGuiKey.L);
-        _keyMap.Add(KeyboardKey.M, ImGuiKey.M);
-        _keyMap.Add(KeyboardKey.N, ImGuiKey.N);
-        _keyMap.Add(KeyboardKey.O, ImGuiKey.O);
-        _keyMap.Add(KeyboardKey.P, ImGuiKey.P);
-        _keyMap.Add(KeyboardKey.Q, ImGuiKey.Q);
-        _keyMap.Add(KeyboardKey.R, ImGuiKey.R);
-        _keyMap.Add(KeyboardKey.S, ImGuiKey.S);
-        _keyMap.Add(KeyboardKey.T, ImGuiKey.T);
-        _keyMap.Add(KeyboardKey.U, ImGuiKey.U);
-        _keyMap.Add(KeyboardKey.V, ImGuiKey.V);
-        _keyMap.Add(KeyboardKey.W, ImGuiKey.W);
-        _keyMap.Add(KeyboardKey.X, ImGuiKey.X);
-        _keyMap.Add(KeyboardKey.Y, ImGuiKey.Y);
-        _keyMap.Add(KeyboardKey.Z, ImGuiKey.Z);
-        _keyMap.Add(KeyboardKey.Space, ImGuiKey.Space);
-        _keyMap.Add(KeyboardKey.Escape, ImGuiKey.Escape);
-        _keyMap.Add(KeyboardKey.Enter, ImGuiKey.Enter);
-        _keyMap.Add(KeyboardKey.Tab, ImGuiKey.Tab);
-        _keyMap.Add(KeyboardKey.Backspace, ImGuiKey.Backspace);
-        _keyMap.Add(KeyboardKey.Insert, ImGuiKey.Insert);
-        _keyMap.Add(KeyboardKey.Delete, ImGuiKey.Delete);
-        _keyMap.Add(KeyboardKey.Right, ImGuiKey.RightArrow);
-        _keyMap.Add(KeyboardKey.Left, ImGuiKey.LeftArrow);
-        _keyMap.Add(KeyboardKey.Down, ImGuiKey.DownArrow);
-        _keyMap.Add(KeyboardKey.Up, ImGuiKey.UpArrow);
-        _keyMap.Add(KeyboardKey.PageUp, ImGuiKey.PageUp);
-        _keyMap.Add(KeyboardKey.PageDown, ImGuiKey.PageDown);
-        _keyMap.Add(KeyboardKey.Home, ImGuiKey.Home);
-        _keyMap.Add(KeyboardKey.End, ImGuiKey.End);
-        _keyMap.Add(KeyboardKey.CapsLock, ImGuiKey.CapsLock);
-        _keyMap.Add(KeyboardKey.ScrollLock, ImGuiKey.ScrollLock);
-        _keyMap.Add(KeyboardKey.NumLock, ImGuiKey.NumLock);
-        _keyMap.Add(KeyboardKey.PrintScreen, ImGuiKey.PrintScreen);
-        _keyMap.Add(KeyboardKey.Pause, ImGuiKey.Pause);
-        _keyMap.Add(KeyboardKey.F1, ImGuiKey.F1);
-        _keyMap.Add(KeyboardKey.F2, ImGuiKey.F2);
-        _keyMap.Add(KeyboardKey.F3, ImGuiKey.F3);
-        _keyMap.Add(KeyboardKey.F4, ImGuiKey.F4);
-        _keyMap.Add(KeyboardKey.F5, ImGuiKey.F5);
-        _keyMap.Add(KeyboardKey.F6, ImGuiKey.F6);
-        _keyMap.Add(KeyboardKey.F7, ImGuiKey.F7);
-        _keyMap.Add(KeyboardKey.F8, ImGuiKey.F8);
-        _keyMap.Add(KeyboardKey.F9, ImGuiKey.F9);
-        _keyMap.Add(KeyboardKey.F10, ImGuiKey.F10);
-        _keyMap.Add(KeyboardKey.F11, ImGuiKey.F11);
-        _keyMap.Add(KeyboardKey.F12, ImGuiKey.F12);
-        _keyMap.Add(KeyboardKey.LeftShift, ImGuiKey.LeftShift);
-        _keyMap.Add(KeyboardKey.LeftControl, ImGuiKey.LeftCtrl);
-        _keyMap.Add(KeyboardKey.LeftAlt, ImGuiKey.LeftAlt);
-        _keyMap.Add(KeyboardKey.LeftSuper, ImGuiKey.LeftSuper);
-        _keyMap.Add(KeyboardKey.RightShift, ImGuiKey.RightShift);
-        _keyMap.Add(KeyboardKey.RightControl, ImGuiKey.RightCtrl);
-        _keyMap.Add(KeyboardKey.RightAlt, ImGuiKey.RightAlt);
-        _keyMap.Add(KeyboardKey.RightSuper, ImGuiKey.RightSuper);
-        _keyMap.Add(KeyboardKey.KeyboardMenu, ImGuiKey.Menu);
-        _keyMap.Add(KeyboardKey.LeftBracket, ImGuiKey.LeftBracket);
-        _keyMap.Add(KeyboardKey.Backslash, ImGuiKey.Backslash);
-        _keyMap.Add(KeyboardKey.RightBracket, ImGuiKey.RightBracket);
-        _keyMap.Add(KeyboardKey.Grave, ImGuiKey.GraveAccent);
-        _keyMap.Add(KeyboardKey.Kp0, ImGuiKey.Keypad0);
-        _keyMap.Add(KeyboardKey.Kp1, ImGuiKey.Keypad1);
-        _keyMap.Add(KeyboardKey.Kp2, ImGuiKey.Keypad2);
-        _keyMap.Add(KeyboardKey.Kp3, ImGuiKey.Keypad3);
-        _keyMap.Add(KeyboardKey.Kp4, ImGuiKey.Keypad4);
-        _keyMap.Add(KeyboardKey.Kp5, ImGuiKey.Keypad5);
-        _keyMap.Add(KeyboardKey.Kp6, ImGuiKey.Keypad6);
-        _keyMap.Add(KeyboardKey.Kp7, ImGuiKey.Keypad7);
-        _keyMap.Add(KeyboardKey.Kp8, ImGuiKey.Keypad8);
-        _keyMap.Add(KeyboardKey.Kp9, ImGuiKey.Keypad9);
-        _keyMap.Add(KeyboardKey.KpDecimal, ImGuiKey.KeypadDecimal);
-        _keyMap.Add(KeyboardKey.KpDivide, ImGuiKey.KeypadDivide);
-        _keyMap.Add(KeyboardKey.KpMultiply, ImGuiKey.KeypadMultiply);
-        _keyMap.Add(KeyboardKey.KpSubtract, ImGuiKey.KeypadSubtract);
-        _keyMap.Add(KeyboardKey.KpAdd, ImGuiKey.KeypadAdd);
-        _keyMap.Add(KeyboardKey.KpEnter, ImGuiKey.KeypadEnter);
-        _keyMap.Add(KeyboardKey.KpEqual, ImGuiKey.KeypadEqual);
+        KeyMap.Add(KeyboardKey.Apostrophe, ImGuiKey.Apostrophe);
+        KeyMap.Add(KeyboardKey.Comma, ImGuiKey.Comma); 
+        KeyMap.Add(KeyboardKey.Minus, ImGuiKey.Minus);
+        KeyMap.Add(KeyboardKey.Period, ImGuiKey.Period);
+        KeyMap.Add(KeyboardKey.Slash, ImGuiKey.Slash);
+        KeyMap.Add(KeyboardKey.Zero, ImGuiKey._0);
+        KeyMap.Add(KeyboardKey.One, ImGuiKey._1);
+        KeyMap.Add(KeyboardKey.Two, ImGuiKey._2);
+        KeyMap.Add(KeyboardKey.Three, ImGuiKey._3);
+        KeyMap.Add(KeyboardKey.Four, ImGuiKey._4);
+        KeyMap.Add(KeyboardKey.Five, ImGuiKey._5);
+        KeyMap.Add(KeyboardKey.Six, ImGuiKey._6);
+        KeyMap.Add(KeyboardKey.Seven, ImGuiKey._7);
+        KeyMap.Add(KeyboardKey.Eight, ImGuiKey._8);
+        KeyMap.Add(KeyboardKey.Nine, ImGuiKey._9);
+        KeyMap.Add(KeyboardKey.Semicolon, ImGuiKey.Semicolon);
+        KeyMap.Add(KeyboardKey.Equal, ImGuiKey.Equal);
+        KeyMap.Add(KeyboardKey.A, ImGuiKey.A);
+        KeyMap.Add(KeyboardKey.B, ImGuiKey.B);
+        KeyMap.Add(KeyboardKey.C, ImGuiKey.C);
+        KeyMap.Add(KeyboardKey.D, ImGuiKey.D);
+        KeyMap.Add(KeyboardKey.E, ImGuiKey.E);
+        KeyMap.Add(KeyboardKey.F, ImGuiKey.F);
+        KeyMap.Add(KeyboardKey.G, ImGuiKey.G);
+        KeyMap.Add(KeyboardKey.H, ImGuiKey.H);
+        KeyMap.Add(KeyboardKey.I, ImGuiKey.I);
+        KeyMap.Add(KeyboardKey.J, ImGuiKey.J);
+        KeyMap.Add(KeyboardKey.K, ImGuiKey.K);
+        KeyMap.Add(KeyboardKey.L, ImGuiKey.L);
+        KeyMap.Add(KeyboardKey.M, ImGuiKey.M);
+        KeyMap.Add(KeyboardKey.N, ImGuiKey.N);
+        KeyMap.Add(KeyboardKey.O, ImGuiKey.O);
+        KeyMap.Add(KeyboardKey.P, ImGuiKey.P);
+        KeyMap.Add(KeyboardKey.Q, ImGuiKey.Q);
+        KeyMap.Add(KeyboardKey.R, ImGuiKey.R);
+        KeyMap.Add(KeyboardKey.S, ImGuiKey.S);
+        KeyMap.Add(KeyboardKey.T, ImGuiKey.T);
+        KeyMap.Add(KeyboardKey.U, ImGuiKey.U);
+        KeyMap.Add(KeyboardKey.V, ImGuiKey.V);
+        KeyMap.Add(KeyboardKey.W, ImGuiKey.W);
+        KeyMap.Add(KeyboardKey.X, ImGuiKey.X);
+        KeyMap.Add(KeyboardKey.Y, ImGuiKey.Y);
+        KeyMap.Add(KeyboardKey.Z, ImGuiKey.Z);
+        KeyMap.Add(KeyboardKey.Space, ImGuiKey.Space);
+        KeyMap.Add(KeyboardKey.Escape, ImGuiKey.Escape);
+        KeyMap.Add(KeyboardKey.Enter, ImGuiKey.Enter);
+        KeyMap.Add(KeyboardKey.Tab, ImGuiKey.Tab);
+        KeyMap.Add(KeyboardKey.Backspace, ImGuiKey.Backspace);
+        KeyMap.Add(KeyboardKey.Insert, ImGuiKey.Insert);
+        KeyMap.Add(KeyboardKey.Delete, ImGuiKey.Delete);
+        KeyMap.Add(KeyboardKey.Right, ImGuiKey.RightArrow);
+        KeyMap.Add(KeyboardKey.Left, ImGuiKey.LeftArrow);
+        KeyMap.Add(KeyboardKey.Down, ImGuiKey.DownArrow);
+        KeyMap.Add(KeyboardKey.Up, ImGuiKey.UpArrow);
+        KeyMap.Add(KeyboardKey.PageUp, ImGuiKey.PageUp);
+        KeyMap.Add(KeyboardKey.PageDown, ImGuiKey.PageDown);
+        KeyMap.Add(KeyboardKey.Home, ImGuiKey.Home);
+        KeyMap.Add(KeyboardKey.End, ImGuiKey.End);
+        KeyMap.Add(KeyboardKey.CapsLock, ImGuiKey.CapsLock);
+        KeyMap.Add(KeyboardKey.ScrollLock, ImGuiKey.ScrollLock);
+        KeyMap.Add(KeyboardKey.NumLock, ImGuiKey.NumLock);
+        KeyMap.Add(KeyboardKey.PrintScreen, ImGuiKey.PrintScreen);
+        KeyMap.Add(KeyboardKey.Pause, ImGuiKey.Pause);
+        KeyMap.Add(KeyboardKey.F1, ImGuiKey.F1);
+        KeyMap.Add(KeyboardKey.F2, ImGuiKey.F2);
+        KeyMap.Add(KeyboardKey.F3, ImGuiKey.F3);
+        KeyMap.Add(KeyboardKey.F4, ImGuiKey.F4);
+        KeyMap.Add(KeyboardKey.F5, ImGuiKey.F5);
+        KeyMap.Add(KeyboardKey.F6, ImGuiKey.F6);
+        KeyMap.Add(KeyboardKey.F7, ImGuiKey.F7);
+        KeyMap.Add(KeyboardKey.F8, ImGuiKey.F8);
+        KeyMap.Add(KeyboardKey.F9, ImGuiKey.F9);
+        KeyMap.Add(KeyboardKey.F10, ImGuiKey.F10);
+        KeyMap.Add(KeyboardKey.F11, ImGuiKey.F11);
+        KeyMap.Add(KeyboardKey.F12, ImGuiKey.F12);
+        KeyMap.Add(KeyboardKey.LeftShift, ImGuiKey.LeftShift);
+        KeyMap.Add(KeyboardKey.LeftControl, ImGuiKey.LeftCtrl);
+        KeyMap.Add(KeyboardKey.LeftAlt, ImGuiKey.LeftAlt);
+        KeyMap.Add(KeyboardKey.LeftSuper, ImGuiKey.LeftSuper);
+        KeyMap.Add(KeyboardKey.RightShift, ImGuiKey.RightShift);
+        KeyMap.Add(KeyboardKey.RightControl, ImGuiKey.RightCtrl);
+        KeyMap.Add(KeyboardKey.RightAlt, ImGuiKey.RightAlt);
+        KeyMap.Add(KeyboardKey.RightSuper, ImGuiKey.RightSuper);
+        KeyMap.Add(KeyboardKey.KeyboardMenu, ImGuiKey.Menu);
+        KeyMap.Add(KeyboardKey.LeftBracket, ImGuiKey.LeftBracket);
+        KeyMap.Add(KeyboardKey.Backslash, ImGuiKey.Backslash);
+        KeyMap.Add(KeyboardKey.RightBracket, ImGuiKey.RightBracket);
+        KeyMap.Add(KeyboardKey.Grave, ImGuiKey.GraveAccent);
+        KeyMap.Add(KeyboardKey.Kp0, ImGuiKey.Keypad0);
+        KeyMap.Add(KeyboardKey.Kp1, ImGuiKey.Keypad1);
+        KeyMap.Add(KeyboardKey.Kp2, ImGuiKey.Keypad2);
+        KeyMap.Add(KeyboardKey.Kp3, ImGuiKey.Keypad3);
+        KeyMap.Add(KeyboardKey.Kp4, ImGuiKey.Keypad4);
+        KeyMap.Add(KeyboardKey.Kp5, ImGuiKey.Keypad5);
+        KeyMap.Add(KeyboardKey.Kp6, ImGuiKey.Keypad6);
+        KeyMap.Add(KeyboardKey.Kp7, ImGuiKey.Keypad7);
+        KeyMap.Add(KeyboardKey.Kp8, ImGuiKey.Keypad8);
+        KeyMap.Add(KeyboardKey.Kp9, ImGuiKey.Keypad9);
+        KeyMap.Add(KeyboardKey.KpDecimal, ImGuiKey.KeypadDecimal);
+        KeyMap.Add(KeyboardKey.KpDivide, ImGuiKey.KeypadDivide);
+        KeyMap.Add(KeyboardKey.KpMultiply, ImGuiKey.KeypadMultiply);
+        KeyMap.Add(KeyboardKey.KpSubtract, ImGuiKey.KeypadSubtract);
+        KeyMap.Add(KeyboardKey.KpAdd, ImGuiKey.KeypadAdd);
+        KeyMap.Add(KeyboardKey.KpEnter, ImGuiKey.KeypadEnter);
+        KeyMap.Add(KeyboardKey.KpEqual, ImGuiKey.KeypadEqual);
     }
 
     /// <summary>
@@ -230,7 +231,7 @@ public class SeImGui : IDisposable
         var io = ImGui.GetIO();
 
         // Key states
-        foreach(var keys in _keyMap)
+        foreach(var keys in KeyMap)
         {
             if(Raylib.IsKeyPressed(keys.Key))
                 io.AddKeyEvent(keys.Value, true);
@@ -239,11 +240,8 @@ public class SeImGui : IDisposable
         }
 
         // Key input
-        foreach (var charGot in InputManager.InternalPressedChars)
-        {
-            if (charGot != 0)
-                io.AddInputCharacter((uint)charGot);
-        }
+        foreach (var charGot in InputManager.InternalPressedChars.Where(charGot => charGot != 0))
+            io.AddInputCharacter((uint)charGot);
     }
 
     private static void UpdateMouse()
@@ -252,9 +250,7 @@ public class SeImGui : IDisposable
 
         // Store button states
         for (var i = 0; i < io.MouseDown.Count; i++)
-        {
-            io.MouseDown[i] = Raylib.IsMouseButtonDown((Raylib_cs.MouseButton)i);
-        }
+            io.MouseDown[i] = Raylib.IsMouseButtonDown((MouseButton)i);
 
         // Mouse scroll
         io.MouseWheel += Raylib.GetMouseWheelMove();
@@ -272,14 +268,13 @@ public class SeImGui : IDisposable
         }
 
         // Mouse cursor state
-        if ((io.ConfigFlags & ImGuiConfigFlags.NoMouseCursorChange) == 0 || Raylib.IsCursorHidden())
-        {
-            var cursor = ImGui.GetMouseCursor();
-            if (cursor == ImGuiMouseCursor.None || io.MouseDrawCursor)
-                Raylib.HideCursor();
-            else
-                Raylib.ShowCursor();
-        }
+        if ((io.ConfigFlags & ImGuiConfigFlags.NoMouseCursorChange) != 0 && !Raylib.IsCursorHidden()) return;
+        
+        var cursor = ImGui.GetMouseCursor();
+        if (cursor == ImGuiMouseCursor.None || io.MouseDrawCursor)
+            Raylib.HideCursor();
+        else
+            Raylib.ShowCursor();
     }
 
     /// <summary>
@@ -412,7 +407,7 @@ public class SeImGui : IDisposable
     /// <param name="width">Destination Width</param>
     /// <param name="height">Destination Height</param>
     /// <param name="source">Source Rectangle</param>
-    public static void ImageRect(Texture2D image, int width, int height, Rect source)
+    private static void ImageRect(Texture2D image, int width, int height, Rect source)
     {
         var uv0 = new Vector2();
         var uv1 = new Vector2();
@@ -447,6 +442,7 @@ public class SeImGui : IDisposable
     /// </summary>
     /// <param name="image">Raylib RenderTexture2D</param>
     /// <param name="center">Center RenderTexture2D</param>
+    [UsedImplicitly]
     public static void ImageRenderTexture(RenderTexture2D image, bool center = true)
     {
         var area = ImGui.GetContentRegionAvail();

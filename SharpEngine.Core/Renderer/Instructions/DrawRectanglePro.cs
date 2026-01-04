@@ -5,9 +5,9 @@ using System;
 namespace SharpEngine.Core.Renderer.Instructions;
 
 /// <summary>
-/// Draws a rectangle with pro parameters.
+/// Draws a rectangle with pro-parameters.
 /// </summary>
-internal record class DrawRectanglePro : Instruction
+internal record DrawRectanglePro : Instruction
 {
     internal override void Execute()
     {

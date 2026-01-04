@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
@@ -19,13 +20,14 @@ public class ShaderManager
     /// <summary>
     /// Gets all Shaders
     /// </summary>
-    public List<SEShader> Shaders => new(_shaders.Values);
+    public List<SEShader> Shaders => [.._shaders.Values];
 
     /// <summary>
     /// Checks if a Shader exists
     /// </summary>
     /// <param name="name">The name of the Shader</param>
     /// <returns>True if the Shader exists, otherwise false</returns>
+    [UsedImplicitly]
     public bool HasShader(string name) => _shaders.ContainsKey(name);
 
     /// <summary>
@@ -33,6 +35,7 @@ public class ShaderManager
     /// </summary>
     /// <param name="name">The name of the Shader to remove</param>
     /// <exception cref="ArgumentException">Thrown if the Shader is not found</exception>
+    [UsedImplicitly]
     public void RemoveShader(string name)
     {
         if (_shaders.TryGetValue(name, out var shader))
@@ -42,7 +45,7 @@ public class ShaderManager
             return;
         }
 
-        DebugManager.Log(LogLevel.LogError, $"SE_SHADERMANAGER: Shader not found : {name}");
+        DebugManager.Log(LogLevel.Error, $"SE_SHADERMANAGER: Shader not found : {name}");
         throw new ArgumentException($"Shader not found : {name}");
     }
 
@@ -52,6 +55,7 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <param name="uniform">The name of the uniform</param>
     /// <param name="value">The float value</param>
+    [UsedImplicitly]
     public void SetShaderValue(string name, string uniform, float value) =>
         SetShaderValue(name, uniform, value, ShaderUniformDataType.Float);
 
@@ -61,6 +65,7 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <param name="uniform">The name of the uniform</param>
     /// <param name="value">The vec2 value</param>
+    [UsedImplicitly]
     public void SetShaderValue(string name, string uniform, Vec2 value) =>
         SetShaderValue(
             name,
@@ -75,6 +80,7 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <param name="uniform">The name of the uniform</param>
     /// <param name="value">The color value</param>
+    [UsedImplicitly]
     public void SetShaderValue(string name, string uniform, Color value) =>
         SetShaderValue(name, uniform, value.ToVec4(), ShaderUniformDataType.Vec4);
 
@@ -84,6 +90,7 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <param name="uniform">The name of the uniform</param>
     /// <param name="value">The int value</param>
+    [UsedImplicitly]
     public void SetShaderValue(string name, string uniform, int value) =>
         SetShaderValue(name, uniform, value, ShaderUniformDataType.Float);
 
@@ -96,6 +103,7 @@ public class ShaderManager
     /// <param name="value">The value</param>
     /// <param name="uniformType">The type of the uniform</param>
     /// <exception cref="ArgumentException">Thrown if the Shader is not found</exception>
+    [UsedImplicitly]
     public void SetShaderValue<T>(
         string name,
         string uniform,
@@ -120,11 +128,12 @@ public class ShaderManager
     /// </summary>
     /// <param name="name">The name of the Shader</param>
     /// <param name="shader">The Shader to add</param>
+    [UsedImplicitly]
     public void AddShader(string name, SEShader shader)
     {
         if (!_shaders.TryAdd(name, shader))
             DebugManager.Log(
-                LogLevel.LogWarning,
+                LogLevel.Warning,
                 $"SE_SHADERMANAGER: Shader already exists : {name}"
             );
     }
@@ -135,11 +144,12 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <param name="vertexFile">The path to the vertex shader file</param>
     /// <param name="fragmentFile">The path to the fragment shader file</param>
+    [UsedImplicitly]
     public void AddShader(string name, string vertexFile, string fragmentFile)
     {
         if (!_shaders.TryAdd(name, new SEShader(File.ReadAllText(vertexFile), File.ReadAllText(fragmentFile))))
             DebugManager.Log(
-                LogLevel.LogWarning,
+                LogLevel.Warning,
                 $"SE_SHADERMANAGER: Shader already exists : {name}"
             );
     }
@@ -150,11 +160,12 @@ public class ShaderManager
     /// <param name="name">The name of the Shader</param>
     /// <param name="vertexCode">The code of the vertex shader</param>
     /// <param name="fragmentCode">The code of the fragment shader</param>
+    [UsedImplicitly]
     public void AddShaderFromCode(string name, string vertexCode, string fragmentCode)
     {
         if (!_shaders.TryAdd(name, new SEShader(vertexCode, fragmentCode)))
             DebugManager.Log(
-                LogLevel.LogWarning,
+                LogLevel.Warning,
                 $"SE_SHADERMANAGER: Shader already exists : {name}"
             );
     }
@@ -169,7 +180,7 @@ public class ShaderManager
     {
         if (_shaders.TryGetValue(name, out var shader))
             return shader;
-        DebugManager.Log(LogLevel.LogError, $"SE_SHADERMANAGER: Shader not found : {name}");
+        DebugManager.Log(LogLevel.Error, $"SE_SHADERMANAGER: Shader not found : {name}");
         throw new ArgumentException($"Shader not found : {name}");
     }
 

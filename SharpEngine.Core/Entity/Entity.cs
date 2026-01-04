@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Entity;
@@ -7,21 +8,25 @@ namespace SharpEngine.Core.Entity;
 /// <summary>
 /// Class which represents Entity
 /// </summary>
+[UsedImplicitly]
 public class Entity
 {
     /// <summary>
     /// How Entity must be updated when paused
     /// </summary>
+    [UsedImplicitly]
     public PauseState PauseState { get; set; } = PauseState.Normal;
 
     /// <summary>
     /// Tag of Entity
     /// </summary>
+    [UsedImplicitly]
     public string Tag { get; set; } = "";
 
     /// <summary>
     /// Name of Entity
     /// </summary>
+    [UsedImplicitly]
     public string Name { get; set; } = "";
 
     /// <summary>
@@ -32,16 +37,19 @@ public class Entity
     /// <summary>
     /// Get All Components of Entity
     /// </summary>
+    [UsedImplicitly]
     public List<Component.Component> Components { get; } = [];
 
     /// <summary>
     /// Get All Children of Entity
     /// </summary>
+    [UsedImplicitly]
     public List<Entity> Children { get; } = [];
 
     /// <summary>
     /// Parent of Entity
     /// </summary>
+    [UsedImplicitly]
     public Entity? Parent { get; set; }
 
     /// <summary>
@@ -64,7 +72,8 @@ public class Entity
     /// Get Scene as T
     /// </summary>
     /// <typeparam name="T">Scene Type</typeparam>
-    /// <returns>Scene casted as T</returns>
+    /// <returns>Scene cast as T</returns>
+    [UsedImplicitly]
     public T? GetSceneAs<T>()
         where T : Scene => (T?)Scene;
 
@@ -74,6 +83,7 @@ public class Entity
     /// <typeparam name="T"></typeparam>
     /// <param name="entity"></param>
     /// <returns></returns>
+    [UsedImplicitly]
     public T AddChild<T>(T entity)
         where T : Entity
     {
@@ -84,11 +94,12 @@ public class Entity
     }
 
     /// <summary>
-    /// Add Component and return it
+    /// Add a Component and return it
     /// </summary>
     /// <param name="component">Component which be added</param>
     /// <typeparam name="T">Type of Component</typeparam>
     /// <returns>Component</returns>
+    [UsedImplicitly]
     public T AddComponent<T>(T component)
         where T : Component.Component
     {
@@ -101,6 +112,7 @@ public class Entity
     /// Remove Child
     /// </summary>
     /// <param name="entity">Child</param>
+    [UsedImplicitly]
     public void RemoveChild(Entity entity)
     {
         entity.Parent = null;
@@ -112,6 +124,7 @@ public class Entity
     /// Remove Component
     /// </summary>
     /// <param name="component">Component will be removed</param>
+    [UsedImplicitly]
     public void RemoveComponent(Component.Component component)
     {
         component.Entity = null;

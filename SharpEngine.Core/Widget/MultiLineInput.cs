@@ -1,13 +1,11 @@
-﻿using System;
+﻿using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils.EventArgs;
-using MouseButton = SharpEngine.Core.Input.MouseButton;
 using Color = SharpEngine.Core.Utils.Color;
-using Microsoft.Win32.SafeHandles;
 
 namespace SharpEngine.Core.Widget;
 
@@ -21,6 +19,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="fontSize">Multi Line Edit Font Size (null)</param>
 /// <param name="secret">If Multi Line Edit is Secret (false)</param>
 /// <param name="zLayer">Z Layer</param>
+[UsedImplicitly]
 public class MultiLineInput(
     Vec2 position,
     string text = "",
@@ -64,7 +63,7 @@ public class MultiLineInput(
             Size / 2,
             0,
             Color.Black,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer
         );
         SERender.DrawRectangle(
@@ -72,7 +71,7 @@ public class MultiLineInput(
             Size / 2,
             0,
             Color.White,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00001f
         );
 
@@ -97,11 +96,11 @@ public class MultiLineInput(
             finalPosition.Y,
             Size.X - 8,
             Size.Y - 8,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00002f,
             () =>
             {
-                DrawLines(finalFont!.Value, finalFontSize, finalPosition, lines, offsetX, offsetY);
+                DrawLines(finalFont.Value, finalFontSize, finalPosition, lines, offsetX, offsetY);
 
                 if (Focused)
                 {
@@ -111,7 +110,7 @@ public class MultiLineInput(
                         5,
                         realTextSize.Y,
                         Color.Black,
-                        InstructionSource.UI,
+                        InstructionSource.Ui,
                         ZLayer + 0.00003f
                     );
                 }
@@ -137,7 +136,7 @@ public class MultiLineInput(
                 finalFontSize,
                 2,
                 Color.Black,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 0
             );
         }

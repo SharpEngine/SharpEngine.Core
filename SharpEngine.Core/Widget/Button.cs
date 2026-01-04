@@ -82,14 +82,14 @@ public class Button(
     public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
-    /// Event which trigger when button is clicked
+    /// Event that triggers when a button is clicked
     /// </summary>
     public event EventHandler? Clicked;
 
     /// <summary>
     /// State of Button
     /// </summary>
-    protected ButtonState _state = ButtonState.Idle;
+    protected ButtonState State = ButtonState.Idle;
 
     /// <inheritdoc />
     public override void Update(float delta)
@@ -101,14 +101,14 @@ public class Button(
 
         if (InputManager.IsMouseInRectangle(new Rect(RealPosition - Size / 2, Size)))
         {
-            _state = ButtonState.Hover;
+            State = ButtonState.Hover;
             if (InputManager.IsMouseButtonPressed(MouseButton.Left))
                 Clicked?.Invoke(this, EventArgs.Empty);
             if (InputManager.IsMouseButtonDown(MouseButton.Left))
-                _state = ButtonState.Down;
+                State = ButtonState.Down;
         }
         else
-            _state = ButtonState.Idle;
+            State = ButtonState.Idle;
     }
 
     /// <inheritdoc />
@@ -121,14 +121,14 @@ public class Button(
         if (!Displayed || Scene == null || Text.Length <= 0 || Font.Length <= 0 || finalFont == null)
             return;
 
-        if (_state == ButtonState.Hover && Active)
+        if (State == ButtonState.Hover && Active)
             SERender.DrawRectangle(
                 RealPosition.X - (Size.X + 4) / 2,
                 RealPosition.Y - (Size.Y + 4) / 2,
                 Size.X + 4,
                 Size.Y + 4,
                 Color.White,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer
             );
 
@@ -138,7 +138,7 @@ public class Button(
             Size.X,
             Size.Y,
             Color.Black,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00001f
         );
         SERender.DrawRectangle(
@@ -147,7 +147,7 @@ public class Button(
             Size.X - 4,
             Size.Y - 4,
             BackgroundColor,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00002f
         );
 
@@ -162,18 +162,18 @@ public class Button(
             finalFontSize,
             2,
             FontColor,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00003f
         );
 
-        if (_state == ButtonState.Down || !Active)
+        if (State == ButtonState.Down || !Active)
             SERender.DrawRectangle(
                 RealPosition.X - Size.X / 2,
                 RealPosition.Y - Size.Y / 2,
                 Size.X,
                 Size.Y,
                 new Color(0, 0, 0, 128),
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer + 0.00004f
             );
     }

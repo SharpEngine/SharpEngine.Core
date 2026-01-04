@@ -6,6 +6,7 @@
 public enum Key
 {
 #pragma warning disable CS1591
+    // ReSharper disable UnusedMember.Global
     None = 0,
     Back = 4,
     VolumeUp = 24, // 0x00000018

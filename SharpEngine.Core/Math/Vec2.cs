@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Math;
 
@@ -21,11 +22,13 @@ public class Vec2
     /// <summary>
     /// X Position
     /// </summary>
+    [UsedImplicitly]
     public float X { get; set; }
 
     /// <summary>
     /// Y Position
     /// </summary>
+    [UsedImplicitly]
     public float Y { get; set; }
 
     /// <summary>
@@ -65,6 +68,7 @@ public class Vec2
     /// Squared Length of Vector 2D
     /// </summary>
     /// <returns>Squared Length</returns>
+    [UsedImplicitly]
     public float LengthSquared() => X * X + Y * Y;
 
     /// <summary>
@@ -82,6 +86,7 @@ public class Vec2
     /// </summary>
     /// <param name="vec2">Target</param>
     /// <returns>Distance</returns>
+    [UsedImplicitly]
     public float DistanceTo(Vec2 vec2)
     {
         var x = vec2.X - X;
@@ -98,6 +103,7 @@ public class Vec2
     }
 
     /// <inheritdoc />
+    // ReSharper disable NonReadonlyMemberInGetHashCode
     public override int GetHashCode() => HashCode.Combine(X, Y);
 
     /// <inheritdoc />

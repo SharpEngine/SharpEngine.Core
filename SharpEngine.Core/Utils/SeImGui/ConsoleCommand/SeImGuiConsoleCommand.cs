@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SharpEngine.Core.Utils.SeImGui.ConsoleCommand;
 
-namespace SharpEngine.Core.Utils.SeImGui.ConsoleCommand
+/// <summary>
+/// Interface for console command
+/// </summary>
+public interface ISeImGuiConsoleCommand
 {
     /// <summary>
-    /// Interface for console command
+    /// Command Name
     /// </summary>
-    public interface ISeImGuiConsoleCommand
-    {
-        /// <summary>
-        /// Command Name
-        /// </summary>
-        public string Command { get; }
+    public string Command { get; }
 
-        /// <summary>
-        /// Process command
-        /// </summary>
-        /// <param name="args">Console Arguments</param>
-        /// <param name="console">Console</param>
-        /// <param name="window">Game Window</param>
-        public void Process(string[] args, SeImGuiConsole console, Window window);
-    }
+    /// <summary>
+    /// Process command
+    /// </summary>
+    /// <param name="args">Console Arguments</param>
+    /// <param name="console">Console</param>
+    /// <param name="window">Game Window</param>
+    public void Process(string[] args, SeImGuiConsole console, Window window);
 }

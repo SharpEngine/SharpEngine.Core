@@ -1,9 +1,6 @@
-﻿using SharpEngine.Core.Utils;
-using SharpEngine.Core.Utils.Tween;
-using System;
+﻿using SharpEngine.Core.Utils.Tween;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Manager
 {
@@ -17,6 +14,7 @@ namespace SharpEngine.Core.Manager
         /// </summary>
         /// <remarks>The list contains all currently tracked tween animations. Modifying this collection
         /// directly may affect the behavior of the tween manager.</remarks>
+        [UsedImplicitly]
         public List<Tween> Tweens { get; set; } = [];
 
         internal void Update(float delta)

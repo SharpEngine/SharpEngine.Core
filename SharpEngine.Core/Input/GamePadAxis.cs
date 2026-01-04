@@ -1,4 +1,6 @@
-﻿namespace SharpEngine.Core.Input;
+﻿using JetBrains.Annotations;
+
+namespace SharpEngine.Core.Input;
 
 /// <summary>
 /// Enum which represents Axis of Gamepad
@@ -18,20 +20,24 @@ public enum GamePadAxis
     /// <summary>
     /// Right Stick X Axis
     /// </summary>
+    [UsedImplicitly]
     RightX,
 
     /// <summary>
     /// Right Stick Y Axis
     /// </summary>
+    [UsedImplicitly]
     RightY,
 
     /// <summary>
     /// Left Trigger Axis
     /// </summary>
+    [UsedImplicitly]
     LeftTrigger,
 
     /// <summary>
     /// Right Trigger Axis
     /// </summary>
+    [UsedImplicitly]
     RightTrigger,
 }

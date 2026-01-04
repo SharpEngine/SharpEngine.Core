@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using ImGuiNET;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
@@ -15,7 +14,6 @@ using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.EventArgs;
 using SharpEngine.Core.Utils.SeImGui;
-using static System.Formats.Asn1.AsnWriter;
 using Color = SharpEngine.Core.Utils.Color;
 
 namespace SharpEngine.Core;
@@ -68,6 +66,7 @@ public class Window
     /// <summary>
     /// Position of Window
     /// </summary>
+    [UsedImplicitly]
     public static Vec2 Position
     {
         get => Raylib.GetWindowPosition();
@@ -77,33 +76,38 @@ public class Window
     /// <summary>
     /// Background Color used in Window
     /// </summary>
+    [UsedImplicitly]
     public Color BackgroundColor { get; set; }
 
     /// <summary>
-    /// Event which be called in Start of Window (can stop start by set result to false)
+    /// Event which be called in Start of Window (can be canceled by set result to false)
     /// </summary>
+    [UsedImplicitly]
     public event EventHandler<BoolEventArgs>? StartCallback;
 
     /// <summary>
-    /// Event which be called in Stop of Window (can stop stop by set result to false)
+    /// Event which be called in Stop of Window (can be canceled by set result to false)
     /// </summary>
+    [UsedImplicitly]
     public event EventHandler<BoolEventArgs>? StopCallback;
 
     /// <summary>
     /// Function which be called to render something in ImGui
     /// </summary>
+    [UsedImplicitly]
     public Action<Window>? RenderImGui { get; set; }
 
     /// <summary>
     /// Manage Debug Mode of Window
     /// </summary>
+    [UsedImplicitly]
     public bool Debug
     {
-        get => _debug;
+        get;
         set
         {
-            _debug = value;
-            DebugManager.SetLogLevel(value ? LogLevel.LogAll : LogLevel.LogInfo);
+            field = value;
+            DebugManager.SetLogLevel(value ? LogLevel.All : LogLevel.Info);
         }
     }
 
@@ -150,6 +154,7 @@ public class Window
     /// <summary>
     /// ImGui Management of Window
     /// </summary>
+    [UsedImplicitly]
     public SeImGui SeImGui { get; }
 
     /// <summary>
@@ -197,13 +202,12 @@ public class Window
     private string _title;
     private bool _closeWindow;
     private int _internalIndexCurrentScene = -1;
-    private bool _debug;
-    private RenderTexture2D _targetTexture;
-    internal bool _imguiDisplayWindow = false;
-    internal bool _imguiDisplayConsole = false;
+    private readonly RenderTexture2D _targetTexture;
+    internal bool ImguiDisplayWindow = false;
+    internal bool ImguiDisplayConsole = false;
 
     private static bool ConsoleLog { get; set; } = true;
-    private static bool FileLog { get; set; } = false;
+    private static bool FileLog { get; set; }
 
     /// <summary>
     /// Create and Init Window
@@ -300,12 +304,14 @@ public class Window
     /// Take a screenshot and save it
     /// </summary>
     /// <param name="path">Path of saved screenshot</param>
+    [UsedImplicitly]
     public static void TakeScreenshot(string path) => Raylib.TakeScreenshot(path);
 
     /// <summary>
     /// Open URL in default browser
     /// </summary>
     /// <param name="url">Url</param>
+    [UsedImplicitly]
     public static void OpenUrl(string url)
     {
         try
@@ -332,7 +338,7 @@ public class Window
             }
             catch (Exception ex)
             {
-                DebugManager.Log(LogLevel.LogError, $"SE: Failed to open URL {url} - {ex.Message}");
+                DebugManager.Log(LogLevel.Error, $"SE: Failed to open URL {url} - {ex.Message}");
             }
         }
     }
@@ -341,13 +347,15 @@ public class Window
     /// Set master volume
     /// </summary>
     /// <param name="volume">Volume (0 to 1)</param>
+    [UsedImplicitly]
     public static void SetMasterVolume(float volume) => Raylib.SetMasterVolume(volume);
 
     /// <summary>
     /// Set Icon of Window
     /// </summary>
     /// <param name="path">Image Path</param>
-    public void SetIcon(string path)
+    [UsedImplicitly]
+    public static void SetIcon(string path)
     {
         var icon = Raylib.LoadImage(path);
         Raylib.SetWindowIcon(icon);
@@ -370,6 +378,7 @@ public class Window
     /// </summary>
     /// <param name="index">Index of Scene</param>
     /// <returns>Scene</returns>
+    [UsedImplicitly]
     public Scene GetScene(int index) => Scenes[index];
 
     /// <summary>
@@ -378,6 +387,7 @@ public class Window
     /// <param name="index">Index of Scene</param>
     /// <typeparam name="T">Type as Scene</typeparam>
     /// <returns>Scene cast as T</returns>
+    [UsedImplicitly]
     public T GetScene<T>(int index)
         where T : Scene => (T)Scenes[index];
 
@@ -386,6 +396,7 @@ public class Window
     /// </summary>
     /// <typeparam name="T">Type as Scene</typeparam>
     /// <returns>Current Scene cast as T</returns>
+    [UsedImplicitly]
     public T GetCurrentScene<T>()
         where T : Scene => (T)Scenes[_internalIndexCurrentScene];
 
@@ -401,16 +412,16 @@ public class Window
 
         if (Scenes.Count == 0)
         {
-            DebugManager.Log(LogLevel.LogError, "SE: There are no scenes in window.");
+            DebugManager.Log(LogLevel.Error, "SE: There are no scenes in window.");
             return;
         }
 
         #region Load
 
-        DebugManager.Log(LogLevel.LogInfo, "SE: Loading Scenes...");
+        DebugManager.Log(LogLevel.Info, "SE: Loading Scenes...");
         foreach (var scene in Scenes)
             scene.Load();
-        DebugManager.Log(LogLevel.LogInfo, "SE: Scenes loaded !");
+        DebugManager.Log(LogLevel.Info, "SE: Scenes loaded !");
 
         #endregion
 
@@ -424,7 +435,7 @@ public class Window
 
             InputManager.UpdateInput();
 
-            if (_screenSize.X != Raylib.GetScreenWidth() || _screenSize.Y != Raylib.GetScreenHeight())
+            if (System.Math.Abs(_screenSize.X - Raylib.GetScreenWidth()) > 0.01f || System.Math.Abs(_screenSize.Y - Raylib.GetScreenHeight()) > 0.01f)
             {
                 _screenSize = new Vec2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
                 RenderScale = MathF.Min(_screenSize.X / _renderSize.X, _screenSize.Y / _renderSize.Y);
@@ -493,26 +504,26 @@ public class Window
 
         #region Unload
 
-        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Scenes...");
+        DebugManager.Log(LogLevel.Info, "SE: Unloading Scenes...");
         foreach (var scene in Scenes)
             scene.Unload();
-        DebugManager.Log(LogLevel.LogInfo, "SE: Scenes unloaded !");
+        DebugManager.Log(LogLevel.Info, "SE: Scenes unloaded !");
 
-        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Textures...");
+        DebugManager.Log(LogLevel.Info, "SE: Unloading Textures...");
         Raylib.UnloadRenderTexture(_targetTexture);
         TextureManager.Unload();
-        DebugManager.Log(LogLevel.LogInfo, "SE: Textures unloaded !");
-        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Fonts...");
+        DebugManager.Log(LogLevel.Info, "SE: Textures unloaded !");
+        DebugManager.Log(LogLevel.Info, "SE: Unloading Fonts...");
         FontManager.Unload();
-        DebugManager.Log(LogLevel.LogInfo, "SE: Fonts unloaded !");
-        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading Shaders...");
+        DebugManager.Log(LogLevel.Info, "SE: Fonts unloaded !");
+        DebugManager.Log(LogLevel.Info, "SE: Unloading Shaders...");
         ShaderManager.Unload();
-        DebugManager.Log(LogLevel.LogInfo, "SE: Shaders unloaded !");
-        DebugManager.Log(LogLevel.LogInfo, "SE: Unloading SeImGui...");
+        DebugManager.Log(LogLevel.Info, "SE: Shaders unloaded !");
+        DebugManager.Log(LogLevel.Info, "SE: Unloading SeImGui...");
         SeImGui.Dispose();
-        DebugManager.Log(LogLevel.LogInfo, "SE: SeImGui unloaded !");
+        DebugManager.Log(LogLevel.Info, "SE: SeImGui unloaded !");
 
-        DebugManager.Log(LogLevel.LogInfo, "SE: Closing Window.");
+        DebugManager.Log(LogLevel.Info, "SE: Closing Window.");
         Raylib.CloseAudioDevice();
         Raylib.CloseWindow();
 
@@ -543,13 +554,13 @@ public class Window
         var message = Logging.GetLogMessage(new IntPtr(text), new IntPtr(args));
         message = (LogLevel)logLevel switch
         {
-            LogLevel.LogTrace => $"TRACE: {message}",
-            LogLevel.LogAll => $"ALL: {message}",
-            LogLevel.LogDebug => $"DEBUG: {message}",
-            LogLevel.LogInfo => $"INFO: {message}",
-            LogLevel.LogWarning => $"WARNING: {message}",
-            LogLevel.LogError => $"ERROR: {message}",
-            LogLevel.LogFatal => $"FATAL: {message}",
+            LogLevel.Trace => $"TRACE: {message}",
+            LogLevel.All => $"ALL: {message}",
+            LogLevel.Debug => $"DEBUG: {message}",
+            LogLevel.Info => $"INFO: {message}",
+            LogLevel.Warning => $"WARNING: {message}",
+            LogLevel.Error => $"ERROR: {message}",
+            LogLevel.Fatal => $"FATAL: {message}",
             _ => message
         };
 

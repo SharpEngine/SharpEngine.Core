@@ -6,7 +6,7 @@ namespace SharpEngine.Core.Renderer.Instructions;
 /// <summary>
 /// Draws circle lines.
 /// </summary>
-internal record class DrawCircleLines : Instruction
+internal record DrawCircleLines : Instruction
 {
     internal override void Execute()
     {

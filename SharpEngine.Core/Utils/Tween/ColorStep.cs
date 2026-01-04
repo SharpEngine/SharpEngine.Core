@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SharpEngine.Core.Utils.Tween;
+﻿namespace SharpEngine.Core.Utils.Tween;
 
 internal record ColorStep(
     short RStep,

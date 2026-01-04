@@ -1,4 +1,5 @@
-﻿using SharpEngine.Core.Math;
+﻿using JetBrains.Annotations;
+using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 
 namespace SharpEngine.Core.Component;
@@ -22,39 +23,45 @@ public class RectComponent(
     /// <summary>
     /// Color of Rectangle
     /// </summary>
+    [UsedImplicitly]
     public Utils.Color Color { get; set; } = color;
 
     /// <summary>
     /// Size of Rectangle
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// If Rectangle is displayed
     /// </summary>
+    [UsedImplicitly]
     public bool Displayed { get; set; } = displayed;
 
     /// <summary>
     /// Offset of Rectangle
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// Offset of ZLayer of Rectangle
     /// </summary>
+    [UsedImplicitly]
     public int ZLayerOffset { get; set; } = zLayerOffset;
 
     /// <summary>
     /// Represents the associated transform component, which defines the position, rotation, and scale of the object in
     /// the scene.
     /// </summary>
-    protected TransformComponent? _transform;
+    [UsedImplicitly]
+    protected TransformComponent? Transform;
 
     /// <inheritdoc />
     public override void Load()
     {
         base.Load();
-        _transform = Entity?.GetComponentAs<TransformComponent>();
+        Transform = Entity?.GetComponentAs<TransformComponent>();
     }
 
     /// <inheritdoc />
@@ -62,19 +69,19 @@ public class RectComponent(
     {
         base.Draw();
 
-        if (_transform == null || !Displayed)
+        if (Transform == null || !Displayed)
             return;
 
-        var finalSize = Size * _transform.Scale;
-        var position = _transform.GetTransformedPosition(Offset);
+        var finalSize = Size * Transform.Scale;
+        var position = Transform.GetTransformedPosition(Offset);
 
         SERender.DrawRectangle(
             new Rect(position.X, position.Y, finalSize.X, finalSize.Y),
             finalSize / 2,
-            _transform.Rotation,
+            Transform.Rotation,
             Color,
             InstructionSource.Entity,
-            _transform.ZLayer + ZLayerOffset
+            Transform.ZLayer + ZLayerOffset
         );
     }
 }

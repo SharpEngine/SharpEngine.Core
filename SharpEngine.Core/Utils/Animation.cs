@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Utils;
 
@@ -19,15 +20,18 @@ public struct Animation(string name, List<uint> indices, float timer, bool loop 
     /// <summary>
     /// Indices of frames
     /// </summary>
+    [UsedImplicitly]
     public List<uint> Indices { get; set; } = indices;
 
     /// <summary>
     /// Timer between frames
     /// </summary>
+    [UsedImplicitly]
     public float Timer { get; set; } = timer;
 
     /// <summary>
     /// Loop Animation
     /// </summary>
+    [UsedImplicitly]
     public bool Loop { get; set; } = loop;
 }

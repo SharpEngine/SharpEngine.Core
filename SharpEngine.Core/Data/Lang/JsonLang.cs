@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Data.Lang;
 
 /// <summary>
 /// Class which represents Lang File with Json
 /// </summary>
+[UsedImplicitly]
 public class JsonLang : ILang
 {
     private Dictionary<string, string> _translations = [];

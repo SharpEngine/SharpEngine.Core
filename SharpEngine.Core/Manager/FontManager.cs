@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Utils;
 
@@ -16,19 +17,21 @@ public class FontManager
     /// <summary>
     /// Get All Fonts
     /// </summary>
-    public List<Font> Fonts => new(_fonts.Values);
+    public List<Font> Fonts => [.._fonts.Values];
 
     /// <summary>
     /// Checks if the font with the specified name exists in the manager.
     /// </summary>
     /// <param name="name">The name of the font.</param>
     /// <returns><c>true</c> if the font exists; otherwise, <c>false</c>.</returns>
+    [UsedImplicitly]
     public bool HasFont(string name) => _fonts.ContainsKey(name);
 
     /// <summary>
     /// Removes the font with the specified name from the manager.
     /// </summary>
     /// <param name="name">The name of the font to remove.</param>
+    [UsedImplicitly]
     public void RemoveFont(string name)
     {
         if (_fonts.TryGetValue(name, out var font))
@@ -38,7 +41,7 @@ public class FontManager
             return;
         }
 
-        DebugManager.Log(LogLevel.LogError, $"SE_FONTMANAGER: Font not found : {name}");
+        DebugManager.Log(LogLevel.Error, $"SE_FONTMANAGER: Font not found : {name}");
         throw new ArgumentException($"Font not found : {name}");
     }
 
@@ -49,16 +52,17 @@ public class FontManager
     /// <param name="file">The path to the font file.</param>
     /// <param name="fontSize">The size of the font (default is 25).</param>
     /// <exception cref="FileNotFoundException">Thrown if the font file is not found.</exception>
+    [UsedImplicitly]
     public void AddFont(string name, string file, int fontSize = 25)
     {
         if (!File.Exists(file))
         {
-            DebugManager.Log(LogLevel.LogFatal, $"SE_FONTMANAGER: Font not found : {name}");
+            DebugManager.Log(LogLevel.Fatal, $"SE_FONTMANAGER: Font not found : {name}");
             throw new FileNotFoundException($"Font not found : {file}");
         }
 
         if (!_fonts.TryAdd(name, Raylib.LoadFontEx(file, fontSize, null, 250)))
-            DebugManager.Log(LogLevel.LogWarning, $"SE_FONTMANAGER: Font already exist : {name}");
+            DebugManager.Log(LogLevel.Warning, $"SE_FONTMANAGER: Font already exist : {name}");
     }
 
     /// <summary>
@@ -74,7 +78,7 @@ public class FontManager
 
         if (_fonts.TryGetValue(name, out var font))
             return font;
-        DebugManager.Log(LogLevel.LogError, $"SE_FONTMANAGER: Font not found : {name}");
+        DebugManager.Log(LogLevel.Error, $"SE_FONTMANAGER: Font not found : {name}");
         throw new ArgumentException($"Font not found : {name}");
     }
 

@@ -6,7 +6,7 @@ namespace SharpEngine.Core.Renderer.Instructions;
 /// <summary>
 /// Draws a rectangle.
 /// </summary>
-internal record class DrawRectangle : Instruction
+internal record DrawRectangle : Instruction
 {
     internal override void Execute()
     {

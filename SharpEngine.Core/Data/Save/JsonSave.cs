@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Data.Save;
 
 /// <summary>
 /// Class which represents Save with json data
 /// </summary>
+[UsedImplicitly]
 public class JsonSave : ISave
 {
     private Dictionary<string, object> _data = [];

@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
@@ -15,22 +16,26 @@ namespace SharpEngine.Core.Widget;
 /// <param name="size">Checkbox Size</param>
 /// <param name="isChecked">If Checkbox is Checked</param>
 /// <param name="zLayer">Z Layer</param>
+[UsedImplicitly]
 public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, int zLayer = 0)
     : Widget(position, zLayer)
 {
     /// <summary>
     /// Size of Checkbox
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; } = size ?? new Vec2(20);
 
     /// <summary>
     /// If Checkbox is Checked
     /// </summary>
+    [UsedImplicitly]
     public bool IsChecked { get; set; } = isChecked;
 
     /// <summary>
     /// Event trigger when value is changed
     /// </summary>
+    [UsedImplicitly]
     public event EventHandler<ValueEventArgs<bool>>? ValueChanged;
 
     /// <inheritdoc />
@@ -67,7 +72,7 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
             Size / 2,
             0,
             Color.Black,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer
         );
         SERender.DrawRectangle(
@@ -75,7 +80,7 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
             (Size - 4) / 2,
             0,
             Color.White,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00001f
         );
 
@@ -85,7 +90,7 @@ public class Checkbox(Vec2 position, Vec2? size = null, bool isChecked = false, 
                 (Size - 6) / 2,
                 0,
                 Color.Black,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer + 0.00002f
             );
     }

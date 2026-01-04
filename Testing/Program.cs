@@ -1,8 +1,6 @@
 ﻿using Raylib_cs;
 using SharpEngine.Core;
 using SharpEngine.Core.Manager;
-using SharpEngine.Core.Math;
-using SharpEngine.Core.Utils;
 using Color = SharpEngine.Core.Utils.Color;
 
 namespace Testing;

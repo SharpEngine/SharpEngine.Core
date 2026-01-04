@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿using JetBrains.Annotations;
+using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Widget.Utils;
@@ -38,31 +39,37 @@ public class Label(
     /// <summary>
     /// Font of Label
     /// </summary>
+    [UsedImplicitly]
     public string Font { get; set; } = font;
 
     /// <summary>
     /// Color of Label
     /// </summary>
+    [UsedImplicitly]
     public Color Color { get; set; } = color ?? Color.Black;
 
     /// <summary>
     /// If Lines is Centered
     /// </summary>
+    [UsedImplicitly]
     public bool CenterAllLines { get; set; } = centerAllLines;
 
     /// <summary>
     /// Rotation of Label
     /// </summary>
+    [UsedImplicitly]
     public int Rotation { get; set; } = rotation;
 
     /// <summary>
     /// Font Size of Label (or Null)
     /// </summary>
+    [UsedImplicitly]
     public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
     /// Style of Label
     /// </summary>
+    [UsedImplicitly]
     public LabelStyles Style { get; set; } = style;
 
     /// <inheritdoc />
@@ -96,7 +103,7 @@ public class Label(
                 finalFontSize,
                 2,
                 Color,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer
             );
 
@@ -107,7 +114,7 @@ public class Label(
                     lineSize.X,
                     2,
                     Color.Black,
-                    InstructionSource.UI,
+                    InstructionSource.Ui,
                     ZLayer + 0.00001f
                 );
             if (Style.HasFlag(LabelStyles.Underline))
@@ -117,7 +124,7 @@ public class Label(
                     lineSize.X,
                     2,
                     Color.Black,
-                    InstructionSource.UI,
+                    InstructionSource.Ui,
                     ZLayer + 0.00001f
                 );
         }

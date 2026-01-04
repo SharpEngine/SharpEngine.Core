@@ -1,4 +1,5 @@
-﻿using SharpEngine.Core.Math;
+﻿using JetBrains.Annotations;
+using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 
@@ -9,34 +10,36 @@ namespace SharpEngine.Core.Widget;
 /// </summary>
 public class ProgressBar : Widget
 {
-    private float _value;
-
     /// <summary>
     /// Value of Bar (0 to 100)
     /// </summary>
+    [UsedImplicitly]
     public float Value
     {
-        get => _value;
-        set => _value = MathHelper.Clamp(value, 0, 100);
+        get;
+        set => field = MathHelper.Clamp(value, 0, 100);
     }
 
     /// <summary>
     /// Size of Bar
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; }
 
     /// <summary>
     /// Color of Bar
     /// </summary>
+    [UsedImplicitly]
     public Color Color { get; set; }
 
     /// <summary>
     /// If Bar is Horizontal
     /// </summary>
-    public bool Horizontal { get; set; } = true;
+    [UsedImplicitly]
+    public bool Horizontal { get; set; }
 
     /// <summary>
-    /// Create ProgressBar
+    /// Create a ProgressBar
     /// </summary>
     /// <param name="position">Position</param>
     /// <param name="size">Size (Vec2(150, 60))</param>
@@ -73,7 +76,7 @@ public class ProgressBar : Widget
             Size / 2,
             0,
             Color.Black,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer
         );
         SERender.DrawRectangle(
@@ -81,7 +84,7 @@ public class ProgressBar : Widget
             (Size - 4) / 2,
             0,
             Color.White,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00001f
         );
         SERender.DrawRectangle(
@@ -89,7 +92,7 @@ public class ProgressBar : Widget
             (Size - 8) / 2,
             0,
             Color,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00002f
         );
     }

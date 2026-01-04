@@ -7,7 +7,7 @@ namespace SharpEngine.Core.Renderer.Instructions;
 /// <summary>
 /// Draws rectangle lines extended.
 /// </summary>
-internal record class DrawRectangleLinesEx : Instruction
+internal record DrawRectangleLinesEx : Instruction
 {
     internal override void Execute()
     {

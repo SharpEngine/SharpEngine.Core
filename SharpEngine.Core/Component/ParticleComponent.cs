@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using SharpEngine.Core.Particle;
 
 namespace SharpEngine.Core.Component;
@@ -6,24 +7,27 @@ namespace SharpEngine.Core.Component;
 /// <summary>
 /// Component which can display particles
 /// </summary>
+[UsedImplicitly]
 public class ParticleComponent : Component
 {
     /// <summary>
     /// Particle Emitters
     /// </summary>
+    [UsedImplicitly]
     public List<ParticleEmitter> ParticleEmitters { get; } = [];
 
     /// <summary>
     /// Represents the associated transform component for the current object, if available.
     /// </summary>
-    protected TransformComponent? _transform;
+    [UsedImplicitly]
+    protected TransformComponent? Transform;
 
     /// <inheritdoc />
     public override void Load()
     {
         base.Load();
 
-        _transform = Entity?.GetComponentAs<TransformComponent>();
+        Transform = Entity?.GetComponentAs<TransformComponent>();
     }
 
     /// <inheritdoc />
@@ -31,11 +35,11 @@ public class ParticleComponent : Component
     {
         base.Update(delta);
 
-        if (_transform == null)
+        if (Transform == null)
             return;
 
         foreach (var emitter in ParticleEmitters)
-            emitter.Update(delta, _transform.Position);
+            emitter.Update(delta, Transform.Position);
     }
 
     /// <inheritdoc />
@@ -43,7 +47,7 @@ public class ParticleComponent : Component
     {
         base.Draw();
 
-        if (_transform == null)
+        if (Transform == null)
             return;
 
         foreach (var emitter in ParticleEmitters)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
 
@@ -18,46 +19,55 @@ public abstract class Widget
     /// <summary>
     /// Z Layer of Widget
     /// </summary>
-    public int ZLayer { get; set; } = 0;
+    [UsedImplicitly]
+    public int ZLayer { get; set; }
 
     /// <summary>
     /// If Widget is Displayed
     /// </summary>
+    [UsedImplicitly]
     public bool Displayed { get; set; } = true;
 
     /// <summary>
     /// If Widget is Active
     /// </summary>
+    [UsedImplicitly]
     public bool Active { get; set; } = true;
 
     /// <summary>
     /// Parent of Widget (can be null)
     /// </summary>
+    [UsedImplicitly]
     public Widget? Parent { get; set; }
 
     /// <summary>
     /// How Widget must be updated when paused
     /// </summary>
+    [UsedImplicitly]
     public PauseState PauseState { get; set; } = PauseState.Normal;
 
     /// <summary>
     /// Name of Widget
     /// </summary>
+    [UsedImplicitly]
     public string Name { get; set; } = "";
 
     /// <summary>
     /// Get Real Position (Position + Parent RealPosition if widget has Parent)
     /// </summary>
+    [UsedImplicitly]
     public Vec2 RealPosition => Parent != null ? Position + Parent.RealPosition : Position;
 
     /// <summary>
     /// If Widget is really displayed (considering parent's display state)
     /// </summary>
+    [UsedImplicitly]
     public bool RealDisplayed => Displayed && (Parent == null || Parent.RealDisplayed);
 
     /// <summary>
     /// Get All Direct Children of Widget
     /// </summary>
+    [UsedImplicitly]
     public List<Widget> Children { get; } = [];
 
     /// <summary>
@@ -92,6 +102,7 @@ public abstract class Widget
     /// </summary>
     /// <typeparam name="T">Type of Children</typeparam>
     /// <returns>Children of type T</returns>
+    [UsedImplicitly]
     public List<T> GetChildrenAs<T>()
         where T : Widget => Children.FindAll(w => w.GetType() == typeof(T)).Cast<T>().ToList();
 
@@ -111,16 +122,18 @@ public abstract class Widget
     /// Get Scene as T
     /// </summary>
     /// <typeparam name="T">Scene Type</typeparam>
-    /// <returns>Scene casted as T</returns>
+    /// <returns>Scene cast as T</returns>
+    [UsedImplicitly]
     public T? GetSceneAs<T>()
         where T : Scene => (T?)Scene;
 
     /// <summary>
     /// Add Child and return it
     /// </summary>
-    /// <param name="widget">Widget which will be added</param>
+    /// <param name="widget">Widget, which will be added</param>
     /// <typeparam name="T">Type of Widget</typeparam>
     /// <returns>Child</returns>
+    [UsedImplicitly]
     public T AddChild<T>(T widget)
         where T : Widget
     {
@@ -135,6 +148,7 @@ public abstract class Widget
     /// Remove Child
     /// </summary>
     /// <param name="widget">Child that will be removed</param>
+    [UsedImplicitly]
     public void RemoveChild(Widget widget)
     {
         widget.Scene = null;
@@ -144,6 +158,7 @@ public abstract class Widget
     /// <summary>
     /// Remove All Children
     /// </summary>
+    [UsedImplicitly]
     public void RemoveAllChildren()
     {
         foreach (var child in Children)
@@ -163,6 +178,7 @@ public abstract class Widget
     /// <summary>
     /// Unload Widget
     /// </summary>
+    [UsedImplicitly]
     public virtual void Unload()
     {
         foreach (var child in Children)
@@ -173,6 +189,7 @@ public abstract class Widget
     /// Update Widget
     /// </summary>
     /// <param name="delta">Time since last frame</param>
+    [UsedImplicitly]
     public virtual void Update(float delta)
     {
         foreach (var child in Children)

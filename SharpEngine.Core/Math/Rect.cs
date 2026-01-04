@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Raylib_cs;
 
 namespace SharpEngine.Core.Math;
@@ -15,21 +16,25 @@ public class Rect(float x, float y, float width, float height)
     /// <summary>
     /// X Position
     /// </summary>
+    [UsedImplicitly]
     public float X { get; set; } = x;
 
     /// <summary>
     /// Y Position
     /// </summary>
+    [UsedImplicitly]
     public float Y { get; set; } = y;
 
     /// <summary>
     /// Width Size
     /// </summary>
+    [UsedImplicitly]
     public float Width { get; set; } = width;
 
     /// <summary>
     /// Height Size
     /// </summary>
+    [UsedImplicitly]
     public float Height { get; set; } = height;
 
     /// <summary>
@@ -59,7 +64,7 @@ public class Rect(float x, float y, float width, float height)
         : this(position.X, position.Y, width, height) { }
 
     /// <summary>
-    /// Return if position is in Rect
+    /// Return if the position is in Rect
     /// </summary>
     /// <param name="position">Position</param>
     /// <returns>if Position is in Rect</returns>
@@ -67,7 +72,7 @@ public class Rect(float x, float y, float width, float height)
         X <= position.X && position.X <= X + Width && Y <= position.Y && position.Y <= Y + Height;
 
     /// <summary>
-    /// Return if other Rect is in Rect
+    /// Return if another Rect is in Rect
     /// </summary>
     /// <param name="other">Rect</param>
     /// <returns>If intersect</returns>
@@ -83,6 +88,7 @@ public class Rect(float x, float y, float width, float height)
     }
 
     /// <inheritdoc />
+    // ReSharper disable NonReadonlyMemberInGetHashCode
     public override int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
     /// <inheritdoc />

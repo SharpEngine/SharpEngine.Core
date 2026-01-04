@@ -1,4 +1,5 @@
-﻿using SharpEngine.Core.Math;
+﻿using JetBrains.Annotations;
+using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 
@@ -23,16 +24,19 @@ public class Image(
     /// <summary>
     /// Name of Texture which be displayed
     /// </summary>
+    [UsedImplicitly]
     public string Texture { get; set; } = texture;
 
     /// <summary>
     /// Scale of Image
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Scale { get; set; } = scale ?? Vec2.One;
 
     /// <summary>
     /// Rotation of Image
     /// </summary>
+    [UsedImplicitly]
     public int Rotation { get; set; } = rotation;
 
     /// <inheritdoc />
@@ -53,7 +57,7 @@ public class Image(
             new Vec2(finalTexture.Width / 2f * Scale.X, finalTexture.Height / 2f * Scale.Y),
             Rotation,
             Color.White,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer
         );
     }

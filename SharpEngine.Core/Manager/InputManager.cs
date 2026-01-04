@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Math;
@@ -13,8 +14,8 @@ namespace SharpEngine.Core.Manager;
 public static class InputManager
 {
     internal static List<int> InternalPressedChars { get; } = [];
-    internal static List<int> InternalPressedKeys { get; set; } = [];
-    internal static Window InternalWindow { get; set; }
+    private static List<int> InternalPressedKeys { get; } = [];
+    internal static Window InternalWindow { get; set; } = null!;
 
     /// <summary>
     /// List of Pressed Chars in Frame
@@ -24,6 +25,7 @@ public static class InputManager
     /// <summary>
     /// List of Pressed Keys in Frame
     /// </summary>
+    [UsedImplicitly]
     public static List<Key> GetPressedKeys() => InternalPressedKeys.Cast<Key>().ToList();
 
     /// <summary>
@@ -38,6 +40,7 @@ public static class InputManager
     /// </summary>
     /// <param name="key">Key</param>
     /// <returns>If Key is up</returns>
+    [UsedImplicitly]
     public static bool IsKeyUp(Key key) => Raylib.IsKeyUp(key.ToRayLib());
 
     /// <summary>
@@ -52,6 +55,7 @@ public static class InputManager
     /// </summary>
     /// <param name="key">Key</param>
     /// <returns>If Key is released</returns>
+    [UsedImplicitly]
     public static bool IsKeyReleased(Key key) => Raylib.IsKeyReleased(key.ToRayLib());
 
     /// <summary>
@@ -62,34 +66,36 @@ public static class InputManager
     public static bool IsMouseInRectangle(Rect rect) => rect.Contains(GetMousePosition());
 
     /// <summary>
-    /// Check if mouse button is down
+    /// Check if the mouse button is down
     /// </summary>
     /// <param name="button">Mouse button</param>
-    /// <returns>If mouse button is down</returns>
+    /// <returns>If the mouse button is down</returns>
     public static bool IsMouseButtonDown(MouseButton button) =>
         Raylib.IsMouseButtonDown(button.ToRayLib());
 
     /// <summary>
-    /// Check if mouse button is up
+    /// Check if the mouse button is up
     /// </summary>
     /// <param name="button">Mouse button</param>
-    /// <returns>If mouse button is up</returns>
+    /// <returns>If the mouse button is up</returns>
+    [UsedImplicitly]
     public static bool IsMouseButtonUp(MouseButton button) =>
         Raylib.IsMouseButtonUp(button.ToRayLib());
 
     /// <summary>
-    /// Check if mouse button is pressed
+    /// Check if the mouse button is pressed
     /// </summary>
     /// <param name="button">Mouse button</param>
-    /// <returns>If mouse button is pressed</returns>
+    /// <returns>If the mouse button is pressed</returns>
     public static bool IsMouseButtonPressed(MouseButton button) =>
         Raylib.IsMouseButtonPressed(button.ToRayLib());
 
     /// <summary>
-    /// Check if mouse button is released
+    /// Check if the mouse button is released
     /// </summary>
     /// <param name="button">Mouse button</param>
-    /// <returns>If mouse button is released</returns>
+    /// <returns>If the mouse button is released</returns>
+    [UsedImplicitly]
     public static bool IsMouseButtonReleased(MouseButton button) =>
         Raylib.IsMouseButtonReleased(button.ToRayLib());
 
@@ -110,6 +116,7 @@ public static class InputManager
     /// Get Real Mouse position
     /// </summary>
     /// <returns>Position</returns>
+    [UsedImplicitly]
     public static Vec2 GetRealMousePosition() => Raylib.GetMousePosition();
 
     /// <summary>
@@ -127,6 +134,7 @@ public static class InputManager
     /// Set Real Mouse Position
     /// </summary>
     /// <param name="position">Position</param>
+    [UsedImplicitly]
     public static void SetRealMousePosition(Vec2 position) =>
         Raylib.SetMousePosition((int)position.X, (int)position.Y);
 
@@ -137,45 +145,50 @@ public static class InputManager
     public static float GetMouseWheelMove() => Raylib.GetMouseWheelMove();
 
     /// <summary>
-    /// Check if gamepad is connected
+    /// Check if the gamepad is connected
     /// </summary>
     /// <param name="index">Index of Gamepad</param>
-    /// <returns>If gamepad is connected</returns>
+    /// <returns>If the gamepad is connected</returns>
+    [UsedImplicitly]
     public static bool IsGamePadConnected(int index) => Raylib.IsGamepadAvailable(index);
 
     /// <summary>
-    /// Check if gamepad button is down
+    /// Check if the gamepad button is down
     /// </summary>
     /// <param name="index">Index of Gamepad</param>
     /// <param name="button">Button of Gamepad</param>
-    /// <returns>If gamepad button is down</returns>
+    /// <returns>If the gamepad button is down</returns>
+    [UsedImplicitly]
     public static bool IsGamePadButtonDown(int index, GamePadButton button) =>
         Raylib.IsGamepadButtonDown(index, button.ToRayLib());
 
     /// <summary>
-    /// Check if gamepad button is up
+    /// Check if the gamepad button is up
     /// </summary>
     /// <param name="index">Index of Gamepad</param>
     /// <param name="button">Button of Gamepad</param>
-    /// <returns>If gamepad button is up</returns>
+    /// <returns>If the gamepad button is up</returns>
+    [UsedImplicitly]
     public static bool IsGamePadButtonUp(int index, GamePadButton button) =>
         Raylib.IsGamepadButtonUp(index, button.ToRayLib());
 
     /// <summary>
-    /// Check if gamepad button is pressed
+    /// Check if the gamepad button is pressed
     /// </summary>
     /// <param name="index">Index of Gamepad</param>
     /// <param name="button">Button of Gamepad</param>
-    /// <returns>If gamepad button is pressed</returns>
+    /// <returns>If the gamepad button is pressed</returns>
+    [UsedImplicitly]
     public static bool IsGamePadButtonPressed(int index, GamePadButton button) =>
         Raylib.IsGamepadButtonPressed(index, button.ToRayLib());
 
     /// <summary>
-    /// Check if gamepad button is released
+    /// Check if the gamepad button is released
     /// </summary>
     /// <param name="index">Index of Gamepad</param>
     /// <param name="button">Button of Gamepad</param>
-    /// <returns>If gamepad button is released</returns>
+    /// <returns>If the gamepad button is released</returns>
+    [UsedImplicitly]
     public static bool IsGamePadButtonReleased(int index, GamePadButton button) =>
         Raylib.IsGamepadButtonReleased(index, button.ToRayLib());
 

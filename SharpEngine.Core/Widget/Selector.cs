@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils.EventArgs;
@@ -7,53 +8,63 @@ using SharpEngine.Core.Utils.EventArgs;
 namespace SharpEngine.Core.Widget;
 
 /// <summary>
-/// CLass which display a selector
+/// Class, which display a selector
 /// </summary>
+[UsedImplicitly]
 public class Selector : Widget
 {
     /// <summary>
     /// Values of Selector
     /// </summary>
+    [UsedImplicitly]
     public List<string> Values { get; }
 
     /// <summary>
     /// Selected Index of Selector
     /// </summary>
+    [UsedImplicitly]
     public int SelectedIndex { get; set; }
 
     /// <summary>
     /// Left Button of Selector
     /// </summary>
+    [UsedImplicitly]
     public Button LeftButton { get; }
 
     /// <summary>
     /// Right Button of Selector
     /// </summary>
+    [UsedImplicitly]
     public Button RightButton { get; }
 
     /// <summary>
     /// Label of Selector
     /// </summary>
+    [UsedImplicitly]
     public Label LabelValue { get; }
 
     /// <summary>
     /// Font of Selector
     /// </summary>
+    [UsedImplicitly]
     public string Font { get; set; }
 
     /// <summary>
     /// Font Size of Selector
     /// </summary>
+    [UsedImplicitly]
     public int? FontSize { get; set; }
 
     /// <summary>
-    /// Event trigger when value is changed
+    /// Event trigger when the value is changed
     /// </summary>
+    [UsedImplicitly]
     public event EventHandler<ValueEventArgs<string>>? ValueChanged;
 
     /// <summary>
     /// Selected Value
     /// </summary>
+    [UsedImplicitly]
     public string Selected => Values[SelectedIndex];
 
     /// <summary>

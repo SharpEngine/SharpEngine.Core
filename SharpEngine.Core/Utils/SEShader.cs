@@ -1,21 +1,19 @@
-﻿using Raylib_cs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using Raylib_cs;
 
 namespace SharpEngine.Core.Utils
 {
     /// <summary>
     /// Base Class which represents Shader
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public class SEShader
     {
         /// <summary>
         /// Internal Raylib Shader
         /// </summary>
-        protected Shader internalShader;
+        [UsedImplicitly]
+        protected Shader InternalShader;
 
         /// <summary>
         /// Create Shader from Vertex and Fragment Shader
@@ -24,7 +22,7 @@ namespace SharpEngine.Core.Utils
         /// <param name="fragmentShader">Fragment Shader</param>
         public SEShader(string? vertexShader, string? fragmentShader)
         {
-            internalShader = Raylib.LoadShaderFromMemory(vertexShader, fragmentShader);
+            InternalShader = Raylib.LoadShaderFromMemory(vertexShader, fragmentShader);
         }
 
         /// <summary>
@@ -33,13 +31,13 @@ namespace SharpEngine.Core.Utils
         /// <param name="internalShader">Raylib Shader</param>
         public SEShader(Shader internalShader)
         {
-            this.internalShader = internalShader;
+            InternalShader = internalShader;
         }
 
         /// <summary>
         /// Get Internal Raylib Shader
         /// </summary>
         /// <returns>Raylib Shader</returns>
-        public Shader GetInternalShader() => internalShader;
+        public Shader GetInternalShader() => InternalShader;
     }
 }

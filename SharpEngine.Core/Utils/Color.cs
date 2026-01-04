@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using JetBrains.Annotations;
 using SharpEngine.Core.Math;
 
 namespace SharpEngine.Core.Utils;
@@ -7,7 +8,8 @@ namespace SharpEngine.Core.Utils;
 /// <summary>
 /// Struct which represents Color
 /// </summary>
-public struct Color
+[UsedImplicitly]
+public struct Color : IEquatable<Color>
 {
     private int _r;
     private int _g;
@@ -17,6 +19,7 @@ public struct Color
     /// <summary>
     /// Get Red Component of Color
     /// </summary>
+    [UsedImplicitly]
     public int R
     {
         readonly get => _r;
@@ -26,6 +29,7 @@ public struct Color
     /// <summary>
     /// Get Green Component of Color
     /// </summary>
+    [UsedImplicitly]
     public int G
     {
         readonly get => _g;
@@ -35,6 +39,7 @@ public struct Color
     /// <summary>
     /// Get Blue Component of Color
     /// </summary>
+    [UsedImplicitly]
     public int B
     {
         readonly get => _b;
@@ -44,6 +49,7 @@ public struct Color
     /// <summary>
     /// Get Alpha Component of Color
     /// </summary>
+    [UsedImplicitly]
     public int A
     {
         readonly get => _a;
@@ -90,6 +96,7 @@ public struct Color
     /// </summary>
     /// <param name="vector4">Vector 4</param>
     /// <returns>Color</returns>
+    [UsedImplicitly]
     public static Color FromVec4(Vector4 vector4) =>
         new(
             (int)(vector4.X * 255),
@@ -103,6 +110,7 @@ public struct Color
     /// </summary>
     /// <param name="force">Force of Darker Color</param>
     /// <returns>Darker Color</returns>
+    [UsedImplicitly]
     public readonly Color Darker(int force = 1) =>
         new(_r - 10 * force, _g - 10 * force, _b - 10 * force, _a);
 
@@ -111,6 +119,7 @@ public struct Color
     /// </summary>
     /// <param name="force">Force of Lighter Color</param>
     /// <returns>Lighter Color</returns>
+    [UsedImplicitly]
     public readonly Color Lighter(int force = 1) =>
         new(_r + 10 * force, _g + 10 * force, _b + 10 * force, _a);
 
@@ -137,7 +146,7 @@ public struct Color
     }
 
     /// <inheritdoc />
-    public override readonly bool Equals(object? obj)
+    public readonly override bool Equals(object? obj)
     {
         if (obj is Color color)
             return this == color;
@@ -145,10 +154,15 @@ public struct Color
     }
 
     /// <inheritdoc />
-    public override readonly int GetHashCode() => base.GetHashCode();
+    public override int GetHashCode() => HashCode.Combine(_r, _g, _b, _a);
 
     /// <inheritdoc />
-    public override readonly string ToString() => $"Color(R={R}, G={G}, B={B}, A={A})";
+    public readonly override string ToString() => $"Color(R={R}, G={G}, B={B}, A={A})";
+
+    /// <inheritdoc />
+    public bool Equals(Color other) => _r == other._r && _g == other._g && _b == other._b && _a == other._a;
+    
+    
 
     /// <summary>
     /// Operator Inequality
@@ -175,7 +189,8 @@ public struct Color
     public static implicit operator Raylib_cs.Color(Color color) =>
         new(color.R, color.G, color.B, color.A);
 
-#pragma warning disable CS1591
+    // ReSharper disable UnusedMember.Global
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static readonly Color MediumAquamarine = new(102, 205, 170, 255);
     public static readonly Color MediumBlue = new(0, 0, 205, 255);
     public static readonly Color MediumOrquid = new(186, 85, 211, 255);

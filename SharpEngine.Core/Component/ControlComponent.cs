@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
@@ -14,52 +15,62 @@ public class ControlComponent : Component
     /// <summary>
     /// Type of Control
     /// </summary>
+    [UsedImplicitly]
     public ControlType ControlType { get; set; }
 
     /// <summary>
     /// Speed of Control
     /// </summary>
+    [UsedImplicitly]
     public int Speed { get; set; }
 
     /// <summary>
     /// If Control use GamePad
     /// </summary>
+    [UsedImplicitly]
     public bool UseGamePad { get; set; }
 
     /// <summary>
     /// Index of GamePad
     /// </summary>
+    [UsedImplicitly]
     public int GamePadIndex { get; set; }
 
     /// <summary>
     /// Jump force
     /// </summary>
+    [UsedImplicitly]
     public float JumpForce { get; set; }
 
     /// <summary>
     /// If Entity is moving
     /// </summary>
+    [UsedImplicitly]
     public bool IsMoving { get; protected set; }
 
     /// <summary>
     /// If Entity can jump
     /// </summary>
+    [UsedImplicitly]
     public bool CanJump { get; protected set; }
 
     /// <summary>
     /// Direction of Control
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Direction { get; protected set; }
 
     /// <summary>
     /// Represents the transform component associated with the current object, if available.
     /// </summary>
-    protected TransformComponent? _transform;
+    [UsedImplicitly]
+    protected TransformComponent? Transform;
 
     /// <summary>
     /// Represents the underlying physics collision component used for basic collision detection.
     /// </summary>
-    protected CollisionComponent? _basicPhysics;
+    [UsedImplicitly]
+    protected CollisionComponent? BasicPhysics;
 
     private readonly Dictionary<ControlKey, Key> _keys;
 
@@ -93,6 +104,7 @@ public class ControlComponent : Component
             { ControlKey.Left, Key.Left },
             { ControlKey.Right, Key.Right }
         };
+        Direction = Vec2.Zero;
     }
 
     /// <summary>
@@ -100,6 +112,7 @@ public class ControlComponent : Component
     /// </summary>
     /// <param name="controlKey">Key Control</param>
     /// <returns>Key</returns>
+    [UsedImplicitly]
     public Key GetKey(ControlKey controlKey) => _keys[controlKey];
 
     /// <summary>
@@ -107,6 +120,7 @@ public class ControlComponent : Component
     /// </summary>
     /// <param name="controlKey">Key Control</param>
     /// <param name="key">Key</param>
+    [UsedImplicitly]
     public void SetKey(ControlKey controlKey, Key key) => _keys[controlKey] = key;
 
     /// <inheritdoc />
@@ -114,8 +128,8 @@ public class ControlComponent : Component
     {
         base.Load();
 
-        _transform = Entity?.GetComponentAs<TransformComponent>();
-        _basicPhysics = Entity?.GetComponentAs<CollisionComponent>();
+        Transform = Entity?.GetComponentAs<TransformComponent>();
+        BasicPhysics = Entity?.GetComponentAs<CollisionComponent>();
     }
 
     /// <inheritdoc />
@@ -125,7 +139,7 @@ public class ControlComponent : Component
 
         IsMoving = false;
 
-        if (_transform == null)
+        if (Transform == null)
             return;
 
         var move = GetMovement();
@@ -138,27 +152,27 @@ public class ControlComponent : Component
         IsMoving = true;
         Direction = move.Normalized();
         var newPos = new Vec2(
-            _transform.LocalPosition.X + Direction.X * Speed * delta,
-            _transform.LocalPosition.Y + Direction.Y * Speed * delta
+            Transform.LocalPosition.X + Direction.X * Speed * delta,
+            Transform.LocalPosition.Y + Direction.Y * Speed * delta
         );
         var newPosX = new Vec2(
-            _transform.LocalPosition.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
-            _transform.LocalPosition.Y
+            Transform.LocalPosition.X + Speed * delta * (Direction.X < 0 ? -1 : 1),
+            Transform.LocalPosition.Y
         );
         var newPosY = new Vec2(
-            _transform.LocalPosition.X,
-            _transform.LocalPosition.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
+            Transform.LocalPosition.X,
+            Transform.LocalPosition.Y + Speed * delta * (Direction.Y < 0 ? -1 : 1)
         );
-        if (_basicPhysics == null || _basicPhysics.CanGo(newPos + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
-            _transform.LocalPosition = newPos;
-        else if (Direction.X != 0 && _basicPhysics.CanGo(newPosX + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
+        if (BasicPhysics == null || BasicPhysics.CanGo(newPos + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
+            Transform.LocalPosition = newPos;
+        else if (Direction.X != 0 && BasicPhysics.CanGo(newPosX + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
         {
-            _transform.LocalPosition = newPosX;
+            Transform.LocalPosition = newPosX;
             Direction = new Vec2(Direction.X < 0 ? -1 : 1, 0);
         }
-        else if (Direction.Y != 0 && _basicPhysics.CanGo(newPosY + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
+        else if (Direction.Y != 0 && BasicPhysics.CanGo(newPosY + (Entity?.Parent?.GetComponentAs<TransformComponent>()?.Position ?? Vec2.Zero)))
         {
-            _transform.LocalPosition = newPosY;
+            Transform.LocalPosition = newPosY;
             Direction = new Vec2(0, Direction.Y < 0 ? -1 : 1);
         }
         else
@@ -181,56 +195,50 @@ public class ControlComponent : Component
     private Vec2 GetMouseFollowMovement()
     {
         var mp = InputManager.GetMousePosition();
-        return mp - _transform!.Position;
+        return mp - Transform!.Position;
     }
 
     private Vec2 GetFourDirectionMovement()
     {
         if (UseGamePad)
             return new Vec2(InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX), InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY));
-        else
-        {
-            var dirX = 0;
-            var dirY = 0;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
-                dirX--;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
-                dirX++;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                dirY--;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
-                dirY++;
-            return new Vec2(dirX, dirY);
-        }
+
+        var dirX = 0;
+        var dirY = 0;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
+            dirX--;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
+            dirX++;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
+            dirY--;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
+            dirY++;
+        return new Vec2(dirX, dirY);
     }
 
     private Vec2 GetLeftRightMovement()
     {
         if (UseGamePad)
             return new Vec2(InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX), 0);
-        else
-        {
-            var dirX = 0;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
-                dirX--;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
-                dirX++;
-            return new Vec2(dirX, 0);
-        }
+
+        var dirX = 0;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Left]))
+            dirX--;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Right]))
+            dirX++;
+        return new Vec2(dirX, 0);
     }
 
     private Vec2 GetUpDownMovement()
     {
         if (UseGamePad)
             return new Vec2(0, InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftY));
-        else
-        {
-            var dirY = 0;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
-                dirY--;
-            if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
-                dirY++;
-            return new Vec2(0, dirY);
-        }
+
+        var dirY = 0;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Up]))
+            dirY--;
+        if (InputManager.IsKeyDown(_keys[ControlKey.Down]))
+            dirY++;
+        return new Vec2(0, dirY);
     }
 }

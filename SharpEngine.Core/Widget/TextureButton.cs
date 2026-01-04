@@ -1,10 +1,8 @@
-﻿using System;
+﻿using JetBrains.Annotations;
 using Raylib_cs;
-using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using Color = SharpEngine.Core.Utils.Color;
-using MouseButton = SharpEngine.Core.Input.MouseButton;
 
 namespace SharpEngine.Core.Widget;
 
@@ -19,6 +17,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="fontColor">Texture Button Font Color</param>
 /// <param name="fontSize">Texture Button Font Size</param>
 /// <param name="zLayer">Z Layer</param>
+[UsedImplicitly]
 public class TextureButton(
     Vec2 position,
     string texture = "",
@@ -33,6 +32,7 @@ public class TextureButton(
     /// <summary>
     /// Texture of Texture Button
     /// </summary>
+    [UsedImplicitly]
     public string Texture { get; set; } = texture;
 
     /// <inheritdoc />
@@ -71,14 +71,14 @@ public class TextureButton(
         )
             return;
 
-        if (_state == ButtonState.Hover && Active)
+        if (State == ButtonState.Hover && Active)
             SERender.DrawRectangle(
                 (RealPosition.X - (Size.X + 4) / 2),
                 (RealPosition.Y - (Size.Y + 4) / 2),
                 (Size.X + 4),
                 (Size.Y + 4),
                 Color.White,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer
             );
 
@@ -89,7 +89,7 @@ public class TextureButton(
             Size / 2,
             0,
             Color.White,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00002f
         );
 
@@ -105,18 +105,18 @@ public class TextureButton(
                 finalFontSize,
                 2,
                 FontColor,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer + 0.00003f
             );
 
-        if (_state == ButtonState.Down || !Active)
+        if (State == ButtonState.Down || !Active)
             SERender.DrawRectangle(
                 (RealPosition.X - Size.X / 2),
                 (RealPosition.Y - Size.Y / 2),
                 Size.X,
                 Size.Y,
                 new Color(0, 0, 0, 128),
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer + 0.00004f
             );
     }

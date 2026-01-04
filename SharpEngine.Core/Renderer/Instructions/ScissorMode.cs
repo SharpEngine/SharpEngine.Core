@@ -5,9 +5,9 @@ using Raylib_cs;
 namespace SharpEngine.Core.Renderer.Instructions;
 
 /// <summary>
-/// Draws in scissor mode.
+/// Draws in scissored mode.
 /// </summary>
-internal record class ScissorMode : Instruction
+internal record ScissorMode : Instruction
 {
     internal override void Execute()
     {

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
-using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Component;
 
@@ -16,6 +15,7 @@ namespace SharpEngine.Core.Component;
 /// <param name="flipY">If Sprite is Flip Vertically</param>
 /// <param name="zLayerOffset">Offset of zLayer</param>
 /// <param name="shader">Sprite Shader ("")</param>
+[UsedImplicitly]
 public class SpriteComponent(
     string texture,
     bool displayed = true,
@@ -29,55 +29,64 @@ public class SpriteComponent(
     /// <summary>
     /// Name of Texture which be displayed
     /// </summary>
+    [UsedImplicitly]
     public string Texture { get; set; } = texture;
 
     /// <summary>
     /// Define if Sprite is displayed
     /// </summary>
+    [UsedImplicitly]
     public bool Displayed { get; set; } = displayed;
 
     /// <summary>
     /// Offset of Sprite
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Offset { get; set; } = offset ?? Vec2.Zero;
 
     /// <summary>
     /// If Sprite is Flip Horizontally
     /// </summary>
+    [UsedImplicitly]
     public bool FlipX { get; set; } = flipX;
 
     /// <summary>
     /// If Sprite is Flip Vertically
     /// </summary>
+    [UsedImplicitly]
     public bool FlipY { get; set; } = flipY;
 
     /// <summary>
     /// Offset of ZLayer of Sprite
     /// </summary>
+    [UsedImplicitly]
     public int ZLayerOffset { get; set; } = zLayerOffset;
 
     /// <summary>
     /// Shader of Sprite
     /// </summary>
+    [UsedImplicitly]
     public string Shader { get; set; } = shader;
 
     /// <summary>
     /// Tint Color of Sprite
     /// </summary>
+    [UsedImplicitly]
     public Utils.Color TintColor { get; set; } = Utils.Color.White;
 
     /// <summary>
     /// Represents the associated transform component, which provides position, rotation, and scale information for the
     /// object.
     /// </summary>
-    protected TransformComponent? _transformComponent;
+    [UsedImplicitly]
+    protected TransformComponent? TransformComponent;
 
     /// <inheritdoc />
     public override void Load()
     {
         base.Load();
 
-        _transformComponent = Entity?.GetComponentAs<TransformComponent>();
+        TransformComponent = Entity?.GetComponentAs<TransformComponent>();
     }
 
     /// <inheritdoc />
@@ -87,11 +96,11 @@ public class SpriteComponent(
 
         var window = Entity?.Scene?.Window;
 
-        if (_transformComponent == null || !Displayed || Texture.Length <= 0 || window == null)
+        if (TransformComponent == null || !Displayed || Texture.Length <= 0 || window == null)
             return;
 
         var finalTexture = window.TextureManager.GetTexture(Texture);
-        var position = _transformComponent.GetTransformedPosition(Offset);
+        var position = TransformComponent.GetTransformedPosition(Offset);
         if (Shader == "")
             DrawTexture(finalTexture, position);
         else
@@ -99,7 +108,7 @@ public class SpriteComponent(
             SERender.ShaderMode(
                 window.ShaderManager.GetShader(Shader).GetInternalShader(),
                 InstructionSource.Entity,
-                _transformComponent.ZLayer + ZLayerOffset,
+                TransformComponent.ZLayer + ZLayerOffset,
                 () => DrawTexture(finalTexture, position)
             );
         }
@@ -118,17 +127,17 @@ public class SpriteComponent(
             new Rect(
                 position.X,
                 position.Y,
-                finalTexture.Width * _transformComponent!.Scale.X,
-                finalTexture.Height * _transformComponent.Scale.Y
+                finalTexture.Width * TransformComponent!.Scale.X,
+                finalTexture.Height * TransformComponent.Scale.Y
             ),
             new Vec2(
-                finalTexture.Width / 2f * _transformComponent.Scale.X,
-                finalTexture.Height / 2f * _transformComponent.Scale.Y
+                finalTexture.Width / 2f * TransformComponent.Scale.X,
+                finalTexture.Height / 2f * TransformComponent.Scale.Y
             ),
-            _transformComponent.Rotation,
+            TransformComponent.Rotation,
             TintColor,
             InstructionSource.Entity,
-            _transformComponent.ZLayer + ZLayerOffset
+            TransformComponent.ZLayer + ZLayerOffset
         );
     }
 }

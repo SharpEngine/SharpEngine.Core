@@ -1,7 +1,9 @@
-﻿namespace SharpEngine.Core.Utils;
+﻿using JetBrains.Annotations;
+
+namespace SharpEngine.Core.Utils;
 
 /// <summary>
-/// Enum which represents how Entity or Widget must be updated when paused
+/// Enum, which represents how Entity or Widget must be updated when paused
 /// </summary>
 public enum PauseState
 {
@@ -13,6 +15,7 @@ public enum PauseState
     /// <summary>
     /// Will never be updated
     /// </summary>
+    [UsedImplicitly]
     Disabled,
 
     /// <summary>

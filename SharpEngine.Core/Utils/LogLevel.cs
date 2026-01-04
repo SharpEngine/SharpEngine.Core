@@ -1,7 +1,9 @@
-﻿namespace SharpEngine.Core.Utils;
+﻿using JetBrains.Annotations;
+
+namespace SharpEngine.Core.Utils;
 
 /// <summary>
-/// Enum which represents Log Levels
+/// Enum, which represents Log Levels
 /// </summary>
 public enum LogLevel
 {
@@ -43,5 +45,6 @@ public enum LogLevel
     /// <summary>
     /// Disable logging
     /// </summary>
+    [UsedImplicitly]
     None,
 }

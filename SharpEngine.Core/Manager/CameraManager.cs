@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Component;
 using SharpEngine.Core.Math;
@@ -15,31 +16,37 @@ public class CameraManager
     /// Entity followed on mode Follow and FollowSmooth
     /// <seealso cref="Mode"/>
     /// </summary>
+    [UsedImplicitly]
     public Entity.Entity? FollowEntity { get; set; }
 
     /// <summary>
     /// Camera Mode
     /// </summary>
+    [UsedImplicitly]
     public Utils.CameraMode Mode { get; set; }
 
     /// <summary>
-    /// Minimum Speed used when mode is FollowSmooth
+    /// Minimum Speed used when the mode is FollowSmooth
     /// </summary>
+    [UsedImplicitly]
     public float MinSpeed { get; set; } = 30;
 
     /// <summary>
-    /// Minimum Effect Length used when mode is FollowSmooth
+    /// Minimum Effect Length used when the mode is FollowSmooth
     /// </summary>
+    [UsedImplicitly]
     public float MinEffectLength { get; set; } = 10;
 
     /// <summary>
-    /// Fraction Speed used when mode is FollowSmooth
+    /// Fraction Speed used when the mode is FollowSmooth
     /// </summary>
+    [UsedImplicitly]
     public float FractionSpeed { get; set; } = 0.8f;
 
     /// <summary>
     /// Rotation of Camera
     /// </summary>
+    [UsedImplicitly]
     public float Rotation
     {
         get => Camera2D.Rotation;
@@ -49,6 +56,7 @@ public class CameraManager
     /// <summary>
     /// Zoom of Camera
     /// </summary>
+    [UsedImplicitly]
     public float Zoom
     {
         get => Camera2D.Zoom;
@@ -58,6 +66,7 @@ public class CameraManager
     /// <summary>
     /// Position of Camera
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Position
     {
         get => Camera2D.Target;

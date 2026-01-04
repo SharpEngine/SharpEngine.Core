@@ -1,4 +1,6 @@
-﻿namespace SharpEngine.Core.Utils.EventArgs;
+﻿using JetBrains.Annotations;
+
+namespace SharpEngine.Core.Utils.EventArgs;
 
 /// <summary>
 /// Event Args which have old and new value
@@ -9,10 +11,12 @@ public class ValueEventArgs<T> : System.EventArgs
     /// <summary>
     /// Old Value
     /// </summary>
+    [UsedImplicitly]
     public required T OldValue { get; init; }
 
     /// <summary>
     /// New Value
     /// </summary>
+    [UsedImplicitly]
     public required T NewValue { get; init; }
 }

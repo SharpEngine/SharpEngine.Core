@@ -1,7 +1,7 @@
 ﻿namespace SharpEngine.Core.Particle;
 
 /// <summary>
-/// Enum which represents functions for particles
+/// Enum, which represents functions for particles
 /// </summary>
 public enum ParticleParametersFunction
 {

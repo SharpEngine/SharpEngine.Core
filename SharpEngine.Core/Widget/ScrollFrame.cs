@@ -1,4 +1,5 @@
-﻿using SharpEngine.Core.Manager;
+﻿using JetBrains.Annotations;
+using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
@@ -15,6 +16,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="borderColor">Scroll Frame Border Color (Color.Black)</param>
 /// <param name="backgroundColor">Scroll Frame Background Color (null)</param>
 /// <param name="zLayer">Z Layer</param>
+[UsedImplicitly]
 public class ScrollFrame(
     Vec2 position,
     Vec2 size,
@@ -28,26 +30,31 @@ public class ScrollFrame(
     /// <summary>
     /// Color of Scroll Frame Border
     /// </summary>
+    [UsedImplicitly]
     public Color BorderColor { get; set; } = borderColor ?? Color.Black;
 
     /// <summary>
     /// Size of Scroll Frame
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; } = size;
 
     /// <summary>
     /// Size of Scroll Frame Border
     /// </summary>
+    [UsedImplicitly]
     public int BorderSize { get; set; } = borderSize;
 
     /// <summary>
     /// Color of Scroll Frame Background
     /// </summary>
+    [UsedImplicitly]
     public Color? BackgroundColor { get; set; } = backgroundColor;
 
     /// <summary>
     /// Scroll Factor of Scroll Frame
     /// </summary>
+    [UsedImplicitly]
     public int ScrollFactor { get; set; } = scrollFactor;
 
     /// <inheritdoc />
@@ -59,11 +66,10 @@ public class ScrollFrame(
             return;
 
         var move = InputManager.GetMouseWheelMove();
-        if (move != 0)
-        {
-            foreach (var child in Children)
-                child.Position = new Vec2(child.Position.X, child.Position.Y + move * ScrollFactor);
-        }
+        if (move == 0) return;
+        
+        foreach (var child in Children)
+            child.Position = new Vec2(child.Position.X, child.Position.Y + move * ScrollFactor);
     }
 
     /// <inheritdoc />
@@ -78,14 +84,14 @@ public class ScrollFrame(
                 Size / 2,
                 0,
                 BackgroundColor.Value,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer
             );
         SERender.DrawRectangleLines(
             new Rect(RealPosition.X - Size.X / 2, RealPosition.Y - Size.Y / 2, Size.X, Size.Y),
             BorderSize,
             BorderColor,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00001f
         );
 
@@ -94,7 +100,7 @@ public class ScrollFrame(
             (RealPosition.Y - Size.Y / 2),
             Size.X,
             Size.Y,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00002f,
             () =>
             {

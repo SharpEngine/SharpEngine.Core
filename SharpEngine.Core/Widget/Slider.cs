@@ -1,8 +1,8 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
-using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Core.Utils.EventArgs;
 
@@ -17,6 +17,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="value">Value (0)</param>
 /// <param name="horizontal">Horizontal (true)</param>
 /// <param name="zLayer">ZLayer (0)</param>
+[UsedImplicitly]
 public class Slider(
     Vec2 position,
     Vec2? size = null,
@@ -27,8 +28,9 @@ public class Slider(
     ) : ProgressBar(position, size, color, value, horizontal, zLayer)
 {
     /// <summary>
-    /// Event trigger when value is changed
+    /// Event trigger when the value is changed
     /// </summary>
+    [UsedImplicitly]
     public event EventHandler<ValueEventArgs<float>>? ValueChanged;
 
     /// <inheritdoc />
@@ -36,26 +38,22 @@ public class Slider(
     {
         base.Update(delta);
 
-        if (!RealDisplayed)
+        if (!RealDisplayed || !InputManager.IsMouseButtonDown(MouseButton.Left)) return;
+        
+        var finalPosition = RealPosition - Size / 2;
+        if (!InputManager.IsMouseInRectangle(new Rect(finalPosition, Size)))
             return;
 
-        if (InputManager.IsMouseButtonDown(MouseButton.Left))
+        var barSize = Horizontal ? Size.X : Size.Y;
+        var point = Horizontal ? InputManager.GetMousePosition().X - finalPosition.X : InputManager.GetMousePosition().Y - finalPosition.Y;
+        var temp = Value;
+        Value = (int)System.Math.Round(point * 100 / barSize, MidpointRounding.AwayFromZero);
+        if (System.Math.Abs(temp - Value) > 0.001f)
         {
-            var finalPosition = RealPosition - Size / 2;
-            if (!InputManager.IsMouseInRectangle(new Rect(finalPosition, Size)))
-                return;
-
-            var barSize = Horizontal ? Size.X : Size.Y;
-            var point = Horizontal ? InputManager.GetMousePosition().X - finalPosition.X : InputManager.GetMousePosition().Y - finalPosition.Y;
-            var temp = Value;
-            Value = (int)System.Math.Round(point * 100 / barSize, MidpointRounding.AwayFromZero);
-            if (System.Math.Abs(temp - Value) > 0.001f)
-            {
-                ValueChanged?.Invoke(
-                    this,
-                    new ValueEventArgs<float> { OldValue = temp, NewValue = Value }
-                );
-            }
+            ValueChanged?.Invoke(
+                this,
+                new ValueEventArgs<float> { OldValue = temp, NewValue = Value }
+            );
         }
     }
 }

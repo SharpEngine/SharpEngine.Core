@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer.Instructions;
@@ -10,6 +11,7 @@ namespace SharpEngine.Core.Renderer;
 /// <summary>
 /// Static class which used to render textures, texts or rectangles
 /// </summary>
+// ReSharper disable once InconsistentNaming
 public static class SERender
 {
     /// <summary>
@@ -25,12 +27,12 @@ public static class SERender
     /// <summary>
     /// Number of Last UI Instructions
     /// </summary>
-    public static int LastUIInstructionsNumber { get; set; }
+    public static int LastUiInstructionsNumber { get; set; }
 
     /// <summary>
     /// Current Instructions to be rendered
     /// </summary>
-    private static List<Instruction> Instructions = [];
+    private static List<Instruction> _instructions = [];
 
     internal static void DrawInstructions(List<Instruction> instructions)
     {
@@ -40,31 +42,31 @@ public static class SERender
             if (instruction.Source == InstructionSource.Entity)
                 LastEntityInstructionsNumber++;
             else
-                LastUIInstructionsNumber++;
+                LastUiInstructionsNumber++;
             instruction.Execute();
         }
     }
 
     /// <summary>
-    /// Draw all instructions in Window
+    /// Draw all instructions in the Window
     /// </summary>
     /// <param name="window">Window</param>
     public static void Draw(Window window)
     {
         LastInstructionsNumber = 0;
         LastEntityInstructionsNumber = 0;
-        LastUIInstructionsNumber = 0;
+        LastUiInstructionsNumber = 0;
         List<Instruction> entityInstructions = [];
         List<Instruction> uiInstructions = [];
 
-        foreach (var instruction in Instructions)
+        foreach (var instruction in _instructions)
         {
             switch (instruction.Source)
             {
                 case InstructionSource.Entity:
                     entityInstructions.Add(instruction);
                     break;
-                case InstructionSource.UI:
+                case InstructionSource.Ui:
                     uiInstructions.Add(instruction);
                     break;
                 default:
@@ -81,7 +83,7 @@ public static class SERender
 
         DrawInstructions(uiInstructions);
 
-        Instructions.Clear();
+        _instructions.Clear();
     }
 
     /// <summary>
@@ -90,7 +92,7 @@ public static class SERender
     /// <param name="shader">Shader</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    /// <param name="shaderAction">Function which render in shader mode</param>
+    /// <param name="shaderAction">Function that renders in shader mode</param>
     public static void ShaderMode(
         Shader shader,
         InstructionSource source,
@@ -98,8 +100,8 @@ public static class SERender
         Action shaderAction
     )
     {
-        var instructions = new List<Instruction>(Instructions);
-        Instructions.Clear();
+        var instructions = new List<Instruction>(_instructions);
+        _instructions.Clear();
         shaderAction();
         var instruction = new ShaderMode
         {
@@ -107,9 +109,9 @@ public static class SERender
             ZLayer = zLayer,
             Parameters = [shader]
         };
-        instruction.Parameters.AddRange(Instructions.Select(x => (object)x));
-        Instructions = instructions;
-        Instructions.Add(instruction);
+        instruction.Parameters.AddRange(_instructions.Select(x => (object)x));
+        _instructions = instructions;
+        _instructions.Add(instruction);
     }
 
     /// <summary>
@@ -121,7 +123,7 @@ public static class SERender
     /// <param name="height">Height</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
-    /// <param name="scissorAction">Function which render in scissor mode</param>
+    /// <param name="scissorAction">Function that renders in scissored mode</param>
     public static void ScissorMode(
         float posX,
         float posY,
@@ -132,8 +134,8 @@ public static class SERender
         Action scissorAction
     )
     {
-        var instructions = new List<Instruction>(Instructions);
-        Instructions.Clear();
+        var instructions = new List<Instruction>(_instructions);
+        _instructions.Clear();
         scissorAction();
         var instruction = new ScissorMode
         {
@@ -141,9 +143,9 @@ public static class SERender
             ZLayer = zLayer,
             Parameters = [posX, posY, width, height]
         };
-        instruction.Parameters.AddRange(Instructions.Select(x => (object)x));
-        Instructions = instructions;
-        Instructions.Add(instruction);
+        instruction.Parameters.AddRange(_instructions.Select(x => (object)x));
+        _instructions = instructions;
+        _instructions.Add(instruction);
     }
 
     /// <summary>
@@ -164,7 +166,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawRectanglePro
             {
                 Source = source,
@@ -194,7 +196,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawRectangle
             {
                 Source = source,
@@ -220,7 +222,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawRectangleLinesEx
             {
                 Source = source,
@@ -239,6 +241,7 @@ public static class SERender
     /// <param name="borderColor">Border Color</param>
     /// <param name="source">Instruction Source</param>
     /// <param name="zLayer">Z Layer</param>
+    [UsedImplicitly]
     public static void DrawCircleLines(
         float posX,
         float posY,
@@ -248,7 +251,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawCircleLines
             {
                 Source = source,
@@ -280,7 +283,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawTexturePro
             {
                 Source = source,
@@ -316,7 +319,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawTextPro
             {
                 Source = source,
@@ -358,7 +361,7 @@ public static class SERender
         float zLayer
     )
     {
-        Instructions.Add(
+        _instructions.Add(
             new DrawTextEx
             {
                 Source = source,

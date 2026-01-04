@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
@@ -33,36 +34,43 @@ public class LineInput(
     /// <summary>
     /// Current Text of Line Input
     /// </summary>
+    [UsedImplicitly]
     public string Text { get; set; } = text;
 
     /// <summary>
     /// Font of Line Input
     /// </summary>
+    [UsedImplicitly]
     public string Font { get; set; } = font;
 
     /// <summary>
     /// Size of Line Input
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; } = size ?? new Vec2(300, 50);
 
     /// <summary>
     /// If Line Input is Focused
     /// </summary>
-    public bool Focused { get; private set; } = false;
+    [UsedImplicitly]
+    public bool Focused { get; private set; }
 
     /// <summary>
     /// Font Size of Line Input (or null)
     /// </summary>
+    [UsedImplicitly]
     public int? FontSize { get; set; } = fontSize;
 
     /// <summary>
     /// If Line Input is Secret
     /// </summary>
+    [UsedImplicitly]
     public bool Secret { get; set; } = secret;
 
     /// <summary>
-    /// Event trigger when value is changed
+    /// Event trigger when the value is changed
     /// </summary>
+    [UsedImplicitly]
     public event EventHandler<ValueEventArgs<string>>? ValueChanged;
 
     /// <summary>
@@ -135,7 +143,7 @@ public class LineInput(
             Size / 2,
             0,
             Color.Black,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer
         );
         SERender.DrawRectangle(
@@ -143,7 +151,7 @@ public class LineInput(
             Size / 2,
             0,
             Color.White,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer + 0.00001f
         );
 
@@ -166,7 +174,7 @@ public class LineInput(
                 finalPosition.Y,
                 Size.X - 8,
                 textSize.Y,
-                InstructionSource.UI,
+                InstructionSource.Ui,
                 ZLayer + 0.00002f,
                 () =>
                 {
@@ -177,25 +185,24 @@ public class LineInput(
                         finalFontSize,
                         2,
                         Color.Black,
-                        InstructionSource.UI,
+                        InstructionSource.Ui,
                         0
                     );
                 }
             );
         }
 
-        if (Focused)
-        {
-            var potentielSize = Raylib.MeasureTextEx(finalFont.Value, "A", finalFontSize, 2);
-            SERender.DrawRectangle(
-                    (RealPosition.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
-                    (RealPosition.Y - potentielSize.Y / 2 + 2),
-                    5,
-                    potentielSize.Y - 4,
-                    Color.Black,
-                    InstructionSource.UI,
-                    ZLayer + 0.00003f
-                );
-        }
+        if (!Focused) return;
+        
+        var potentielSize = Raylib.MeasureTextEx(finalFont.Value, "A", finalFontSize, 2);
+        SERender.DrawRectangle(
+            (RealPosition.X - Size.X / 2 + 10 + textSize.X - (offset > 0 ? offset : 0)),
+            (RealPosition.Y - potentielSize.Y / 2 + 2),
+            5,
+            potentielSize.Y - 4,
+            Color.Black,
+            InstructionSource.Ui,
+            ZLayer + 0.00003f
+        );
     }
 }

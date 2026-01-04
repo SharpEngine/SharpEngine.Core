@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using Color = SharpEngine.Core.Utils.Color;
@@ -14,76 +15,91 @@ public class Particle(ParticleParameters parameters)
     /// <summary>
     /// Position of Particle
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Position { get; set; } = parameters.Position;
 
     /// <summary>
     /// Velocity of Particle
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Velocity { get; set; } = parameters.Velocity;
 
     /// <summary>
     /// Acceleration of Particle
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Acceleration { get; set; } = parameters.Acceleration;
 
     /// <summary>
     /// Lifetime of Particle
     /// </summary>
+    [UsedImplicitly]
     public float Lifetime { get; set; } = parameters.Lifetime;
 
     /// <summary>
     /// Time Since Start of Particle
     /// </summary>
-    public float TimeSinceStart { get; set; } = 0;
+    [UsedImplicitly]
+    public float TimeSinceStart { get; set; }
 
     /// <summary>
     /// Size of Particle
     /// </summary>
+    [UsedImplicitly]
     public float Size { get; set; } = parameters.SizeFunction == ParticleParametersFunction.Increase ? 0 : parameters.Size;
 
     /// <summary>
     /// Max Size of Particle
     /// </summary>
+    [UsedImplicitly]
     public float MaxSize { get; set; } = parameters.Size;
 
     /// <summary>
     /// Rotation of Particle
     /// </summary>
+    [UsedImplicitly]
     public float Rotation { get; set; } = parameters.Rotation;
 
     /// <summary>
     /// Rotation Speed of Particle
     /// </summary>
+    [UsedImplicitly]
     public float RotationSpeed { get; set; } = parameters.RotationSpeed;
 
     /// <summary>
     /// Begin Color of Particle
     /// </summary>
+    [UsedImplicitly]
     public Color BeginColor { get; set; } = parameters.BeginColor;
 
     /// <summary>
     /// Current Color of Particle
     /// </summary>
+    [UsedImplicitly]
     public Color CurrentColor { get; set; } = parameters.BeginColor;
 
     /// <summary>
     /// End Color of Particle
     /// </summary>
+    [UsedImplicitly]
     public Color EndColor { get; set; } = parameters.EndColor;
 
     /// <summary>
     /// Size Function of Particle
     /// </summary>
+    [UsedImplicitly]
     public ParticleParametersFunction SizeFunction { get; set; } = parameters.SizeFunction;
 
     /// <summary>
     /// Size Function Value of Particle
     /// </summary>
+    [UsedImplicitly]
     public float SizeFunctionValue { get; set; } = parameters.SizeFunctionValue;
 
     /// <summary>
     /// ZLayer of Particle
     /// </summary>
+    [UsedImplicitly]
     public int ZLayer { get; set; } = parameters.ZLayer;
 
     /// <summary>

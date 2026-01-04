@@ -1,4 +1,5 @@
-﻿using SharpEngine.Core.Math;
+﻿using JetBrains.Annotations;
+using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 
@@ -12,6 +13,7 @@ namespace SharpEngine.Core.Widget;
 /// <param name="color">Color Rect Color</param>
 /// <param name="rotation">Color Rect Rotation</param>
 /// <param name="zLayer">Z Layer</param>
+[UsedImplicitly]
 public class ColorRect(
     Vec2 position,
     Vec2? size = null,
@@ -23,16 +25,19 @@ public class ColorRect(
     /// <summary>
     /// Color of Rect
     /// </summary>
+    [UsedImplicitly]
     public Color Color { get; set; } = color ?? Color.Black;
 
     /// <summary>
     /// Size of Rect
     /// </summary>
+    [UsedImplicitly]
     public Vec2 Size { get; set; } = size ?? Vec2.One;
 
     /// <summary>
     /// Rotation of Rect
     /// </summary>
+    [UsedImplicitly]
     public int Rotation { get; set; } = rotation;
 
     /// <inheritdoc />
@@ -48,7 +53,7 @@ public class ColorRect(
             Size / 2,
             Rotation,
             Color,
-            InstructionSource.UI,
+            InstructionSource.Ui,
             ZLayer
         );
     }

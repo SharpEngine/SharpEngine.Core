@@ -1,42 +1,50 @@
 ﻿using SharpEngine.Core.Manager;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Utils.Tween
 {
-    internal class TweenData<D, DStep> where D : notnull
+    internal class TweenData<TD, TDStep>(
+        object obj,
+        Expression<Func<object, TD>> property,
+        TD from,
+        TD to,
+        float duration,
+        bool useFrom = true)
+        where TD : notnull
     {
-        public object Obj { get; set; }
-        public Expression<Func<object, D>> Property { get; set; }
-        public D From { get; set; }
-        public D To { get; set; }
-        public float Duration { get; set; }
-        public D CurrentValue { get; set; } = default!;
-        public DStep Step { get; set; } = default!;
+        [UsedImplicitly]
+        public object Obj { get; set; } = obj;
 
-        public bool UseFrom { get; set; }
+        [UsedImplicitly]
+        public Expression<Func<object, TD>> Property { get; set; } = property;
 
-        public TweenData(object obj, Expression<Func<object, D>> property, D from, D to, float duration, bool useFrom = true)
-        {
-            Obj = obj;
-            Property = property;
-            From = from;
-            To = to;
-            Duration = duration;
-            UseFrom = useFrom;
-        }
+        [UsedImplicitly]
+        public TD From { get; set; } = from;
+
+        [UsedImplicitly]
+        public TD To { get; set; } = to;
+
+        [UsedImplicitly]
+        public float Duration { get; set; } = duration;
+
+        [UsedImplicitly]
+        public TD CurrentValue { get; set; } = default!;
+        [UsedImplicitly]
+        public TDStep Step { get; set; } = default!;
+        [UsedImplicitly]
+        public bool UseFrom { get; set; } = useFrom;
 
         public void Launch() 
         { 
             CurrentValue = UseFrom ? From : Property.Compile()(Obj);
             Step = CurrentValue switch
             {
-                float fFrom when To is float fTo => (DStep)(object)((fTo - fFrom) / Duration),
-                int iFrom when To is int iTo => (DStep)(object)((iTo - iFrom) / Duration),
-                Color cFrom when To is Color cTo => (DStep)(object)new ColorStep(
+                float fFrom when To is float fTo => (TDStep)(object)((fTo - fFrom) / Duration),
+                int iFrom when To is int iTo => (TDStep)(object)((iTo - iFrom) / Duration),
+                Color cFrom when To is Color cTo => (TDStep)(object)new ColorStep(
                     (short)((cTo.R - cFrom.R) / Duration),
                     (short)((cTo.G - cFrom.G) / Duration),
                     (short)((cTo.B - cFrom.B) / Duration),
@@ -45,7 +53,7 @@ namespace SharpEngine.Core.Utils.Tween
                 _ => throw new NotSupportedException("Unsupported type for tweening.")
             };
 
-            DebugManager.Log(LogLevel.LogDebug, $"Tween Launched: From = {From}, To = {To}, Duration = {Duration}, Step = {Step}");
+            DebugManager.Log(LogLevel.Debug, $"Tween Launched: From = {From}, To = {To}, Duration = {Duration}, Step = {Step}");
         }
 
         public void Update(float deltaTime)
@@ -58,9 +66,9 @@ namespace SharpEngine.Core.Utils.Tween
 
             CurrentValue = CurrentValue switch
             {
-                float cVal when Step is float step => (D)(object)(cVal + step * deltaTime),
-                int cVal when Step is int step => (D)(object)(cVal + (int)(step * deltaTime)),
-                Color cVal when Step is ColorStep step => (D)(object)new Color(
+                float cVal when Step is float step => (TD)(object)(cVal + step * deltaTime),
+                int cVal when Step is int step => (TD)(object)(cVal + (int)(step * deltaTime)),
+                Color cVal when Step is ColorStep step => (TD)(object)new Color(
                     (byte)(cVal.R + step.RStep * deltaTime),
                     (byte)(cVal.G + step.GStep * deltaTime),
                     (byte)(cVal.B + step.BStep * deltaTime),

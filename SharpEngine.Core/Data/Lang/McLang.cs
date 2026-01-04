@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Utils;
 
@@ -7,6 +8,7 @@ namespace SharpEngine.Core.Data.Lang;
 /// <summary>
 /// Class which represents Lang File with Minecraft Format (allow start line comments)
 /// </summary>
+[UsedImplicitly]
 public class McLang : ILang
 {
     private readonly Dictionary<string, string> _translations = [];
@@ -38,7 +40,7 @@ public class McLang : ILang
             if (!finalLine.Contains('='))
             {
                 DebugManager.Log(
-                    LogLevel.LogWarning,
+                    LogLevel.Warning,
                     $"SE_MCLANG: Cannot found '=' between key and value : {line} (Skip line)"
                 );
                 continue;

@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Math;
 
@@ -22,12 +23,14 @@ public static class Rand
     /// </summary>
     /// <param name="max">Maximum Value (excluded)</param>
     /// <returns>Random Number</returns>
+    [UsedImplicitly]
     public static int GetRand(int max) => Random.Next(max);
 
     /// <summary>
     /// Get random non negative integer
     /// </summary>
     /// <returns>Random Number</returns>
+    [UsedImplicitly]
     public static int GetRand() => Random.Next();
 
     /// <summary>
@@ -43,11 +46,13 @@ public static class Rand
     /// </summary>
     /// <param name="max">Maximum Value (excluded)</param>
     /// <returns>Random Number</returns>
+    [UsedImplicitly]
     public static float GetRandF(float max) => Random.NextSingle() * max;
 
     /// <summary>
-    /// Get random float between 0 and 1
+    /// Get a random float between 0 and 1
     /// </summary>
     /// <returns>Random Number</returns>
+    [UsedImplicitly]
     public static float GetRandF() => Random.NextSingle();
 }

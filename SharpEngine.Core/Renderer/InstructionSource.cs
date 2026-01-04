@@ -1,7 +1,7 @@
 ﻿namespace SharpEngine.Core.Renderer;
 
 /// <summary>
-/// Enum which represents from what instruction come
+/// Enum, which represents from what instruction comes
 /// </summary>
 public enum InstructionSource
 {
@@ -13,5 +13,5 @@ public enum InstructionSource
     /// <summary>
     /// Instruction created by UI
     /// </summary>
-    UI
+    Ui
 }

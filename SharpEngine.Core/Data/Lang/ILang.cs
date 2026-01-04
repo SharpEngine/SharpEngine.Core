@@ -1,4 +1,6 @@
-﻿namespace SharpEngine.Core.Data.Lang;
+﻿using JetBrains.Annotations;
+
+namespace SharpEngine.Core.Data.Lang;
 
 /// <summary>
 /// Interface which represents Lang File
@@ -17,5 +19,6 @@ public interface ILang
     /// Reload Translations from File
     /// </summary>
     /// <param name="file">File Path</param>
+    [UsedImplicitly]
     public void Reload(string file);
 }

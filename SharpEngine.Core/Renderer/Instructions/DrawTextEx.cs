@@ -7,7 +7,7 @@ namespace SharpEngine.Core.Renderer.Instructions;
 /// <summary>
 /// Draws text with extended parameters.
 /// </summary>
-internal record class DrawTextEx : Instruction
+internal record DrawTextEx : Instruction
 {
     internal override void Execute()
     {

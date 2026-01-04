@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Raylib_cs;
 using SharpEngine.Core.Utils;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SharpEngine.Core.Manager;
 
@@ -16,13 +16,14 @@ public class TextureManager
     /// <summary>
     /// Get All Textures
     /// </summary>
-    public List<Texture2D> Textures => new(_texture2Ds.Values);
+    public List<Texture2D> Textures => [.._texture2Ds.Values];
 
     /// <summary>
     /// Checks if the texture with the specified name exists in the manager.
     /// </summary>
     /// <param name="name">The name of the texture.</param>
     /// <returns>True if the texture exists, otherwise false.</returns>
+    [UsedImplicitly]
     public bool HasTexture(string name) => _texture2Ds.ContainsKey(name);
 
     ///<summary>
@@ -30,6 +31,7 @@ public class TextureManager
     /// </summary>
     /// <param name="name">The name of the texture.</param>
     /// <exception cref="ArgumentException">Thrown if the texture is not found.</exception>
+    [UsedImplicitly]
     public void RemoveTexture(string name)
     {
         if (_texture2Ds.TryGetValue(name, out var texture))
@@ -39,7 +41,7 @@ public class TextureManager
             return;
         }
 
-        DebugManager.Log(LogLevel.LogError, $"SE_TEXTUREMANAGER: Texture not found : {name}");
+        DebugManager.Log(LogLevel.Error, $"SE_TEXTUREMANAGER: Texture not found : {name}");
         throw new ArgumentException($"Texture not found : {name}");
     }
 
@@ -48,11 +50,12 @@ public class TextureManager
     /// </summary>
     /// <param name="name">The name of the texture.</param>
     /// <param name="texture2D">The texture to add.</param>
+    [UsedImplicitly]
     public void AddTexture(string name, Texture2D texture2D)
     {
         if (!_texture2Ds.TryAdd(name, texture2D))
             DebugManager.Log(
-                LogLevel.LogWarning,
+                LogLevel.Warning,
                 $"SE_TEXTUREMANAGER: Texture already exists : {name}"
             );
     }
@@ -62,11 +65,12 @@ public class TextureManager
     /// </summary>
     /// <param name="name">The name of the texture.</param>
     /// <param name="file">The file path of the texture.</param>
+    [UsedImplicitly]
     public void AddTexture(string name, string file)
     {
         if (!_texture2Ds.TryAdd(name, Raylib.LoadTexture(file)))
             DebugManager.Log(
-                LogLevel.LogWarning,
+                LogLevel.Warning,
                 $"SE_TEXTUREMANAGER: Texture already exists : {name}"
             );
     }
@@ -81,7 +85,7 @@ public class TextureManager
     {
         if (_texture2Ds.TryGetValue(name, out var texture))
             return texture;
-        DebugManager.Log(LogLevel.LogError, $"SE_TEXTUREMANAGER: Texture not found : {name}");
+        DebugManager.Log(LogLevel.Error, $"SE_TEXTUREMANAGER: Texture not found : {name}");
         throw new ArgumentException($"Texture not found : {name}");
     }
 

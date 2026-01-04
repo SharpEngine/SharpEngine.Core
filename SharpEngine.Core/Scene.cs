@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core;
@@ -12,10 +13,11 @@ public class Scene
     /// <summary>
     /// Define if Scene is paused
     /// </summary>
-    public bool Paused { get; set; } = false;
+    [UsedImplicitly]
+    public bool Paused { get; set; }
 
     /// <summary>
-    /// Window which have this scene
+    /// Window that has this scene
     /// </summary>
     public Window? Window { get; set; }
 
@@ -44,6 +46,7 @@ public class Scene
     /// Add Scene System
     /// </summary>
     /// <param name="system">Scene System</param>
+    [UsedImplicitly]
     public void AddSceneSystem(ISceneSystem system) => _sceneSystems.Add(system);
 
     /// <summary>
@@ -51,6 +54,7 @@ public class Scene
     /// </summary>
     /// <typeparam name="T">Type of System</typeparam>
     /// <returns>System or null</returns>
+    [UsedImplicitly]
     public T? GetSceneSystem<T>()
         where T : ISceneSystem => _sceneSystems.OfType<T>().FirstOrDefault();
 
@@ -61,6 +65,7 @@ public class Scene
     /// <param name="delay">If adding must be delayed</param>
     /// <typeparam name="T">Type of Widget</typeparam>
     /// <returns>Widget</returns>
+    [UsedImplicitly]
     public T AddWidget<T>(T widget, bool delay = false)
         where T : Widget.Widget
     {
@@ -80,6 +85,7 @@ public class Scene
     /// </summary>
     /// <typeparam name="T">Type of Widgets</typeparam>
     /// <returns>Widgets</returns>
+    [UsedImplicitly]
     public List<T> GetWidgetsAs<T>()
         where T : Widget.Widget => Widgets.OfType<T>().ToList();
 
@@ -88,6 +94,7 @@ public class Scene
     /// </summary>
     /// <param name="widget">Widget which be removed</param>
     /// <param name="delay">If remove must be delayed</param>
+    [UsedImplicitly]
     public void RemoveWidget(Widget.Widget widget, bool delay = false)
     {
         if (delay)
@@ -102,6 +109,7 @@ public class Scene
     /// <summary>
     /// Remove All Widgets
     /// </summary>
+    [UsedImplicitly]
     public void RemoveAllWidgets()
     {
         foreach (var widget in Widgets)
@@ -116,6 +124,7 @@ public class Scene
     /// <param name="delay">If adding must be delayed</param>
     /// <typeparam name="T">Type of Widgets</typeparam>
     /// <returns>Entity</returns>
+    [UsedImplicitly]
     public T AddEntity<T>(T entity, bool delay = false)
         where T : Entity.Entity
     {
@@ -135,6 +144,7 @@ public class Scene
     /// </summary>
     /// <param name="entity">Entity to be removed</param>
     /// <param name="delay">If remove must be delayed</param>
+    [UsedImplicitly]
     public void RemoveEntity(Entity.Entity entity, bool delay = false)
     {
         if (delay)
@@ -149,6 +159,7 @@ public class Scene
     /// <summary>
     /// Remove all Entities
     /// </summary>
+    [UsedImplicitly]
     public void RemoveAllEntities()
     {
         foreach (var entity in Entities)
@@ -159,6 +170,7 @@ public class Scene
     /// <summary>
     /// Load Scene
     /// </summary>
+    [UsedImplicitly]
     public virtual void Load()
     {
         foreach (var system in _sceneSystems)
@@ -173,6 +185,7 @@ public class Scene
     /// <summary>
     /// Unload Scene
     /// </summary>
+    [UsedImplicitly]
     public virtual void Unload()
     {
         foreach (var entity in Entities)
@@ -188,6 +201,7 @@ public class Scene
     /// Update Scene
     /// </summary>
     /// <param name="delta">Time since last update</param>
+    [UsedImplicitly]
     public virtual void Update(float delta)
     {
         foreach (var system in _sceneSystems)
@@ -232,6 +246,7 @@ public class Scene
     /// <summary>
     /// Draw Scene
     /// </summary>
+    [UsedImplicitly]
     public virtual void Draw()
     {
         foreach (var system in _sceneSystems)
@@ -255,6 +270,7 @@ public class Scene
     /// <summary>
     /// Function call when Scene is closed
     /// </summary>
+    [UsedImplicitly]
     public virtual void CloseScene()
     {
         foreach (var system in _sceneSystems)

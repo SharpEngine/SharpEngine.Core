@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using SharpEngine.Core.Data.Lang;
 using SharpEngine.Core.Utils;
 
@@ -12,22 +13,24 @@ public static class LangManager
     /// <summary>
     /// Current Language Used
     /// </summary>
+    [UsedImplicitly]
     public static string CurrentLang { get; set; } = "default";
 
     /// <summary>
     /// List of known languages
     /// </summary>
-    public static List<string> Langs => new(Languages.Keys);
+    public static List<string> Langs => [..Languages.Keys];
 
     /// <summary>
     /// Add Language to Manager
     /// </summary>
     /// <param name="name">Language Name</param>
     /// <param name="lang">Language Object</param>
+    [UsedImplicitly]
     public static void AddLang(string name, ILang lang)
     {
         if (!Languages.TryAdd(name, lang))
-            DebugManager.Log(LogLevel.LogWarning, $"SE_LANGMANAGER: Lang already exist : {name}");
+            DebugManager.Log(LogLevel.Warning, $"SE_LANGMANAGER: Lang already exist : {name}");
     }
 
     /// <summary>
@@ -36,6 +39,7 @@ public static class LangManager
     /// <param name="key">Translation Key</param>
     /// <param name="defaultTranslation">Default Translation</param>
     /// <returns>Translation or Default Translation if key or language not found</returns>
+    [UsedImplicitly]
     public static string GetTranslation(string key, string defaultTranslation) =>
         GetTranslation(key, defaultTranslation, CurrentLang);
 
@@ -46,6 +50,7 @@ public static class LangManager
     /// <param name="defaultTranslation">Default Translation</param>
     /// <param name="lang">Language Name</param>
     /// <returns>Translation or Default Translation if key or language not found</returns>
+    [UsedImplicitly]
     public static string GetTranslation(string key, string defaultTranslation, string lang)
     {
         if (Languages.TryGetValue(lang, out var translation))
@@ -53,7 +58,7 @@ public static class LangManager
 
         if (lang != "default")
             DebugManager.Log(
-                LogLevel.LogWarning,
+                LogLevel.Warning,
                 $"SE_LANGMANAGER: Lang not found : {lang} (pass default translation)"
             );
         return defaultTranslation;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Core.Manager;
@@ -14,17 +15,18 @@ public class TimerManager
     /// <summary>
     /// Get All Timers
     /// </summary>
-    public List<Timer> Timers => new(_timers.Values);
+    public List<Timer> Timers => [.._timers.Values];
 
     /// <summary>
     /// Add Timer to manager
     /// </summary>
     /// <param name="name">Timer Name</param>
     /// <param name="timer">Timer</param>
+    [UsedImplicitly]
     public void AddTimer(string name, Timer timer)
     {
         if (!_timers.TryAdd(name, timer))
-            DebugManager.Log(LogLevel.LogWarning, $"SE_TIMERMANAGER: Timer already exist : {name}");
+            DebugManager.Log(LogLevel.Warning, $"SE_TIMERMANAGER: Timer already exist : {name}");
     }
 
     /// <summary>
@@ -32,10 +34,8 @@ public class TimerManager
     /// </summary>
     /// <param name="name">Timer Name</param>
     /// <returns>Timer</returns>
-    public Timer? GetTimer(string name)
-    {
-        return _timers.TryGetValue(name, out var timer) ? timer : null;
-    }
+    [UsedImplicitly]
+    public Timer? GetTimer(string name) => _timers.GetValueOrDefault(name);
 
     internal void Update(float delta)
     {

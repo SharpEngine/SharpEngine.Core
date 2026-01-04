@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Data.Save;
 
 /// <summary>
 /// Class which represents Save with binary data
 /// </summary>
+[UsedImplicitly]
 public class BinarySave : ISave
 {
     private readonly Dictionary<string, object> _data = [];

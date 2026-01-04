@@ -5,9 +5,9 @@ using System;
 namespace SharpEngine.Core.Renderer.Instructions;
 
 /// <summary>
-/// Draws text with pro parameters.
+/// Draws text with pro-parameters.
 /// </summary>
-internal record class DrawTextPro : Instruction
+internal record DrawTextPro : Instruction
 {
     internal override void Execute()
     {
