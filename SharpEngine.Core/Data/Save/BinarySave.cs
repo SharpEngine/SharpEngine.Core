@@ -28,6 +28,7 @@ public class BinarySave : ISave
                     "b" => bR.ReadBoolean(),
                     "i" => bR.ReadInt32(),
                     "d" => bR.ReadDouble(),
+                    "f" => bR.ReadSingle(),
                     _ => bR.ReadString()
                 };
                 _data.Add(key, value);
@@ -55,6 +56,10 @@ public class BinarySave : ISave
                 case int v:
                     bW.Write("i");
                     bW.Write(v);
+                    break;
+                case float f:
+                    bW.Write("f");
+                    bW.Write(f);
                     break;
                 case double v:
                     bW.Write("d");
