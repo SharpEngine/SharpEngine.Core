@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.5.3 - 05/05/2026
+[+] BinarySave: Manage float values
+
 ### V 2.5.2 - 26/04/2026
 [#] Window: Crash on ImGui when debug is false
 
