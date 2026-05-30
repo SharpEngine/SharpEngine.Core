@@ -34,7 +34,7 @@ public class SeImGui : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc cref="Dispose" />
+    /// <inheritdoc cref="Dispose()" />
     protected virtual void Dispose(bool disposing)
     {
         if (!disposing) return;

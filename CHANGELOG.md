@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.5.4 - 30/05/2026
+[.] Raylib-cs: 8.0.0
+
 ### V 2.5.3 - 05/05/2026
 [+] BinarySave: Manage float values
 
