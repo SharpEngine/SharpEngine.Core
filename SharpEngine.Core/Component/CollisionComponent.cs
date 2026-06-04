@@ -19,7 +19,7 @@ public class CollisionComponent(
     Vec2 size,
     Vec2? offset = null,
     bool solid = true,
-    Action<Entity.Entity, Entity.Entity>? collisionCallback = null,
+    Action<Entity.Entity>? collisionCallback = null,
     bool drawDebug = false
 ) : Component
 {
@@ -45,7 +45,7 @@ public class CollisionComponent(
     /// Gets or sets the collision callback action.
     /// </summary>
     [UsedImplicitly]
-    public Action<Entity.Entity, Entity.Entity>? CollisionCallback { get; set; } = collisionCallback;
+    public Action<Entity.Entity>? CollisionCallback { get; set; } = collisionCallback;
 
     /// <summary>
     /// Gets or sets a value indicating whether the collision should be drawn for debugging.
@@ -96,8 +96,8 @@ public class CollisionComponent(
                 var selfRect = GetCollisionRect(position);
                 if (!Raylib.CheckCollisionRecs(entityRect, selfRect)) continue;
                 
-                CollisionCallback?.Invoke(Entity, entity);
-                entityPhysics.CollisionCallback?.Invoke(Entity, entity);
+                CollisionCallback?.Invoke(entity);
+                entityPhysics.CollisionCallback?.Invoke(Entity);
 
                 if (canGo)
                     canGo = !(Solid && entityPhysics.Solid);

@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 2.6.0 - 04/06/2026
+[\~] CollisionComponent: Collision callback will now have only other entity as parameter
+
 ### V 2.5.4 - 30/05/2026
 [.] Raylib-cs: 8.0.0
 
