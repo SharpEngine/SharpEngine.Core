@@ -46,15 +46,16 @@ public class MyScene : Scene
     {
         base.OpenScene();
 
+		TransformComponent transform = Entities[0].GetComponentAs<TransformComponent>()!;
         Window?.TweenManager.Tweens.Add(new Tween([
             new TweenStep(5)
-                .Float(Entities[0].GetComponentAs<TransformComponent>()!, x => ((TransformComponent)x).LocalRotation, 360, 5)
-                .Float(Entities[0].GetComponentAs<TransformComponent>()!.LocalPosition, x => ((Vec2)x).X, 100, 5)
-                .Float(Entities[0].GetComponentAs<TransformComponent>()!.LocalPosition, x => ((Vec2)x).Y, 100, 5),
+                .Float(transform, x => x.LocalRotation, 360, 5)
+                .Float(transform, x => x.LocalPosition.X, 100, 5)
+                .Float(transform, x => x.LocalPosition.Y, 100, 5),
             new TweenStep(10)
-                .Float(Entities[0].GetComponentAs<TransformComponent>()!, x => ((TransformComponent)x).LocalRotation, 720, 5)
-                .Float(Entities[0].GetComponentAs<TransformComponent>()!.LocalPosition, x => ((Vec2)x).X, 0, 5)
-                .Float(Entities[0].GetComponentAs<TransformComponent>()!.LocalPosition, x => ((Vec2)x).Y, 0, 5),
+                .Float(transform, x => x.LocalRotation, 720, 5)
+                .Float(transform, x => x.LocalPosition.X, 0, 5)
+                .Float(transform, x => x.LocalPosition.Y, 0, 5),
         ], () => DebugManager.Log(LogLevel.Info, "FIN DU TWEEN")));
     }
 }

@@ -1,84 +1,65 @@
-﻿using SharpEngine.Core.Manager;
 using System;
-using System.Linq.Expressions;
-using System.Reflection;
 using JetBrains.Annotations;
 
 namespace SharpEngine.Core.Utils.Tween
 {
-    internal class TweenData<TD, TDStep>(
-        object obj,
-        Expression<Func<object, TD>> property,
-        TD from,
-        TD to,
-        float duration,
-        bool useFrom = true)
-        where TD : notnull
-    {
-        [UsedImplicitly]
-        public object Obj { get; set; } = obj;
+	public abstract class ITweenData
+	{
+		public abstract void Launch();
+		public abstract void Update(float t);
+	}
 
-        [UsedImplicitly]
-        public Expression<Func<object, TD>> Property { get; set; } = property;
+	public abstract class TweenData<T> : ITweenData
+	{
+		[UsedImplicitly]
+		public Func<T> Getter { get; set; } = default!;
 
-        [UsedImplicitly]
-        public TD From { get; set; } = from;
+		[UsedImplicitly]
+		public Action<T> Setter { get; set; } = default!;
 
-        [UsedImplicitly]
-        public TD To { get; set; } = to;
+		[UsedImplicitly]
+		public T From { get; set; } = default!;
 
-        [UsedImplicitly]
-        public float Duration { get; set; } = duration;
+		[UsedImplicitly]
+		public T To { get; set; } = default!;
 
-        [UsedImplicitly]
-        public TD CurrentValue { get; set; } = default!;
-        [UsedImplicitly]
-        public TDStep Step { get; set; } = default!;
-        [UsedImplicitly]
-        public bool UseFrom { get; set; } = useFrom;
+		internal bool UseCurrentValue { get; set; }
 
-        public void Launch() 
-        { 
-            CurrentValue = UseFrom ? From : Property.Compile()(Obj);
-            Step = CurrentValue switch
-            {
-                float fFrom when To is float fTo => (TDStep)(object)((fTo - fFrom) / Duration),
-                int iFrom when To is int iTo => (TDStep)(object)((iTo - iFrom) / Duration),
-                Color cFrom when To is Color cTo => (TDStep)(object)new ColorStep(
-                    (short)((cTo.R - cFrom.R) / Duration),
-                    (short)((cTo.G - cFrom.G) / Duration),
-                    (short)((cTo.B - cFrom.B) / Duration),
-                    (short)((cTo.A - cFrom.A) / Duration)
-                ),
-                _ => throw new NotSupportedException("Unsupported type for tweening.")
-            };
+		public sealed override void Launch()
+		{
+			if (UseCurrentValue)
+				From = Getter();
+		}
+	}
 
-            DebugManager.Log(LogLevel.Debug, $"Tween Launched: From = {From}, To = {To}, Duration = {Duration}, Step = {Step}");
-        }
+	internal sealed class IntTweenData : TweenData<int>
+	{
+		public override void Update(float t)
+		{
+			Setter(t >= 1f ? To : (int)(From + ((double)To - From) * t));
+		}
+	}
 
-        public void Update(float deltaTime)
-        {
-            if (Duration <= 0)
-            {
-                ((PropertyInfo)((MemberExpression)Property.Body).Member).SetValue(Obj, To);
-                return;
-            }
+	internal sealed class FloatTweenData : TweenData<float>
+	{
+		public override void Update(float t)
+		{
+			Setter(t >= 1f ? To : From + (To - From) * t);
+		}
+	}
 
-            CurrentValue = CurrentValue switch
-            {
-                float cVal when Step is float step => (TD)(object)(cVal + step * deltaTime),
-                int cVal when Step is int step => (TD)(object)(cVal + (int)(step * deltaTime)),
-                Color cVal when Step is ColorStep step => (TD)(object)new Color(
-                    (byte)(cVal.R + step.RStep * deltaTime),
-                    (byte)(cVal.G + step.GStep * deltaTime),
-                    (byte)(cVal.B + step.BStep * deltaTime),
-                    (byte)(cVal.A + step.AStep * deltaTime)
-                ),
-                _ => CurrentValue
-            };
-
-            ((PropertyInfo)((MemberExpression)Property.Body).Member).SetValue(Obj, CurrentValue);
-            Duration -= deltaTime;
-        }
-    }
+	internal sealed class ColorTweenData : TweenData<Color>
+	{
+		public override void Update(float t)
+		{
+			Setter(
+				new Color(
+					(int)(From.R + (To.R - From.R) * t),
+					(int)(From.G + (To.G - From.G) * t),
+					(int)(From.B + (To.B - From.B) * t),
+					(int)(From.A + (To.A - From.A) * t)
+				)
+			);
+		}
+	}
 }
